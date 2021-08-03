@@ -1,0 +1,45 @@
+version: 0.2
+env:
+  variables:
+    SYNDICATE_ENV: test
+phases:
+  install:
+    runtime-versions:
+        ruby: 2.7
+  pre_build:
+    commands:
+      - rbenv versions | cut -c3- | grep '2.7' > .ruby-version
+      - rbenv versions
+      - rbenv version
+      - gem install bundler
+      - bundle config set without development
+      - bundle config set path vendor/bundle
+      - bundle install
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+    finally:
+      - rm -rf vendor/bundle
+      - rm -rf creds/
+      - rm -rf ~/.bundle
+      - rm -rf .bundle
+      - rm README.md server.rb
+  build:
+    commands:
+      - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - bundle config set without 'test development'
+      - bundle config set path vendor/bundle
+      - cat ~/.bundle/config
+      - bundle install
+      - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
+  post_build:
+    commands:
+      - export BUCKET=syndicate-lambda-deployment-artifacts
+      - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
+reports:
+    rspec_reports:
+        files:
+            - report.xml
+        base-directory: out
+        file-format: JunitXml
+artifacts:
+  files:
+    - '**/*'

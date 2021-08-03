@@ -1,0 +1,23 @@
+{
+  "pile": {
+    "book_list": [
+      {
+        "isbn": "0380720019",
+        "title": "The Boer War",
+        "other_thing": "foo"
+      },
+      {
+        "isbn": "9780142406120",
+        "title": "Point Blank (Alex Rider Adventure)"
+      },
+      {
+        "isbn": "1640499342",
+        "title": "52 Weekend Adventures in Northern California: My Favorite Outdoor Getaways (Travel Guide)"
+      },
+      {
+        "isbn": "073522465X",
+        "title": "The Searcher: A Novel"
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: REST API for the Bridge Syndicate Backend
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        DefaultAuthorizer: AWS_IAM
+  AuthGamePost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+      Handler: lambda/auth/game/post.game_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/game
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
+
+

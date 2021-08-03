@@ -1,0 +1,11 @@
+{
+  "blueTeam": [
+    "vice9"
+  ],
+  "requiredPlayers": 2,
+  "redTeam": [
+    "NitroholicPls"
+  ],
+  "goalsToWin": 5,
+  "gameLengthInSeconds": 900
+}
