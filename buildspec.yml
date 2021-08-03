@@ -21,7 +21,6 @@ phases:
       - rm -rf creds/
       - rm -rf ~/.bundle
       - rm -rf .bundle
-      - rm README.md server.rb
   build:
     commands:
       - echo Building SHA $CODEBUILD_RESOLVED_SOURCE_VERSION
@@ -33,6 +32,7 @@ phases:
   post_build:
     commands:
       - export BUCKET=codepipeline-us-west-2-941846439889
+      - aws s3 cp README.md s3://codepipeline-us-west-2-941846439889/
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 reports:
     rspec_reports:
