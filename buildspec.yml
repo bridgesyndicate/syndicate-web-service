@@ -31,9 +31,9 @@ phases:
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
   post_build:
     commands:
-      - export BUCKET=codepipeline-us-west-2-941846439889
+      - export BUCKET=syndicate-web-service-cfn-artifacts
       - aws sts get-caller-identity
-      - aws s3 cp README.md s3://codepipeline-us-west-2-941846439889/
+      - aws s3 cp README.md s3://syndicate-web-service-cfn-artifacts/
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 reports:
     rspec_reports:
