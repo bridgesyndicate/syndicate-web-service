@@ -32,7 +32,7 @@ phases:
       - echo "\$my_git_commit_sha = '$CODEBUILD_RESOLVED_SOURCE_VERSION'" > git_commit_sha.rb
   post_build:
     commands:
-      - export BUCKET=syndicate-lambda-deployment-artifacts
+      - export BUCKET=codepipeline-us-west-2-941846439889
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 reports:
     rspec_reports:

@@ -1,4 +1,3 @@
-require 'pry'
 require 'json'
 require 'ostruct'
 
@@ -29,7 +28,6 @@ def game_post_handler(event:, context:)
     game = OpenStruct.new
     game.game_data = JSON.parse(payload, object_class: OpenStruct)
     game.uuid = uuid
-    # binding.pry;1
     ret_obj = $ddb_game_manager.put(game)
     status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
   end
