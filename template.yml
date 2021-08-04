@@ -8,6 +8,12 @@ Resources:
       StageName: Prod
       Auth:
         DefaultAuthorizer: AWS_IAM
+  ApiPermissionForAuthGamePost:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref AuthGamePost
+      Principal: apigateway.amazonaws.com
   AuthGamePost:
     Type: AWS::Serverless::Function
     Properties:

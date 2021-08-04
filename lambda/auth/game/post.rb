@@ -11,7 +11,7 @@ def game_post_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
-    "Indybooks-git-commit-sha" => $my_git_commit_sha
+    "X-git-commit-sha" => $my_git_commit_sha
   }
 
   uuid = SecureRandom.uuid
