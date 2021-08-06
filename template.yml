@@ -19,6 +19,8 @@ Resources:
             TableName: syndicate_production_games
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
+        - SQSPollerPolicy:
+            QueueName: arn:aws:sqs:us-west-2:595508394202:syndicate_production_games
       Handler: lambda/auth/game/post.game_post_handler
       Runtime: ruby2.7
       CodeUri: ./
@@ -30,5 +32,3 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
-
-
