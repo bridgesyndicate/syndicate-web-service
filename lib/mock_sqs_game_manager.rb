@@ -1,17 +1,14 @@
 require 'time'
 
-class MockDynamodbGameManager
+class MockSqsGameManager
   attr_accessor :client, :table_name
-  def initialize(region: nil,
-                 table_name: nil,
-                 endpoint: nil)
+  def initialize()
 
     @table_name = "syndicate_#{SYNDICATE_ENV}_games"
 
-    @client = {
-      region:      region,
-      endpoint:    endpoint
-    }
+    @client = Aws::Sqs::Client.new(region: AwsCredentials.instance.region,
+                                        credentials: AwsCredentials.instance.credentials,
+                                        )
   end
 
   def conditional_user_pile_create(p)

@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
+require 'aws_credentials'
 require 'lambda/auth/game/post'
 require 'sinatra'
 require 'sinatra_shim/auth/game/post'

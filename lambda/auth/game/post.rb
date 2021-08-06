@@ -1,11 +1,14 @@
 require 'json'
 require 'ostruct'
-
 load 'git_commit_sha.rb'
+require 'aws_credentials'
 require 'json-schema'
 require 'lib/dynamo_client.rb'
+require 'lib/sqs_client.rb'
 require 'lib/schema/game_post'
 require 'lib/helpers'
+
+UUID_REGEX = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/
 
 def game_post_handler(event:, context:)
 
@@ -24,13 +27,16 @@ def game_post_handler(event:, context:)
            body: {}.to_json
   } if status == BAD_REQUEST
   
-  if status == OK
-    game = OpenStruct.new
-    game.game_data = JSON.parse(payload, object_class: OpenStruct)
-    game.uuid = uuid
-    ret_obj = $ddb_game_manager.put(game)
-    status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
-  end
+
+  game = OpenStruct.new
+  game.game_data = JSON.parse(payload, object_class: OpenStruct)
+  game.uuid = uuid
+  ret_obj = $ddb_game_manager.put(game)
+  status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
+  game.game_data.uuid = uuid
+
+  sqs_ret = $sqs_game_manager.enqueue(game.game_data.to_h.to_json)
+  status = SERVER_ERROR unless sqs_ret.message_id.match(/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/)
 
   ret = {
     "status": status,

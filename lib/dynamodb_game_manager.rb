@@ -2,31 +2,15 @@ require 'time'
 
 class DynamodbGameManager
   attr_accessor :client, :table_name
-  def initialize(region:, table_name:nil, access_key_id: nil,
-                 secret_access_key: nil,
-                 session_token: nil,
-                 profile_name: 'default', endpoint: nil)
-    if access_key_id.nil? && secret_access_key.nil?
-      access_key_id = ENV['AWS_ACCESS_KEY_ID']
-      secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-    end
-    credentials = Aws::Credentials.new(access_key_id,
-                                       secret_access_key,
-                                       ENV['AWS_SESSION_TOKEN'])
+
+  def initialize()
+
     @table_name = "syndicate_#{SYNDICATE_ENV}_games"
 
-    if endpoint
-      @client = Aws::DynamoDB::Client.new(
-        region:      region,
-        credentials: credentials,
-        endpoint:    endpoint
-      )
-    else
-      @client = Aws::DynamoDB::Client.new(
-        region:      region,
-        credentials: credentials,
-      )
-    end
+    @client = Aws::DynamoDB::Client.new(region: AwsCredentials.instance.region,
+                                        credentials: AwsCredentials.instance.credentials,
+                                        endpoint: AwsCredentials.instance.endpoint
+                                        )
   end
 
   def create_table
