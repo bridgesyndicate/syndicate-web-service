@@ -1,16 +1,19 @@
 require 'time'
+require 'aws-sdk-dynamodb'
 
 class DynamodbGameManager
   attr_accessor :client, :table_name
 
   def initialize()
-
     @table_name = "syndicate_#{SYNDICATE_ENV}_games"
-
-    @client = Aws::DynamoDB::Client.new(region: AwsCredentials.instance.region,
-                                        credentials: AwsCredentials.instance.credentials,
-                                        endpoint: AwsCredentials.instance.endpoint
-                                        )
+    options = {
+      region: AwsCredentials.instance.region,
+      credentials: AwsCredentials.instance.credentials,
+    }
+    options = options.merge({
+                              endpoint: AwsCredentials.instance.endpoint
+                            }) unless AwsCredentials.instance.endpoint.nil?
+    @client = Aws::DynamoDB::Client.new(options)
   end
 
   def create_table

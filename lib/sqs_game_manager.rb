@@ -1,3 +1,5 @@
+require 'aws-sdk-sqs'
+
 class SqsGameManager
   attr_accessor :client, :queue_name
 

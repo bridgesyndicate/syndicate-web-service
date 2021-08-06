@@ -3,10 +3,6 @@ require 'lib/mock_dynamodb_helpers'
 require 'lib/dynamodb_game_manager'
 require 'lib/helpers'
 
-require 'bundler'
-
-Bundler.require
-
 if SYNDICATE_ENV == 'test'
   $ddb_game_manager    =  MockDynamodbGameManager.new()
 else
