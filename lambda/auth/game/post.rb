@@ -8,8 +8,6 @@ require 'lib/sqs_client.rb'
 require 'lib/schema/game_post'
 require 'lib/helpers'
 
-UUID_REGEX = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/
-
 def game_post_handler(event:, context:)
 
   headers_list = {
