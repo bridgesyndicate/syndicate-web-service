@@ -19,7 +19,7 @@ Resources:
             TableName: syndicate_production_games
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
-        - SQSPollerPolicy:
+        - SQSSendMessagePolicy:
             QueueName: syndicate_production_games
       Handler: lambda/auth/game/post.game_post_handler
       Runtime: ruby2.7
