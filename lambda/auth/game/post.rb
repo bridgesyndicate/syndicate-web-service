@@ -1,12 +1,12 @@
 require 'json'
 require 'ostruct'
-load 'git_commit_sha.rb'
-require 'aws_credentials'
 require 'json-schema'
+load 'git_commit_sha.rb'
+require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
-require 'lib/sqs_client.rb'
-require 'lib/schema/game_post'
 require 'lib/helpers'
+require 'lib/schema/game_post'
+require 'lib/sqs_client.rb'
 
 def game_post_handler(event:, context:)
 
