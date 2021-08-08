@@ -21,7 +21,7 @@ class DynamodbGameManager
   end
 
   def create_table_impl
-    schema = { 
+    schema = {
       key_schema: [
                    { attribute_name: 'game_uuid',  key_type: 'HASH' }
                   ],
@@ -37,22 +37,24 @@ class DynamodbGameManager
         write_capacity_units: 5
       }
     }
-      
-    schema = schema.merge(provisioned_capacity) if SYNDICATE_ENV == 'development'      
+
+    schema = schema.merge(provisioned_capacity) if SYNDICATE_ENV == 'development'
     puts schema.inspect
     @client.create_table(schema.merge({ table_name: @table_name }))
   end
 
-  def delete(pile_uuid)
-    params = {
-      table_name: @table_name,
-      key: {
-        pile_uuid: pile_uuid
-      },
-      return_consumed_capacity: "INDEXES",
-      return_item_collection_metrics: "SIZE"
-    }
-    client.delete_item(params)
+  def update_arn(game_uuid, taskArn)
+    begin
+      @client.update_item(
+        table_name: @table_name,
+        key: { "game_uuid": game_uuid },
+        update_expression: 'SET game.taskArn=:pVal',
+        expression_attribute_values: { ':pVal' => taskArn },
+        condition_expression: 'attribute_exists(game_uuid)'
+      )
+    rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
+      ObjectNotFound
+    end
   end
 
   def put(p)
@@ -78,5 +80,8 @@ class DynamodbGameManager
         }
       }
     )
+  end
+
+  class ObjectNotFound
   end
 end

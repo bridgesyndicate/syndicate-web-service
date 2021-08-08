@@ -24,7 +24,6 @@ def game_post_handler(event:, context:)
            headers: headers_list,
            body: {}.to_json
   } if status == BAD_REQUEST
-  
 
   game = OpenStruct.new
   game.game_data = JSON.parse(payload, object_class: OpenStruct)
@@ -34,7 +33,7 @@ def game_post_handler(event:, context:)
   game.game_data.uuid = uuid
 
   sqs_ret = $sqs_game_manager.enqueue(game.game_data.to_h.to_json)
-  status = SERVER_ERROR unless sqs_ret.message_id.match(/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/)
+  status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
 
   ret = {
     "status": status,
