@@ -1,7 +1,8 @@
 require 'time'
+require 'ostruct'
 
 class MockDynamodbGameManager
-  attr_accessor :client, :table_name
+  attr_accessor :client, :table_name, :succeed
   def initialize(region: nil,
                  table_name: nil,
                  endpoint: nil)
@@ -12,6 +13,17 @@ class MockDynamodbGameManager
       region:      region,
       endpoint:    endpoint
     }
+    @succeed = true
+  end
+
+  def update_arn(game_uuid, taskArn)
+    if @succeed
+      ret_val = OpenStruct.new
+      ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
+      return ret_val
+    else
+      ObjectNotFound
+    end
   end
 
   def conditional_user_pile_create(p)
@@ -43,5 +55,7 @@ class MockDynamodbGameManager
       ret = {}
     end
       MockDynamoResults.new(ret)
+  end
+  class ObjectNotFound
   end
 end

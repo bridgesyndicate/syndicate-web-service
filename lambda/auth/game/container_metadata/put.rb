@@ -1,4 +1,3 @@
-require 'pry'
 require 'json'
 require 'ostruct'
 require 'json-schema'
@@ -9,14 +8,13 @@ require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/sqs_client.rb'
 
-def auth_game_container_metadata_handler(event:, context:)
+def auth_game_container_metadata_put_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
     "X-git-commit-sha" => $my_git_commit_sha
   }
 
-  binding.pry;1
   payload = event['body']
   status = JSON::Validator.validate(GameContainerMetadataSchema.schema, payload,
                                     :strict => true
@@ -29,7 +27,6 @@ def auth_game_container_metadata_handler(event:, context:)
   payload = JSON.parse(payload, object_class: OpenStruct)
   game_uuid = payload.uuid
   taskArn = payload.taskArn
-  binding.pry;1
 
   ret_obj = $ddb_game_manager.update_arn(game_uuid, taskArn)
 
