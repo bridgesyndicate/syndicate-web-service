@@ -32,3 +32,25 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
+  AuthGameContainerMetadataPut:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+      Handler: lambda/auth/game/container_metadata/put.auth_game_container_metadata_put_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/game/container_metadata
+            Method: PUT
+            RestApiId:
+              Ref: ApiGatewayApi
