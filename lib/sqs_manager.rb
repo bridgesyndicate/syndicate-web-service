@@ -1,6 +1,6 @@
 require 'aws-sdk-sqs'
 
-class SqsGameManager
+class SqsManager
   attr_accessor :client
 
   def initialize()
@@ -21,9 +21,7 @@ class SqsGameManager
   end
 
   def get_queue_url(queue_name)
-    lut = { syndicate_development_games: 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_development_games',
-      syndicate_production_games:  'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games'}
-    return lut[queue_name.to_sym]
+    return 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games' if queue_name.match /^GAME/
   end
 
   # queue_name_resp = client.get_queue_url({ queue_name: @queue_name }) # want to avoid another service call

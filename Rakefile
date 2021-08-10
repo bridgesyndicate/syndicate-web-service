@@ -1,3 +1,4 @@
+require 'pry'
 require 'bundler'
 
 Bundler.require
@@ -13,6 +14,26 @@ task default: %w/create_game_table/
 task :create_game_table do
   manager = DynamodbGameManager.new()
   puts manager.create_table
+end
+
+task :test_get_ip do
+  # aws ecs describe-tasks --tasks arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e | jq '.tasks[]' | grep -i eni
+  # aws ec2 describe-network-interfaces --network-interface-ids  eni-094b22b7e425e613f | jq '.NetworkInterfaces[0].PrivateIpAddresses[0].Association.PublicIp'
+
+  task_arn ='arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e'
+  client = Aws::ECS::Client.new(
+                                region: AwsCredentials.instance.region,
+                                credentials: AwsCredentials.instance.credentials,
+                                )
+  resp = client.describe_tasks({ tasks: [task_arn] })
+  eni = resp.to_h[:tasks][0][:attachments][0][:details].select{|e| e[:name] == 'networkInterfaceId'}[0][:value]
+
+  client = Aws::EC2::Client.new(
+                                region: AwsCredentials.instance.region,
+                                credentials: AwsCredentials.instance.credentials,
+                                )
+  resp = client.describe_network_interfaces({ network_interface_ids: [ eni ] })
+  puts resp.to_h[:network_interfaces][0][:association][:public_ip]
 end
 
 task :test_post do
@@ -32,6 +53,7 @@ task :test_post do
                                   url: BASE_URL,
                                   body: body
                                   )
+binding.pry;1
   uri = URI.parse(BASE_URL)
   https = Net::HTTP.new(uri.host,uri.port)
   https.use_ssl = true

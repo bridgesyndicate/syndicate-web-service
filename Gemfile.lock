@@ -13,6 +13,12 @@ GEM
     aws-sdk-dynamodb (1.62.0)
       aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-ec2 (1.254.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-ecs (1.83.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-sqs (1.42.0)
       aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
@@ -74,6 +80,8 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk-dynamodb
+  aws-sdk-ec2
+  aws-sdk-ecs
   aws-sdk-sqs
   json-schema
   pry-byebug

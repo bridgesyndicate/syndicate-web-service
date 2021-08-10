@@ -31,8 +31,8 @@ def game_post_handler(event:, context:)
   ret_obj = $ddb_game_manager.put(game)
   status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
   game.game_data.uuid = uuid
-
-  sqs_ret = $sqs_game_manager.enqueue(game.game_data.to_h.to_json)
+  queue = "#{GAME}-#{SYNDICATE_ENV}"
+  sqs_ret = $sqs_manager.enqueue(queue, game.game_data.to_h.to_json)
   status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
 
   ret = {
