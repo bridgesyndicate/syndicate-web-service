@@ -39,8 +39,12 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
-        - DynamoDBWritePolicy:
-            TableName: syndicate_production_games
+        - Statement:
+            - Sid: inlinePolicyAuthGameContainerMetadataPutEc2
+              Effect: Allow
+              Action:
+                - ec2:DescribeNetworkInterfaces
+              Resource: '*'
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
         - Statement:
