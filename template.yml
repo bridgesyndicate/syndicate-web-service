@@ -44,7 +44,7 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
         - Statement:
-            - Sid: inline_policy_AuthGameContainerMetadataPut_ecs
+            - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
               Effect: Allow
               Action:
                 - ecs:DescribeTasks
