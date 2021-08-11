@@ -39,7 +39,9 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
-      - Statement:
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+        - Statement:
             - Sid: inlinePolicyAuthGameContainerMetadataPutSqsAll
               Effect: Allow
               Action:
@@ -47,7 +49,7 @@ Resources:
               Resource: 'arn:aws:sqs:us-west-2:595508394202:syndicate_production_player_messages'
             - Sid: inlinePolicyAuthGameContainerMetadataPutSqsList
               Effect: Allow
-              Action: 
+              Action:
                 - sqs:ListQueues
               Resource: '*'
         - Statement:
@@ -56,8 +58,6 @@ Resources:
               Action:
                 - ec2:DescribeNetworkInterfaces
               Resource: '*'
-        - DynamoDBWritePolicy:
-            TableName: syndicate_production_games
         - Statement:
             - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
               Effect: Allow
