@@ -39,6 +39,17 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
+      - Statement:
+            - Sid: inlinePolicyAuthGameContainerMetadataPutSqsAll
+              Effect: Allow
+              Action:
+                - sqs:*
+              Resource: 'arn:aws:sqs:us-west-2:595508394202:syndicate_production_player_messages'
+            - Sid: inlinePolicyAuthGameContainerMetadataPutSqsList
+              Effect: Allow
+              Action: 
+                - sqs:ListQueues
+              Resource: '*'
         - Statement:
             - Sid: inlinePolicyAuthGameContainerMetadataPutEc2
               Effect: Allow
