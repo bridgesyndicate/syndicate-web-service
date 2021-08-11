@@ -43,6 +43,14 @@ Resources:
             TableName: syndicate_production_games
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
+        - PolicyName: inline_policy_AuthGameContainerMetadataPut_ecs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ecs:DescribeTasks'
+                Resource: '*'
       Handler: lambda/auth/game/container_metadata/put.auth_game_container_metadata_put_handler
       Runtime: ruby2.7
       CodeUri: ./
