@@ -57,6 +57,20 @@ class DynamodbGameManager
     end
   end
 
+  def update_game(game_uuid, game)
+    begin
+      @client.update_item(
+        table_name: @table_name,
+        key: { "game_uuid": game_uuid },
+        update_expression: 'SET game=:pVal',
+        expression_attribute_values: { ':pVal' => game },
+        condition_expression: 'attribute_exists(game_uuid)'
+      )
+    rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
+      ObjectNotFound
+    end
+  end
+
   def put(p)
     @client.put_item(
       {

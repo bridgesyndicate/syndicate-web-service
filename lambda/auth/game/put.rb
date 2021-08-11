@@ -1,44 +1,47 @@
 require 'json'
-load 'git_commit_sha.rb'
-load 'lib/dynamo_client.rb'
+require 'ostruct'
 require 'json-schema'
-require 'lib/schema/pile_post'
+load 'git_commit_sha.rb'
+require 'lib/aws_credentials'
+require 'lib/dynamo_client.rb'
 require 'lib/helpers'
+require 'lib/schema/game_put'
 
-def auth_pile_put_handler(event:, context:)
+def game_post_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
-    "Indybooks-git-commit-sha" => $my_git_commit_sha
+    "X-git-commit-sha" => $my_git_commit_sha
   }
 
-  begin
-    uuid = event['pathParameters']['proxy'].split('/')[0]
-    username = get_cognito_username(event)
-    raise unless uuid.match(UUID_REGEX)
-  rescue
-    return { statusCode: BAD_REQUEST,
-             headers: headers_list,
-             body: {}.to_json
-    }
-  end
-
   payload = event['body']
-  status = JSON::Validator.validate(PilePostSchema.schema, payload,
+  status = JSON::Validator.validate(GamePutSchema.schema, payload,
                                     :strict => true
                                    ) ? OK : BAD_REQUEST
+  return { statusCode: status,
+           headers: headers_list,
+           body: {}.to_json
+  } if status == BAD_REQUEST
 
-  if status == OK
-    payload = JSON.parse(payload, object_class: OpenStruct)
-    payload.pile.uuid = uuid
-    payload.pile.username = get_cognito_username(event)
-    ret_obj = $pile_manager.put(payload.pile)
-    status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
+  game = JSON.parse(payload, object_class: OpenStruct)
+  game_uuid = game.uuid
+
+  ret_obj = $ddb_game_manager.update_game(game_uuid, game)
+
+  if ret_obj == DynamodbGameManager::ObjectNotFound
+    status = NOT_FOUND
+  elsif ret_obj.data.class != Aws::DynamoDB::Types::UpdateItemOutput
+    status = SERVER_ERROR
   end
+
+  ret = {
+    "status": status,
+    "uuid": uuid
+  }
 
   return { statusCode: status,
            headers: headers_list,
-           body: '{}'
+           body: ret.to_json
   }
 
 end
