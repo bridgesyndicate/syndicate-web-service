@@ -10,8 +10,16 @@ RSpec.describe '#game_post' do
     let(:lambda_result) { game_post_handler(event: event, context: '') }
     let(:post_file) {'spec/mocks/game/valid-post.json'}
 
+    before(:each) {
+      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-games.xml'), headers: {})
+    }
+
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do
+        #WebMock.after_request do |request_signature, response|
+        #  puts "Request #{request_signature} was made and #{response.body} was returned"
+        #end
         expect(lambda_result.class).to eq Hash
       end
 
@@ -38,7 +46,6 @@ RSpec.describe '#game_post' do
             to match UUID_REGEX
         end
       end
-
 
       describe 'for invalid game posts' do
         describe 'with missing properties' do

@@ -1,0 +1,1 @@
+<?xml version="1.0"?><SendMessageResponse xmlns="http://queue.amazonaws.com/doc/2012-11-05/"><SendMessageResult><MessageId>12d5573c-a0c5-4981-b421-8a488f46ea2d</MessageId><MD5OfMessageBody>6985815b965e178a2a02fa07f54a93f1</MD5OfMessageBody></SendMessageResult><ResponseMetadata><RequestId>52a4dc12-5ce5-5da8-8096-859f38ba49d9</RequestId></ResponseMetadata></SendMessageResponse>

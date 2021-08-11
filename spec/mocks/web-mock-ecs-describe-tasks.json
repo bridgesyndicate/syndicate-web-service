@@ -1,0 +1,104 @@
+{
+  "tasks": [
+    {
+      "attachments": [
+        {
+          "id": "7113c741-1a4c-444f-946e-f0ee566369eb",
+          "type": "ElasticNetworkInterface",
+          "status": "ATTACHED",
+          "details": [
+            {
+              "name": "subnetId",
+              "value": "subnet-0556f60b4b79faa84"
+            },
+            {
+              "name": "networkInterfaceId",
+              "value": "eni-deadbeefdeadbeefd"
+            },
+            {
+              "name": "macAddress",
+              "value": "06:6a:23:89:24:4d"
+            },
+            {
+              "name": "privateDnsName",
+              "value": "ip-10-0-0-248.us-west-2.compute.internal"
+            },
+            {
+              "name": "privateIPv4Address",
+              "value": "10.0.0.248"
+            }
+          ]
+        }
+      ],
+      "availability_zone": "us-west-2a",
+      "cluster_arn": "arn:aws:ecs:us-west-2:595508394202:cluster/default",
+      "connectivity": "CONNECTED",
+      "connectivity_at": "2021-08-09 11:37:44 -0700",
+      "containers": [
+        {
+          "container_arn": "arn:aws:ecs:us-west-2:595508394202:container/default/0e0a0ac6d3274d999589c70836da031e/325df3c3-d182-44f5-a83e-c819b7c2a41b",
+          "task_arn": "arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e",
+          "name": "bridge-dev-server",
+          "image": "595508394202.dkr.ecr.us-west-2.amazonaws.com/syn-bridge-servers",
+          "image_digest": "sha256:82f75bcc3f9a27ee05b6e289cac35ec03f0c667d4aa2d3ade492551488187da1",
+          "runtime_id": "0e0a0ac6d3274d999589c70836da031e-2590604502",
+          "last_status": "RUNNING",
+          "network_bindings": [
+
+          ],
+          "network_interfaces": [
+            {
+              "attachment_id": "7113c741-1a4c-444f-946e-f0ee566369eb",
+              "private_ipv_4_address": "10.0.0.248"
+            }
+          ],
+          "health_status": "UNKNOWN",
+          "managed_agents": [
+            {
+              "last_started_at": "2021-08-09 11:38:25 -0700",
+              "name": "ExecuteCommandAgent",
+              "last_status": "RUNNING"
+            }
+          ],
+          "cpu": "0"
+        }
+      ],
+      "cpu": "512",
+      "created_at": "2021-08-09 11:37:39 -0700",
+      "desired_status": "RUNNING",
+      "enable_execute_command": true,
+      "group": "service:bridge-dev-server",
+      "health_status": "UNKNOWN",
+      "last_status": "RUNNING",
+      "launch_type": "FARGATE",
+      "memory": "1024",
+      "overrides": {
+        "container_overrides": [
+          {
+            "name": "bridge-dev-server"
+          }
+        ],
+        "inference_accelerator_overrides": [
+
+        ]
+      },
+      "platform_version": "1.4.0",
+      "pull_started_at": "2021-08-09 11:37:59 -0700",
+      "pull_stopped_at": "2021-08-09 11:38:09 -0700",
+      "started_at": "2021-08-09 11:38:11 -0700",
+      "started_by": "ecs-svc/2209115385153589060",
+      "tags": [
+
+      ],
+      "task_arn": "arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e",
+      "task_definition_arn": "arn:aws:ecs:us-west-2:595508394202:task-definition/bridge-dev-server:5",
+      "version": 3,
+      "ephemeral_storage": {
+        "size_in_gi_b": 20
+      }
+    }
+  ],
+  "failures": [
+
+  ]
+}

@@ -6,11 +6,23 @@ RSpec.describe '#auth_game_container_metadata_put' do
   context 'lambda_result' do
     let(:event) { { 'body' =>  post_body } }
     let(:lambda_result) { auth_game_container_metadata_put_handler(event: event, context: '') }
-    let(:valid_uuid) { SecureRandom.uuid }
+    let(:valid_uuid) { '87d2ebbf-3016-4ab8-97e6-c06e410b3359' }
+    let(:task_arn) { 'arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e' }
     let(:invalid_uuid) { SecureRandom.uuid }
-    let(:valid_post) { JSON.generate({ uuid: valid_uuid, taskArn:'foo' }) }
+    let(:valid_post) { JSON.generate({ uuid: valid_uuid, taskArn: task_arn }) }
     let(:invalid_post) { JSON.generate({ doobar: "foo", uuid: invalid_uuid, taskArn:'foo' }) }
     let(:post_body) { valid_post }
+
+    before(:each) {
+      stub_request(:post, "https://ecs.us-west-2.amazonaws.com/")
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-ecs-describe-tasks.json'), headers: {})
+      stub_request(:post, "https://ec2.us-west-2.amazonaws.com/")
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-ec2-describe-network-interface.xml'), headers: {})
+      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages')
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-player-messages.xml'), headers: {})
+      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-player-messages.xml'), headers: {})
+    }
 
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do
@@ -33,6 +45,9 @@ RSpec.describe '#auth_game_container_metadata_put' do
     describe 'for the body' do
       describe 'for a valid update' do
         it 'it succeeds' do
+          #WebMock.after_request do |request_signature, response|
+          #  puts "Request #{request_signature} was made and #{response.body} was returned"
+          #end
           expect(lambda_result[:statusCode]).to eq 200
         end
       end

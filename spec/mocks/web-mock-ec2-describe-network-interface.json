@@ -1,0 +1,65 @@
+{
+  "network_interfaces": [
+    {
+      "association": {
+        "ip_owner_id": "amazon",
+        "public_dns_name": "ec2-34-213-182-216.us-west-2.compute.amazonaws.com",
+        "public_ip": "34.213.182.216"
+      },
+      "attachment": {
+        "attach_time": "2021-08-09 18:37:45 UTC",
+        "attachment_id": "eni-attach-065a57b5165763cb7",
+        "delete_on_termination": false,
+        "device_index": 1,
+        "network_card_index": 0,
+        "instance_owner_id": "290390480838",
+        "status": "attached"
+      },
+      "availability_zone": "us-west-2a",
+      "description": "arn:aws:ecs:us-west-2:595508394202:attachment/7113c741-1a4c-444f-946e-f0ee566369eb",
+      "groups": [
+        {
+          "group_name": "bridge-5724",
+          "group_id": "sg-08aa3c48e068ffe49"
+        }
+      ],
+      "interface_type": "interface",
+      "ipv_6_addresses": [
+
+      ],
+      "mac_address": "06:6a:23:89:24:4d",
+      "network_interface_id": "eni-094b22b7e425e613f",
+      "owner_id": "595508394202",
+      "private_dns_name": "ip-10-0-0-248.us-west-2.compute.internal",
+      "private_ip_address": "10.0.0.248",
+      "private_ip_addresses": [
+        {
+          "association": {
+            "ip_owner_id": "amazon",
+            "public_dns_name": "ec2-34-213-182-216.us-west-2.compute.amazonaws.com",
+            "public_ip": "34.213.182.216"
+          },
+          "primary": true,
+          "private_dns_name": "ip-10-0-0-248.us-west-2.compute.internal",
+          "private_ip_address": "10.0.0.248"
+        }
+      ],
+      "requester_id": "578734482556",
+      "requester_managed": true,
+      "source_dest_check": true,
+      "status": "in-use",
+      "subnet_id": "subnet-0556f60b4b79faa84",
+      "tag_set": [
+        {
+          "key": "aws:ecs:clusterName",
+          "value": "default"
+        },
+        {
+          "key": "aws:ecs:serviceName",
+          "value": "bridge-dev-server"
+        }
+      ],
+      "vpc_id": "vpc-07e616597cb48f4c7"
+    }
+  ]
+}

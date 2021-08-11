@@ -7,6 +7,7 @@ require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_post'
 require 'lib/sqs_client.rb'
+require 'lib/syndicate_random_uuid.rb'
 
 def game_post_handler(event:, context:)
 
@@ -15,7 +16,7 @@ def game_post_handler(event:, context:)
     "X-git-commit-sha" => $my_git_commit_sha
   }
 
-  uuid = SecureRandom.uuid
+  uuid = SyndicateRandomUuid.uuid
   payload = event['body']
   status = JSON::Validator.validate(GamePostSchema.schema, payload,
                                     :strict => true
