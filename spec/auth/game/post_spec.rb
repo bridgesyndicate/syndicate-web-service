@@ -7,7 +7,7 @@ require 'lib/helpers'
 RSpec.describe '#game_post' do
   context 'lambda_result' do
     let(:event) { { 'body' =>  File.read(post_file) } }
-    let(:lambda_result) { game_post_handler(event: event, context: '') }
+    let(:lambda_result) { auth_game_post_handler(event: event, context: '') }
     let(:post_file) {'spec/mocks/game/valid-post.json'}
 
     before(:each) {

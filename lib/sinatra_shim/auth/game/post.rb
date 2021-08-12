@@ -1,6 +1,6 @@
 module AuthGamePost
   def auth_game_post(event)
-    lamda_result = game_post_handler(event: event, context: '')
+    lamda_result = auth_game_post_handler(event: event, context: '')
     [
       lamda_result[:statusCode],
       lamda_result[:headers],

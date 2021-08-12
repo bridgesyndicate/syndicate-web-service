@@ -1,0 +1,62 @@
+{
+  "remainingTimeFormatted" : "08:28",
+  "remainingTimeInSeconds" : 507,
+  "killsRegistered" : [ {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628720990858
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721020659
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721033854
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721057353
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721070053
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721154655
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "killTime" : 1628721347403
+  } ],
+  "playerMap" : {
+    "vice9" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "NitroholicPls" : "9ae216a2-ba18-459d-ae02-2a79a111915f"
+  },
+  "numberOfJoinedPlayers" : 2,
+  "gameLengthInSeconds" : 900,
+  "gameScore" : {
+    "red" : 5,
+    "blue" : 0
+  },
+  "gameStartedAt" : 1628720958365,
+  "gameEndedAt" : 1628721350856,
+  "state" : "AFTER_GAME",
+  "taskArn" : "arn:aws:ecs:us-west-2:595508394202:task/default/578ecf58f25f",
+  "redTeam" : [ "vice9" ],
+  "blueTeam" : [ "NitroholicPls" ],
+  "joinedPlayers" : [ "vice9", "NitroholicPls" ],
+  "goalsScored" : [ {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "goalTime" : 1628720998702
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "goalTime" : 1628721092803
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "goalTime" : 1628721234053
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "goalTime" : 1628721290252
+  }, {
+    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "goalTime" : 1628721350855
+  } ],
+  "requiredPlayers" : 2,
+  "uuid" : "30df8a82-cbe9-4c3b-936c-fbaa67d4efd7",
+  "goalsToWin" : 5
+}

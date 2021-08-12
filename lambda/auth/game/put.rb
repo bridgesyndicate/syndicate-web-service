@@ -7,7 +7,7 @@ require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_put'
 
-def game_post_handler(event:, context:)
+def auth_game_put_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
@@ -36,7 +36,7 @@ def game_post_handler(event:, context:)
 
   ret = {
     "status": status,
-    "uuid": uuid
+    "uuid": game_uuid
   }
 
   return { statusCode: status,

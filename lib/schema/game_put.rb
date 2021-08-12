@@ -30,6 +30,69 @@ class GamePutSchema
           items: {
             type: :string
           }
+        },
+        remainingTimeFormatted: {
+          type: :string,
+        },
+        remainingTimeInSeconds: {
+          type: :integer
+        },
+        numberOfJoinedPlayers: {
+          type: :integer
+        },
+        gameStartedAt: {
+          type: :integer
+        },
+        gameEndedAt: {
+          type: :integer
+        },
+        state: {
+          type: :string
+        },
+        taskArn: {
+          type: :string
+        },
+        uuid: {
+          type: :uuid
+        },
+        killsRegistered: {
+          type: :array,
+          items: {
+            playerUUID: {
+              type: :string
+            },
+            killTime: {
+              type: :integer
+            }
+          }
+        },
+        playerMap: {
+          type: :object,
+        },
+        gameScore: {
+          items: {
+            red: {
+              type: :integer,
+            },
+            blue: {
+              type: :integer,
+            }
+          }
+        },
+        joinedPlayers: {
+          type: :array,
+          items: :string
+        },
+        goalsScored: {
+          type: :array,
+          items: {
+            playerUUID: {
+              type: :string
+            },
+            goalTime: {
+              type: :integer
+            }
+          }
         }
       }
     }

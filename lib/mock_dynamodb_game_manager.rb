@@ -16,7 +16,7 @@ class MockDynamodbGameManager
     @succeed = true
   end
 
-  def update_arn(game_uuid, taskArn)
+  def update_arn(game_uuid, task_arn)
     if @succeed
       ret_val = OpenStruct.new
       ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
@@ -26,12 +26,8 @@ class MockDynamodbGameManager
     end
   end
 
-  def conditional_user_pile_create(p)
-    if (rand > 0.5)
-      MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
-    else
-      false
-    end
+  def update_game(game_uuid, game)
+    MockDynamoSeahorse.new(Aws::DynamoDB::Types::UpdateItemOutput.new)
   end
 
   def add_pile_uuid(username, uuid)

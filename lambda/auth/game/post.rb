@@ -9,7 +9,7 @@ require 'lib/schema/game_post'
 require 'lib/sqs_client.rb'
 require 'lib/syndicate_random_uuid.rb'
 
-def game_post_handler(event:, context:)
+def auth_game_post_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",

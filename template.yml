@@ -17,11 +17,9 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
-        - DynamoDBWritePolicy:
-            TableName: syndicate_production_games
         - SQSSendMessagePolicy:
             QueueName: syndicate_production_games
-      Handler: lambda/auth/game/post.game_post_handler
+      Handler: lambda/auth/game/post.auth_game_post_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
@@ -72,6 +70,28 @@ Resources:
           Type: Api
           Properties:
             Path: /auth/game/container_metadata
+            Method: PUT
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthGamePut:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+        - SQSSendMessagePolicy:
+            QueueName: syndicate_production_games
+      Handler: lambda/auth/game/put.auth_game_put_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/game
             Method: PUT
             RestApiId:
               Ref: ApiGatewayApi
