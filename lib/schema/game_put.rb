@@ -93,6 +93,9 @@ class GamePutSchema
               type: :integer
             }
           }
+        },
+        finalGameLengthFormatted: {
+          type: :string
         }
       }
     }

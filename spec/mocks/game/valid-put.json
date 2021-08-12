@@ -1,6 +1,7 @@
 {
   "remainingTimeFormatted" : "08:28",
   "remainingTimeInSeconds" : 507,
+  "finalGameLengthFormatted": "10:10",
   "killsRegistered" : [ {
     "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
     "killTime" : 1628720990858
