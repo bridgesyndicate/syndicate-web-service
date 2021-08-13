@@ -96,6 +96,12 @@ class GamePutSchema
         },
         finalGameLengthFormatted: {
           type: :string
+        },
+        queuedAt: {
+          type: :integer,
+        },
+        dequeuedAt: {
+          type: :integer,
         }
       }
     }

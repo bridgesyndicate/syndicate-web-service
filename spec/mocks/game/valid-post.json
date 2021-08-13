@@ -7,5 +7,6 @@
     "NitroholicPls"
   ],
   "goalsToWin": 5,
-  "gameLengthInSeconds": 900
+  "gameLengthInSeconds": 900,
+  "queuedAt": 1628891284
 }

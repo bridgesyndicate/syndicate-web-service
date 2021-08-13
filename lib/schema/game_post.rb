@@ -30,6 +30,9 @@ class GamePostSchema
           items: {
             type: :string
           }
+        },
+        queuedAt: {
+          type: :integer,
         }
       }
     }
