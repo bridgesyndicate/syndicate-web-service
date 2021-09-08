@@ -95,3 +95,23 @@ Resources:
             Method: PUT
             RestApiId:
               Ref: ApiGatewayApi
+  AuthUserByMinecraftUuidGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/user/by-minecraft-uuid/get.auth_user_by_minecraft_uuid_get_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/user/by-minecraft-uuid/{proxy+}
+            Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi

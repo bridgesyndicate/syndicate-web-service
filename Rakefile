@@ -6,6 +6,7 @@ libpath = File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
 $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 
 require 'dynamodb_game_manager'
+require 'dynamodb_user_manager'
 require 'helpers'
 require 'aws_credentials'
 
@@ -13,6 +14,11 @@ task default: %w/create_game_table/
 
 task :create_game_table do
   manager = DynamodbGameManager.new()
+  puts manager.create_table
+end
+
+task :create_user_table do
+  manager = DynamodbUserManager.new()
   puts manager.create_table
 end
 

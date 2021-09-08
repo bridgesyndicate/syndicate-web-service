@@ -4,17 +4,20 @@ dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'aws_credentials'
+require 'lambda/auth/game/container_metadata/put'
 require 'lambda/auth/game/post'
 require 'lambda/auth/game/put'
-require 'lambda/auth/game/container_metadata/put'
+require 'lambda/auth/user/by-minecraft-uuid/get'
 require 'sinatra'
-require 'sinatra_shim/auth/game/post'
 require 'sinatra_shim/auth/game/container_metadata/put'
+require 'sinatra_shim/auth/game/post'
 require 'sinatra_shim/auth/game/put'
+require 'sinatra_shim/auth/user/by-minecraft-uuid/get'
 
+helpers AuthGameContainerMetadataPut
 helpers AuthGamePost
 helpers AuthGamePut
-helpers AuthGameContainerMetadataPut
+helpers AuthUserByMinecraftUuidGet
 
 post '/auth/game' do
   event = {
@@ -35,4 +38,13 @@ put '/auth/game' do
     'body' =>  request.body.read
   }
   auth_game_put(event)
+end
+
+get '/auth/user/by-minecraft-uuid/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  params[:splat][0]
+    }
+  }
+  auth_user_by_minecraft_uuid_get(event)
 end
