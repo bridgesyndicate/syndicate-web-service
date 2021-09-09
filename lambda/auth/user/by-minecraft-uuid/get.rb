@@ -1,7 +1,7 @@
-require 'json'
 load 'git_commit_sha.rb'
-load 'lib/dynamo_client.rb'
-require 'json-schema'
+require 'json'
+require 'lib/aws_credentials'
+require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'securerandom'
 
