@@ -7,19 +7,31 @@ $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 
 require 'dynamodb_game_manager'
 require 'dynamodb_user_manager'
+require 'dynamodb_kick_code_manager'
 require 'helpers'
 require 'aws_credentials'
 
-task default: %w/create_game_table/
+task default: %w/create_tables/
+
+task :create_tables do
+  %w/game user kick_code/.each do |table|
+    Rake::Task["create_#{table}_table"].execute
+  end
+end
 
 task :create_game_table do
   manager = DynamodbGameManager.new()
-  puts manager.create_table
+  manager.create_table
 end
 
 task :create_user_table do
   manager = DynamodbUserManager.new()
-  puts manager.create_table
+  manager.create_table
+end
+
+task :create_kick_code_table do
+  manager = DynamodbKickCodeManager.new()
+  manager.create_table
 end
 
 task :test_get_ip do
@@ -59,7 +71,6 @@ task :test_post do
                                   url: BASE_URL,
                                   body: body
                                   )
-binding.pry;1
   uri = URI.parse(BASE_URL)
   https = Net::HTTP.new(uri.host,uri.port)
   https.use_ssl = true

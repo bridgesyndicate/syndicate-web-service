@@ -24,12 +24,14 @@ def auth_user_by_minecraft_uuid_get_handler(event:, context:)
   user = $ddb_user_manager.get(uuid)
   if user.items.empty?
     status = NOT_FOUND
+    kick_code = SecureRandom.alphanumeric
+    $ddb_kick_code_manager.put(kick_code, uuid)
     ret = {
-      kickCode: SecureRandom.alphanumeric
+      kickCode: kick_code
     }
   else
     status = OK
-    user = user.items.first
+    user = user.items.first # TODO: make a User model
     user.transform_values! do |value|
       value.class == BigDecimal ? value.to_f : value
     end

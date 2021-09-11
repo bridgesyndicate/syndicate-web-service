@@ -1,11 +1,11 @@
 require 'time'
 require 'aws-sdk-dynamodb'
 
-class DynamodbUserManager
+class DynamodbKickCodeManager
   attr_accessor :client, :table_name
 
   def initialize()
-    @table_name = "syndicate_#{SYNDICATE_ENV}_users"
+    @table_name = "syndicate_#{SYNDICATE_ENV}_kick_codes"
     options = {
       region: AwsCredentials.instance.region,
       credentials: AwsCredentials.instance.credentials,
@@ -23,10 +23,10 @@ class DynamodbUserManager
   def create_table_impl
     schema = {
       key_schema: [
-                   { attribute_name: 'minecraftUUID',  key_type: 'HASH' }
+                   { attribute_name: 'kick_code',  key_type: 'HASH' }
                   ],
       attribute_definitions: [
-                              { attribute_name: 'minecraftUUID',    attribute_type: 'S' }
+                              { attribute_name: 'kick_code',    attribute_type: 'S' }
                              ],
       table_name: @table_name
     }
@@ -43,29 +43,19 @@ class DynamodbUserManager
     @client.create_table(schema.merge({ table_name: @table_name }))
   end
 
-  def put(p)
+  def put(kick_code, uuid)
     @client.put_item(
-                     {
-                       table_name: @table_name,
-                       item: {
-                         'updated_at' => Time.now.utc.iso8601,
-                         'created_at' => Time.now.utc.iso8601,
-                         'minecraftUUID' => p.uuid,
-                         'discordID' => SecureRandom.random_number(10**16)
-                       }
-                     }
-                     )
-  end
-
-  def get(minecraft_uuid) ##uid is a reserved word
-    client.query(
       {
         table_name: @table_name,
-        key_condition_expression: "minecraftUUID = :minecraft_uuid",
-        expression_attribute_values: {
-          ":minecraft_uuid" => minecraft_uuid
+        item: {
+          'created_at' => Time.now.utc.iso8601,
+          'kick_code' => kick_code,
+          'minecraft_uuid' => uuid
         }
       }
     )
+  end
+
+  class ObjectNotFound
   end
 end

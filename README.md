@@ -14,6 +14,9 @@ SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_
 SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
 ```
 
+## to see all the tables
+`SYNDICATE_ENV=development AWS_DEFAULT_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar aws dynamodb list-tables --endpoint http://0.0.0.0:8000`
+
 ## supports pry
 ```ruby
 require 'pry'

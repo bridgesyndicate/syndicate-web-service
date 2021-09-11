@@ -43,7 +43,7 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
         end
       end
       describe 'for an invalid uuid' do
-        let(:uuid) { 'abcd' }          
+        let(:uuid) { 'abcd' }
         it 'returns 400' do
           expect(lambda_result[:statusCode]).to eq 400
         end
@@ -51,8 +51,6 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
       describe 'for an invalid user' do
         let(:uuid) { SecureRandom.uuid.chop.concat(%w/1 3 5 7 9 a b c d e f/.sample) }
         it 'returns 404' do
-          puts uuid
-          
           expect(lambda_result[:statusCode]).to eq 404
         end
         it 'returns a kick code' do
