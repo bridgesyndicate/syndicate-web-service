@@ -8,7 +8,7 @@ def auth_pile_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
-    "Indybooks-git-commit-sha" => $my_git_commit_sha
+    "Syndicate-git-commit-sha" => $my_git_commit_sha
   }
 
   begin

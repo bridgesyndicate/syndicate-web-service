@@ -9,7 +9,7 @@ def auth_user_by_minecraft_uuid_get_handler(event:, context:)
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
-    "Indybooks-git-commit-sha" => $my_git_commit_sha
+    "Syndicate-commit-sha" => $my_git_commit_sha
   }
 
   begin
