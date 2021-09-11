@@ -7,16 +7,19 @@ require 'aws_credentials'
 require 'lambda/auth/game/container_metadata/put'
 require 'lambda/auth/game/post'
 require 'lambda/auth/game/put'
+require 'lambda/auth/register/by-kick-code/post'
 require 'lambda/auth/user/by-minecraft-uuid/get'
 require 'sinatra'
 require 'sinatra_shim/auth/game/container_metadata/put'
 require 'sinatra_shim/auth/game/post'
 require 'sinatra_shim/auth/game/put'
+require 'sinatra_shim/auth/register/by-kick-code/post'
 require 'sinatra_shim/auth/user/by-minecraft-uuid/get'
 
 helpers AuthGameContainerMetadataPut
 helpers AuthGamePost
 helpers AuthGamePut
+helpers AuthRegisterByKickCodePost
 helpers AuthUserByMinecraftUuidGet
 
 post '/auth/game' do
@@ -47,4 +50,13 @@ get '/auth/user/by-minecraft-uuid/*' do
     }
   }
   auth_user_by_minecraft_uuid_get(event)
+end
+
+post '/auth/register/by-kick-code/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "#{params[:splat][0]}/discord-id/#{params[:splat][1]}"
+    }
+  }
+  auth_register_by_kick_code_post(event)
 end

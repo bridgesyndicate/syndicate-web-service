@@ -56,6 +56,18 @@ class DynamodbKickCodeManager
     )
   end
 
+  def get(kick_code)
+    client.query(
+      {
+        table_name: @table_name,
+        key_condition_expression: 'kick_code = :kick_code',
+        expression_attribute_values: {
+          ':kick_code' => kick_code
+        }
+      }
+    )
+  end
+
   class ObjectNotFound
   end
 end

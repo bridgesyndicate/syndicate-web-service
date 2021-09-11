@@ -17,6 +17,19 @@ class MockDynamodbUserManager
     @succeed = true
   end
 
+  def put(minecraft_uuid, discord_id, kick_code, kick_code_created_at)
+    MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
+    item = {
+      'updated_at' => Time.now.utc.iso8601,
+      'created_at' => Time.now.utc.iso8601,
+      'minecraft_uuid' => minecraft_uuid,
+      'discord_id' => discord_id,
+      'kick_code' => kick_code,
+      'kick_code_created_at' => kick_code_created_at
+    }
+    item
+  end
+
   def get(uuid)
     if uuid.match?(/[02468]$/)
       ret = [{

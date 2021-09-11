@@ -23,10 +23,10 @@ class DynamodbUserManager
   def create_table_impl
     schema = {
       key_schema: [
-                   { attribute_name: 'minecraftUUID',  key_type: 'HASH' }
+                   { attribute_name: 'minecraft_uuid',  key_type: 'HASH' }
                   ],
       attribute_definitions: [
-                              { attribute_name: 'minecraftUUID',    attribute_type: 'S' }
+                              { attribute_name: 'minecraft_uuid',    attribute_type: 'S' }
                              ],
       table_name: @table_name
     }
@@ -43,25 +43,29 @@ class DynamodbUserManager
     @client.create_table(schema.merge({ table_name: @table_name }))
   end
 
-  def put(p)
+  def put(minecraft_uuid, discord_id, kick_code, kick_code_created_at)
+    item = {
+      'updated_at' => Time.now.utc.iso8601,
+      'created_at' => Time.now.utc.iso8601,
+      'minecraft_uuid' => minecraft_uuid,
+      'discord_id' => discord_id,
+      'kick_code' => kick_code,
+      'kick_code_created_at' => kick_code_created_at
+    }
     @client.put_item(
-                     {
-                       table_name: @table_name,
-                       item: {
-                         'updated_at' => Time.now.utc.iso8601,
-                         'created_at' => Time.now.utc.iso8601,
-                         'minecraftUUID' => p.uuid,
-                         'discordID' => SecureRandom.random_number(10**16)
-                       }
-                     }
-                     )
+      {
+        table_name: @table_name,
+        item: item
+      }
+    )
+    item
   end
 
   def get(minecraft_uuid) ##uid is a reserved word
     client.query(
       {
         table_name: @table_name,
-        key_condition_expression: "minecraftUUID = :minecraft_uuid",
+        key_condition_expression: "minecraft_uuid = :minecraft_uuid",
         expression_attribute_values: {
           ":minecraft_uuid" => minecraft_uuid
         }

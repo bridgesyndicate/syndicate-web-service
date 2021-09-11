@@ -20,20 +20,19 @@ class MockDynamodbKickCodeManager
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
-  def get(username)
-    if username == 'indybooks'
-      n_piles = Integer(rand*10) + 1
+  def get(kick_code)
+    if kick_code.match?(/[02468]$/)
       ret = [{
-               username: username,
                updated_at: Time.now.utc.iso8601,
-               created_at: Time.now.utc.iso8601,
-               pile_uuid_list: n_piles.times.map { SecureRandom.uuid }
+               kick_code: kick_code,
+               minecraft_uuid: SecureRandom.uuid
              }]
     else
       ret = {}
     end
       MockDynamoResults.new(ret)
   end
+
   class ObjectNotFound
   end
 end

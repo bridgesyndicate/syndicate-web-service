@@ -117,3 +117,25 @@ Resources:
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
+  AuthRegisterByKickCodePost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_kick_codes
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/register/by-kick-code/post.auth_register_by_kick_code_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/register/by-kick-code/{proxy+}
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
