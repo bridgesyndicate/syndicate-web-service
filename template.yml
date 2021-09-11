@@ -104,6 +104,8 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: syndicate_production_users
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_kick_codes
       Handler: lambda/auth/user/by-minecraft-uuid/get.auth_user_by_minecraft_uuid_get_handler
       Runtime: ruby2.7
       CodeUri: ./
