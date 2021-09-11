@@ -27,7 +27,7 @@ def auth_user_by_minecraft_uuid_get_handler(event:, context:)
     kick_code = SecureRandom.alphanumeric
     $ddb_kick_code_manager.put(kick_code, uuid)
     ret = {
-      kickCode: kick_code
+      kick_code: kick_code
     }
   else
     status = OK

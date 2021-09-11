@@ -54,7 +54,7 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
           expect(lambda_result[:statusCode]).to eq 404
         end
         it 'returns a kick code' do
-          expect(JSON.parse(lambda_result[:body])['kickCode']).to match KICK_CODE_REGEX
+          expect(JSON.parse(lambda_result[:body])['kick_code']).to match KICK_CODE_REGEX
         end
       end
     end
