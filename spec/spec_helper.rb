@@ -1,4 +1,7 @@
+require 'simplecov'
 require 'webmock/rspec'
+
+SimpleCov.start
 
 ENV['SYNDICATE_ENV'] = 'test'
 ENV['AWS_REGION'] = 'us-west-2'
