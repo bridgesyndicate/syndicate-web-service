@@ -76,3 +76,6 @@ rspec -fd spec/
   # https://indybooks-developer-pastes.s3.us-east-2.amazonaws.com/2020-08-01-10-46-20.png
 
 
+```
+SYNDICATE_ENV=development AWS_DEFAULT_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar aws dynamodb query --endpoint http://localhost:8000 --table-name syndicate_development_users --index-name discord-id-index --key-condition-expression "discord_id = :discord_id" --expression-attribute-values '{":discord_id":{"N":"528866998471211970"} }'
+```

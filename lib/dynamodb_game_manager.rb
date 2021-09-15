@@ -78,7 +78,7 @@ class DynamodbGameManager
         item: {
           'game_uuid' => p.uuid,
           'created_at' => Time.now.utc.iso8601,
-          'game' => p.game_data
+          'game' => p
         }
       }
     )

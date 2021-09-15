@@ -37,13 +37,35 @@ RSpec.describe '#game_post' do
     end
 
     describe 'for the post body' do
+      describe 'for game post with unvalidated players' do
+        let(:post_file) {'spec/mocks/game/404-post.json'}
+        it 'returns 404' do
+          expect(lambda_result[:statusCode]).to eq 404
+        end
+        it 'states that users must be verified' do
+          expect(JSON.parse(lambda_result[:body])['reason']).to eq 'All discord users must be verified.'
+        end
+      end
+      describe 'for game post with a duplicate player' do
+        let(:post_file) {'spec/mocks/game/dup-post.json'}
+        it 'returns 404' do
+          expect(lambda_result[:statusCode]).to eq 404
+        end
+        it 'states that users must be verified' do
+          expect(JSON.parse(lambda_result[:body])['reason']).to eq 'All discord users must be verified.'
+        end
+      end
       describe 'for a valid game post' do
-        it 'it succeeds' do
+        it 'succeeds' do
           expect(lambda_result[:statusCode]).to eq 200
         end
-        it 'returns a uuid' do
-          expect(JSON.parse(lambda_result[:body])['uuid']).
+        it 'returns a game with a uuid' do
+          expect(JSON.parse(lambda_result[:body])['game']['uuid']).
             to match UUID_REGEX
+        end
+        it 'adds adds blue_team_minecraft_uuids and red_team_minecraft_uuids' do
+          expect(JSON.parse(lambda_result[:body])['game']['blue_team_minecraft_uuids'].size).
+            to eq JSON.parse(lambda_result[:body])['game']['blue_team_discord_ids'].size
         end
       end
 
@@ -54,7 +76,7 @@ RSpec.describe '#game_post' do
             expect(lambda_result[:statusCode]).to eq 400
           end
           it 'returns an empty body' do
-            expect(lambda_result[:body]).to eq '{}'
+            expect( JSON.parse(lambda_result[:body])['reason'] ).to eq 'Payload json does not validate against schema.'
           end
         end
         describe 'with extra properties' do

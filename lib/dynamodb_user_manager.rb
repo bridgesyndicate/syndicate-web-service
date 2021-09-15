@@ -2,10 +2,11 @@ require 'time'
 require 'aws-sdk-dynamodb'
 
 class DynamodbUserManager
-  attr_accessor :client, :table_name
+  attr_accessor :client, :table_name, :secondary_index_name
 
   def initialize()
     @table_name = "syndicate_#{SYNDICATE_ENV}_users"
+    @secondary_index_name = 'discord-id-index'
     options = {
       region: AwsCredentials.instance.region,
       credentials: AwsCredentials.instance.credentials,
@@ -23,11 +24,38 @@ class DynamodbUserManager
   def create_table_impl
     schema = {
       key_schema: [
-                   { attribute_name: 'minecraft_uuid',  key_type: 'HASH' }
-                  ],
+        {
+          attribute_name: 'minecraft_uuid',
+          key_type: 'HASH'
+        }
+      ],
       attribute_definitions: [
-                              { attribute_name: 'minecraft_uuid',    attribute_type: 'S' }
-                             ],
+        {
+          attribute_name: 'minecraft_uuid',
+          attribute_type: 'S'
+        },
+        {
+          attribute_name: 'discord_id',
+          attribute_type: 'N'
+        }
+      ],
+      global_secondary_indexes: [
+        index_name: secondary_index_name,
+        key_schema: [
+          {
+            attribute_name: "discord_id",
+            key_type: "HASH"
+          }
+        ],
+        projection: {
+          projection_type: 'INCLUDE',
+          non_key_attributes: ['minecraft_uuid']
+        },
+        provisioned_throughput: {
+          read_capacity_units: 1,
+          write_capacity_units: 1
+        }
+      ],
       table_name: @table_name
     }
 
@@ -71,5 +99,19 @@ class DynamodbUserManager
         }
       }
     )
+  end
+
+  def ensure_verified(discord_ids)
+    discord_ids.map do |id|
+      client.query(
+        {
+          table_name: @table_name,
+          index_name: secondary_index_name,
+          key_condition_expression: "discord_id = :discord_id",
+          expression_attribute_values: {
+            ":discord_id" => id
+          }
+        })
+    end
   end
 end

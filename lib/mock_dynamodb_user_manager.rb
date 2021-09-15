@@ -43,6 +43,19 @@ class MockDynamodbUserManager
     end
       MockDynamoResults.new(ret)
   end
-  class ObjectNotFound
+
+  def ensure_verified(discord_ids)
+    discord_ids.map do |id|
+      if id.to_s.match?(/[02468]$/)
+        ret = [{
+                 'minecraft_uuid' =>  SecureRandom.uuid,
+                 'created_at' => Time.now.utc.iso8601,
+                 'discord_id' => id
+               }]
+        MockDynamoResults.new(ret)
+      else
+        MockDynamoResults.new({})
+      end
+    end
   end
 end
