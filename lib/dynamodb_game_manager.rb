@@ -33,12 +33,12 @@ class DynamodbGameManager
 
     provisioned_capacity = {
       provisioned_throughput: {
-        read_capacity_units: 10,
-        write_capacity_units: 5
+        read_capacity_units: 1,
+        write_capacity_units: 1
       }
     }
 
-    schema = schema.merge(provisioned_capacity) if SYNDICATE_ENV == 'development'
+    schema = schema.merge(provisioned_capacity)
     puts schema.inspect
     client.create_table(schema.merge({ table_name: table_name }))
   end

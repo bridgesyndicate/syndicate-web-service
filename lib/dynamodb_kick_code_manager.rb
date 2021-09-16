@@ -17,7 +17,7 @@ class DynamodbKickCodeManager
   end
 
   def create_table
-    create_table_impl unless @client.list_tables.table_names.include?(@table_name)
+    create_table_impl unless client.list_tables.table_names.include?(table_name)
   end
 
   def create_table_impl
@@ -28,25 +28,25 @@ class DynamodbKickCodeManager
       attribute_definitions: [
                               { attribute_name: 'kick_code',    attribute_type: 'S' }
                              ],
-      table_name: @table_name
+      table_name: table_name
     }
 
     provisioned_capacity = {
       provisioned_throughput: {
-        read_capacity_units: 10,
-        write_capacity_units: 5
+        read_capacity_units: 1,
+        write_capacity_units: 1
       }
     }
 
     schema = schema.merge(provisioned_capacity)
     puts schema.inspect
-    @client.create_table(schema.merge({ table_name: @table_name }))
+    client.create_table(schema.merge({ table_name: table_name }))
   end
 
   def put(kick_code, uuid)
-    @client.put_item(
+    client.put_item(
       {
-        table_name: @table_name,
+        table_name: table_name,
         item: {
           'created_at' => Time.now.utc.iso8601,
           'kick_code' => kick_code,
@@ -59,7 +59,7 @@ class DynamodbKickCodeManager
   def get(kick_code)
     client.query(
       {
-        table_name: @table_name,
+        table_name: table_name,
         key_condition_expression: 'kick_code = :kick_code',
         expression_attribute_values: {
           ':kick_code' => kick_code

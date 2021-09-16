@@ -12,7 +12,7 @@ class AwsCredentials
     id = ENV['AWS_ACCESS_KEY_ID'] || 'access'
     secret = ENV['AWS_SECRET_ACCESS_KEY'] || 'secret'
     token = ENV['AWS_SESSION_TOKEN'] if SYNDICATE_ENV == 'production'
-    @region = ENV['AWS_REGION'] || 'us-east-1'
+    @region = ENV['AWS_REGION'] || 'us-west-2'
     @credentials = Aws::Credentials.new(id, secret, token)
   end
 end

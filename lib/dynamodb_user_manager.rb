@@ -61,8 +61,8 @@ class DynamodbUserManager
 
     provisioned_capacity = {
       provisioned_throughput: {
-        read_capacity_units: 10,
-        write_capacity_units: 5
+        read_capacity_units: 1,
+        write_capacity_units: 1
       }
     }
 
