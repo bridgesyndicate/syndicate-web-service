@@ -36,7 +36,7 @@ def auth_register_by_kick_code_post_handler(event:, context:)
   kick_code_created_at = kick_record['created_at']
 
   ret = $ddb_user_manager.put(minecraft_uuid,
-                        discord_id.to_i,
+                        discord_id,
                         kick_code,
                         kick_code_created_at)
 

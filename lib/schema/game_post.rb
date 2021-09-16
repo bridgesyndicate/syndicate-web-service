@@ -12,7 +12,7 @@ class GamePostSchema
         blue_team_discord_ids: {
           type: :array,
           items: {
-            type: :integer
+            type: :string
           }
         },
         blue_team_discord_names: {
@@ -24,7 +24,7 @@ class GamePostSchema
         red_team_discord_ids: {
           type: :array,
           items: {
-            type: :integer
+            type: :string
           }
         },
         red_team_discord_names: {
@@ -36,7 +36,16 @@ class GamePostSchema
         accepted_by_discord_ids: {
           type: :array,
           items: {
-            type: :integer
+            type: :object,
+            required: %w/discord_id accepted_at/,
+            properties: {
+              discord_id: {
+                type: :string
+              },
+              accepted_at: {
+                type: :"date-time",
+              }
+            }
           }
         },
         goals_to_win: {
@@ -55,7 +64,7 @@ class GamePostSchema
           maximum: 8
         },
         queued_at: {
-          type: :integer,
+          type: :"date-time"
         },
         queued_via: {
           type: :string

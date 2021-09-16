@@ -139,3 +139,25 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
+  AuthGameAcceptPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_games
+        - SQSSendMessagePolicy:
+            QueueName: syndicate_production_games
+      Handler: lambda/auth/game/accept/post.auth_game_accept_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/game/accept/{proxy+}
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi

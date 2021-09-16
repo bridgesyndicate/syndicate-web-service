@@ -6,7 +6,6 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_post'
-require 'lib/sqs_client.rb'
 
 def auth_game_post_handler(event:, context:)
 
@@ -42,7 +41,7 @@ def auth_game_post_handler(event:, context:)
   } if status != OK
 
   lut = ensure_verified_ret.map {|i| i.items.first}.map{|x|
-    { x['discord_id'].to_i => x['minecraft_uuid'] } }.reduce({}, :merge)
+    { x['discord_id'] => x['minecraft_uuid'] } }.reduce({}, :merge)
   game['blue_team_minecraft_uuids'] = game['blue_team_discord_ids'].map{ |id|
     lut[id] }
   game['red_team_minecraft_uuids'] = game['red_team_discord_ids'].map{ |id|

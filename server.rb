@@ -4,18 +4,21 @@ dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'aws_credentials'
+require 'lambda/auth/game/accept/post'
 require 'lambda/auth/game/container_metadata/put'
 require 'lambda/auth/game/post'
 require 'lambda/auth/game/put'
 require 'lambda/auth/register/by-kick-code/post'
 require 'lambda/auth/user/by-minecraft-uuid/get'
 require 'sinatra'
+require 'sinatra_shim/auth/game/accept/post'
 require 'sinatra_shim/auth/game/container_metadata/put'
 require 'sinatra_shim/auth/game/post'
 require 'sinatra_shim/auth/game/put'
 require 'sinatra_shim/auth/register/by-kick-code/post'
 require 'sinatra_shim/auth/user/by-minecraft-uuid/get'
 
+helpers AuthGameAcceptPost
 helpers AuthGameContainerMetadataPut
 helpers AuthGamePost
 helpers AuthGamePut
@@ -59,4 +62,13 @@ post '/auth/register/by-kick-code/*' do
     }
   }
   auth_register_by_kick_code_post(event)
+end
+
+post '/auth/game/accept/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "#{params[:splat][0]}/discord-id/#{params[:splat][1]}"
+    }
+  }
+  auth_game_accept_post(event)
 end

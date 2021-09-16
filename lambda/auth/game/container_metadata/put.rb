@@ -41,17 +41,16 @@ def auth_game_container_metadata_put_handler(event:, context:)
 
   if status == OK
     eni = $ecs_client.get_iface_for_task_arn(task_arn)
-    public_ip = $ec2_client.get_public_ip_for_iface(eni)
-    queue = "#{PLAYER_MESSAGES}-#{SYNDICATE_ENV}"
-    player_message = {
-      game_uuid: game_uuid,
-      public_ip: public_ip
-    }
-    $sqs_manager.enqueue(queue, JSON.generate(player_message))
+    unless eni == 'missing'
+      public_ip = $ec2_client.get_public_ip_for_iface(eni)
+    else
+      public_ip = '0.0.0.0'
+    end
   end
 
   ret = {
-    "status": status,
+    status: status,
+    ip: public_ip
   }
 
   return { statusCode: status,

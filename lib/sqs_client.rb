@@ -21,8 +21,15 @@ class SqsManager
   end
 
   def get_queue_url(queue_name)
-    return 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games' if queue_name.match /^game/
-    return 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages' if queue_name.match /^player_messages/
+    env_and_name = "#{SYNDICATE_ENV}_#{queue_name}"
+    case env_and_name
+    when "development_#{GAME}"
+      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_development_games'
+    when "production_#{GAME}"
+      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games'
+    when /PLAYER_MESSAGES/
+      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages'
+    end
   end
 
   def enqueue(queue_name, message)

@@ -36,7 +36,7 @@ class DynamodbUserManager
         },
         {
           attribute_name: 'discord_id',
-          attribute_type: 'N'
+          attribute_type: 'S' # I wanted to use 'N', but dynamodb-admin truncates
         }
       ],
       global_secondary_indexes: [

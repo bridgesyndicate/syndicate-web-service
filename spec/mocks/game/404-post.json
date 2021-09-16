@@ -1,20 +1,23 @@
 {
   "uuid": "fff47ae2-dec5-4de8-9172-1ab9216b30e0",
   "blue_team_discord_ids": [
-    4177669984712131
+    "4177669984712131"
   ],
   "blue_team_discord_names": [
     "viceversa"
   ],
   "red_team_discord_ids": [
-    4177669984712131
+    "4177669984712131"
   ],
   "red_team_discord_names": [
     "ken"
   ],
   "required_players": 2,
   "accepted_by_discord_ids": [
-    4177669984712131
+    {
+      "discord_id": "4177669984712131",
+      "accepted_at": 1631743473
+    }
   ],
   "goals_to_win": 5,
   "game_length_in_seconds": 900,
