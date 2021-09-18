@@ -7,6 +7,8 @@ gem 'aws-sdk-sqs'
 gem 'aws-sdk-dynamodb'
 gem 'aws-sdk-ecs'
 gem 'aws-sdk-ec2'
+gem 'bunny'
+
 
 group :test do
   gem 'simplecov', require: false, group: :test
