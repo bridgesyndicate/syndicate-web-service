@@ -36,6 +36,7 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          RABBIT_HOST: $some thing here
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games

@@ -50,7 +50,8 @@ class DynamodbGameManager
         key: { "game_uuid": game_uuid },
         update_expression: 'SET game.taskArn=:pVal',
         expression_attribute_values: { ':pVal' => taskArn },
-        condition_expression: 'attribute_exists(game_uuid)'
+        condition_expression: 'attribute_exists(game_uuid)',
+        return_values: 'UPDATED_NEW'
       )
     rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
       ObjectNotFound
@@ -64,7 +65,8 @@ class DynamodbGameManager
         key: { "game_uuid": game_uuid },
         update_expression: 'SET game=:pVal',
         expression_attribute_values: { ':pVal' => game },
-        condition_expression: 'attribute_exists(game_uuid)'
+        condition_expression: 'attribute_exists(game_uuid)',
+        return_values: 'UPDATED_NEW'
       )
     rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
       ObjectNotFound

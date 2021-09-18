@@ -1,65 +1,125 @@
 {
-  "queuedAt": 1628891905,
-  "dequeuedAt": 1628891925,
-  "remainingTimeFormatted" : "08:28",
-  "remainingTimeInSeconds" : 507,
-  "finalGameLengthFormatted": "10:10",
-  "killsRegistered" : [ {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628720990858
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721020659
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721033854
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721057353
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721070053
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721154655
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "killTime" : 1628721347403
-  } ],
-  "playerMap" : {
-    "vice9" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "NitroholicPls" : "9ae216a2-ba18-459d-ae02-2a79a111915f"
+  "required_players": 2,
+  "dequeued_at": "2021-09-17T18:33:02.303Z",
+  "uuid": "0cb9f58e-1b12-47ec-bc3b-8be4973b1adc",
+  "goals_to_win": 5,
+  "game_length_in_seconds": 900,
+  "game_score": {
+    "red": 0,
+    "blue": 5
   },
-  "numberOfJoinedPlayers" : 2,
-  "gameLengthInSeconds" : 900,
-  "gameScore" : {
-    "red" : 5,
-    "blue" : 0
+  "game_started_at": 1631903582949,
+  "game_ended_at": 1631903942946,
+  "state": "AFTER_GAME",
+  "task_arn": "arn:aws:ecs:us-west-2:595508394202:task/default/5b42900b6d094b249db5315b7cb83612",
+  "red_team_minecraft_uuids": [
+    "9ae216a2-ba18-459d-ae02-2a79a111915f"
+  ],
+  "blue_team_minecraft_uuids": [
+    "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+  ],
+  "red_team_discord_ids": [
+    "240177490906054658"
+  ],
+  "blue_team_discord_ids": [
+    "417766998471213061"
+  ],
+  "red_team_discord_names": [
+    "ken"
+  ],
+  "blue_team_discord_names": [
+    "viceversa"
+  ],
+  "queued_at": "2021-09-17T04:27:18Z",
+  "queued_via": "discord duel slash command",
+  "accepted_by_discord_ids": [
+    {
+      "accepted_at": "2021-09-17T18:33:02Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T18:21:01Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T18:18:33Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T17:59:47Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T05:09:33Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T05:08:31Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T05:01:13Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T04:48:14Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T04:43:40Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T04:41:08Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T04:28:15Z",
+      "discord_id": "240177490906054658"
+    },
+    {
+      "accepted_at": "2021-09-17T04:27:18Z",
+      "discord_id": "417766998471213061"
+    }
+  ],
+  "joined_players": [
+    "vice9",
+    "NitroholicPls"
+  ],
+  "goals_scored": [
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "goal_time": 1631903853343
+    },
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "goal_time": 1631903895324
+    },
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "goal_time": 1631903910488
+    },
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "goal_time": 1631903925345
+    },
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "goal_time": 1631903942945
+    }
+  ],
+  "kills_registered": [
+    {
+      "player_UUID": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+      "kill_time": 1631903887876
+    }
+  ],
+  "player_map": {
+    "vice9": "f0885cea-8291-4734-be1b-bf37f6bcab7c",
+    "NitroholicPls": "9ae216a2-ba18-459d-ae02-2a79a111915f"
   },
-  "gameStartedAt" : 1628720958365,
-  "gameEndedAt" : 1628721350856,
-  "state" : "AFTER_GAME",
-  "taskArn" : "arn:aws:ecs:us-west-2:595508394202:task/default/578ecf58f25f",
-  "redTeam" : [ "vice9" ],
-  "blueTeam" : [ "NitroholicPls" ],
-  "joinedPlayers" : [ "vice9", "NitroholicPls" ],
-  "goalsScored" : [ {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "goalTime" : 1628720998702
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "goalTime" : 1628721092803
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "goalTime" : 1628721234053
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "goalTime" : 1628721290252
-  }, {
-    "playerUUID" : "f0885cea-8291-4734-be1b-bf37f6bcab7c",
-    "goalTime" : 1628721350855
-  } ],
-  "requiredPlayers" : 2,
-  "uuid" : "30df8a82-cbe9-4c3b-936c-fbaa67d4efd7",
-  "goalsToWin" : 5
+  "number_of_joined_players": 2,
+  "final_game_length_formatted": "06:00",
+  "remaining_time_formatted": "08:31",
+  "remaining_time_in_seconds": 510
 }

@@ -10,6 +10,7 @@ require 'lib/ecs_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/sqs_client.rb'
+require 'lib/rabbit_client.rb'
 
 def auth_game_container_metadata_put_handler(event:, context:)
 
@@ -42,15 +43,23 @@ def auth_game_container_metadata_put_handler(event:, context:)
   if status == OK
     eni = $ecs_client.get_iface_for_task_arn(task_arn)
     unless eni == 'missing'
-      public_ip = $ec2_client.get_public_ip_for_iface(eni)
+      container_ip = $ec2_client.get_ip_for_iface(eni)
     else
-      public_ip = '0.0.0.0'
+      container_ip = 'localhost'
+    end
+  end
+
+  if status == OK
+    (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
+     ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
+      container_name = container_ip
+      $rabbit_client.send_player_to_host(id, container_name, container_ip)
     end
   end
 
   ret = {
     status: status,
-    ip: public_ip
+    ip: container_ip
   }
 
   return { statusCode: status,

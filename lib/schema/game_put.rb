@@ -2,74 +2,116 @@ class GamePutSchema
   def self.schema
     {
       type: :object,
-      required: %w/blueTeam redTeam requiredPlayers goalsToWin gameLengthInSeconds/,
+      required: %w/uuid red_team_minecraft_uuids blue_team_minecraft_uuids
+                   blue_team_discord_ids blue_team_discord_names
+                   red_team_discord_ids red_team_discord_names required_players
+                   goals_to_win game_length_in_seconds queued_at queued_via/,
       properties: {
-        goalsToWin: {
+        red_team_minecraft_uuids: {
+          type: :array,
+          items: {
+            type: :uuid
+          }
+        },
+        blue_team_minecraft_uuids: {
+          type: :array,
+          items: {
+            type: :uuid
+          }
+        },
+        blue_team_discord_ids: {
+          type: :array,
+          items: {
+            type: :string
+          }
+        },
+        blue_team_discord_names: {
+          type: :array,
+          items: {
+            type: :string
+          }
+        },
+        red_team_discord_ids: {
+          type: :array,
+          items: {
+            type: :string
+          }
+        },
+        red_team_discord_names: {
+          type: :array,
+          items: {
+            type: :string
+          }
+        },
+        accepted_by_discord_ids: {
+          type: :array,
+          items: {
+            type: :object,
+            required: %w/discord_id accepted_at/,
+            properties: {
+              discord_id: {
+                type: :string
+              },
+              accepted_at: {
+                type: :"date-time",
+              }
+            }
+          }
+        },
+        goals_to_win: {
           type: :integer,
           minimum: 1,
           maximum: 5
         },
-        gameLengthInSeconds: {
+        game_length_in_seconds: {
           type: :integer,
-          minimum: 60,
+          minimum: 30,
           maximum: 1800
         },
-        requiredPlayers: {
+        required_players: {
           type: :integer,
           minimum: 0,
           maximum: 8
         },
-        redTeam: {
-          type: :array,
-          items: {
-            type: :string
-          }
-        },
-        blueTeam: {
-          type: :array,
-          items: {
-            type: :string
-          }
-        },
-        remainingTimeFormatted: {
+        remaining_time_formatted: {
           type: :string,
         },
-        remainingTimeInSeconds: {
+        remaining_time_in_seconds: {
           type: :integer
         },
-        numberOfJoinedPlayers: {
+        number_of_joined_players: {
           type: :integer
         },
-        gameStartedAt: {
+        game_started_at: {
           type: :integer
         },
-        gameEndedAt: {
+        game_ended_at: {
           type: :integer
         },
         state: {
           type: :string
         },
-        taskArn: {
+        task_arn: {
           type: :string
         },
         uuid: {
           type: :uuid
         },
-        killsRegistered: {
+        kills_registered: {
           type: :array,
           items: {
-            playerUUID: {
+            player_UUID: {
               type: :string
             },
-            killTime: {
+            kill_time: {
               type: :integer
             }
           }
         },
-        playerMap: {
+        player_map: {
           type: :object,
         },
-        gameScore: {
+        game_score: {
           items: {
             red: {
               type: :integer,
@@ -79,29 +121,32 @@ class GamePutSchema
             }
           }
         },
-        joinedPlayers: {
+        joined_players: {
           type: :array,
           items: :string
         },
-        goalsScored: {
+        goals_scored: {
           type: :array,
           items: {
-            playerUUID: {
+            player_UUID: {
               type: :string
             },
-            goalTime: {
+            goal_time: {
               type: :integer
             }
           }
         },
-        finalGameLengthFormatted: {
+        final_game_length_formatted: {
           type: :string
         },
-        queuedAt: {
-          type: :integer,
+        queued_via: {
+          type: :string
         },
-        dequeuedAt: {
-          type: :integer,
+        queued_at: {
+          type: :"date-time"
+        },
+        dequeued_at: {
+          type: :"date-time"
         }
       }
     }

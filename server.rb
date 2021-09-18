@@ -25,6 +25,8 @@ helpers AuthGamePut
 helpers AuthRegisterByKickCodePost
 helpers AuthUserByMinecraftUuidGet
 
+set :bind, '0.0.0.0'
+
 post '/auth/game' do
   event = {
     'body' =>  request.body.read

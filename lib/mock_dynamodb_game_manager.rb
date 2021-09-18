@@ -20,6 +20,13 @@ class MockDynamodbGameManager
     if @succeed
       ret_val = OpenStruct.new
       ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
+      t = rand(4) + 1
+      ret_val.attributes = {
+        'game' => {
+          'blue_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid},
+          'red_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid}
+        }
+      }
       return ret_val
     else
       ObjectNotFound
@@ -27,7 +34,16 @@ class MockDynamodbGameManager
   end
 
   def update_game(game_uuid, game)
-    MockDynamoSeahorse.new(Aws::DynamoDB::Types::UpdateItemOutput.new)
+    ret_val = OpenStruct.new
+    ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
+    t = rand(4) + 1
+    ret_val.attributes = {
+      'game' => {
+        'blue_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid},
+        'red_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid}
+      }
+    }
+    return ret_val
   end
 
   def add_pile_uuid(username, uuid)
@@ -38,20 +54,6 @@ class MockDynamodbGameManager
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
-  def get(username)
-    if username == 'indybooks'
-      n_piles = Integer(rand*10) + 1
-      ret = [{
-               username: username,
-               updated_at: Time.now.utc.iso8601,
-               created_at: Time.now.utc.iso8601,
-               pile_uuid_list: n_piles.times.map { SecureRandom.uuid }
-             }]
-    else
-      ret = {}
-    end
-      MockDynamoResults.new(ret)
-  end
   class ObjectNotFound
   end
 end

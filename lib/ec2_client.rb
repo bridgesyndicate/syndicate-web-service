@@ -10,7 +10,7 @@ class Ec2Manager
                                    )
   end
 
-  def get_public_ip_for_iface(eni)
+  def get_ip_for_iface(eni)
     resp = client.describe_network_interfaces({ network_interface_ids: [ eni ] })
     resp.to_h[:network_interfaces][0][:association][:public_ip]
   end
