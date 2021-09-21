@@ -36,15 +36,15 @@ Resources:
       VpcConfig:
         SecurityGroupIds:
           - !ImportValue
-            'broker-01-RabbitIngressSecurityGroupId'
+            'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
         SubnetIds:
           - !ImportValue
-            'broker-01-SubnetBrokerId'
+            'SyndicateVPCAndBroker-SubnetBrokerId'
       Environment:
         Variables:
           SYNDICATE_ENV: production
           RABBIT_URI: !ImportValue
-            'broker-01-AmqpEndpoint'
+            'SyndicateVPCAndBroker-AmqpEndpoint'
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
