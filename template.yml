@@ -33,6 +33,13 @@ Resources:
   AuthGameContainerMetadataPut:
     Type: AWS::Serverless::Function
     Properties:
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue
+          'broker-01-RabbitIngressSecurityGroupId'
+        SubnetIds:
+          - !ImportValue
+          'broker-01-SubnetBrokerId'
       Environment:
         Variables:
           SYNDICATE_ENV: production
