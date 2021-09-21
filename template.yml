@@ -36,7 +36,9 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
-          RABBIT_HOST: $some thing here
+          RABBIT_HOST:
+            - !ImportValue
+             'Fn::Sub': 'broker-01-BrokerIP'
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
