@@ -36,7 +36,7 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
-          RABBIT_HOST: !ImportValue
+          RABBIT_URI: !ImportValue
             'broker-01-AmqpEndpoint'
       Policies:
         - DynamoDBWritePolicy:

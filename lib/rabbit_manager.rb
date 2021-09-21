@@ -4,8 +4,12 @@ class RabbitClient
   attr_accessor :connection
 
   def initialize()
-    @connection = Bunny.new(automatically_recover: false,
-                            hostname: ENV['RABBIT_HOST'] || '127.0.0.1')
+    if ENV['RABBIT_URI']
+      @connection = Bunny.new(ENV['RABBIT_URI'])
+    else
+      @connection = Bunny.new(automatically_recover: false,
+                              hostname: '127.0.0.1')
+    end
     connection.start
   end
 
