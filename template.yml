@@ -36,9 +36,8 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
-          RABBIT_HOST:
-            - !ImportValue
-            Fn::Sub: 'broker-01-AmqpEndpoint'
+          RABBIT_HOST: !ImportValue
+            'broker-01-AmqpEndpoint'
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
