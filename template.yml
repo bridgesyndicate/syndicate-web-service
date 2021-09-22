@@ -37,9 +37,11 @@ Resources:
         SecurityGroupIds:
           - !ImportValue
             'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
         SubnetIds:
           - !ImportValue
-            'SyndicateVPCAndBroker-SubnetBrokerId'
+            'SyndicateVPCAndBroker-SubnetLambdaId'
       Environment:
         Variables:
           SYNDICATE_ENV: production
