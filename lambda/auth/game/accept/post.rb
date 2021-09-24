@@ -42,7 +42,7 @@ def auth_game_accept_post_handler(event:, context:)
 
   return { statusCode: status,
            headers: headers_list,
-           body: ret.attributes.to_json
+           body: ret.to_json
   }
 
 end

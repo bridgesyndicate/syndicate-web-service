@@ -107,7 +107,7 @@ class DynamodbGameManager
       expression_attribute_values: { ':vals': new_acceptance,
                                      ':now': Time.now.utc.iso8601
                                    },
-      return_values: 'UPDATED_NEW'
+      return_values: 'ALL_NEW'
     }
     ret = client.update_item(params)
     ret.attributes['game'].transform_values! do |value|
