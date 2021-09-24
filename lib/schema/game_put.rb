@@ -91,7 +91,7 @@ class GamePutSchema
         state: {
           type: :string
         },
-        task_arn: {
+        task_ip: {
           type: :string
         },
         uuid: {
