@@ -5,11 +5,8 @@ load 'git_commit_sha.rb'
 
 require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
-require 'lib/ec2_client.rb'
-require 'lib/ecs_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
-require 'lib/sqs_client.rb'
 require 'lib/rabbit_client.rb'
 
 def auth_game_container_metadata_put_handler(event:, context:)
@@ -31,8 +28,9 @@ def auth_game_container_metadata_put_handler(event:, context:)
   payload = JSON.parse(payload, object_class: OpenStruct)
   game_uuid = payload.uuid
   task_arn = payload.taskArn
+  container_ip = task_arn # used to be the arn and we would use ec2 and ecs to look up the IP
 
-  ret_obj = $ddb_game_manager.update_arn(game_uuid, task_arn)
+  ret_obj = $ddb_game_manager.update_arn(game_uuid, container_ip)
 
   if ret_obj == DynamodbGameManager::ObjectNotFound
     status = NOT_FOUND
@@ -40,21 +38,10 @@ def auth_game_container_metadata_put_handler(event:, context:)
     status = SERVER_ERROR
   end
 
-  if status == OK
-    eni = $ecs_client.get_iface_for_task_arn(task_arn)
-    unless eni == 'missing'
-      container_ip = $ec2_client.get_ip_for_iface(eni)
-    else
-      container_ip = 'localhost'
-    end
-  end
-
-  if status == OK
-    (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-     ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
-      container_name = container_ip
-      $rabbit_client.send_player_to_host(id, container_name, container_ip)
-    end
+  (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
+   ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
+    container_name = container_ip
+    $rabbit_client.send_player_to_host(id, container_name, container_ip)
   end
 
   ret = {
