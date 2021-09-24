@@ -38,6 +38,9 @@ def auth_game_container_metadata_put_handler(event:, context:)
     status = SERVER_ERROR
   end
 
+  puts "XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  puts ret_obj.inspect
+
   if status == OK
     (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
      ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
