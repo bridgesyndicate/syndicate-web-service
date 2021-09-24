@@ -16,7 +16,7 @@ class MockDynamodbGameManager
     @succeed = true
   end
 
-  def update_arn(game_uuid, task_arn)
+  def update_task_ip(game_uuid, task_arn)
     if @succeed
       ret_val = OpenStruct.new
       ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new

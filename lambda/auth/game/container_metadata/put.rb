@@ -30,7 +30,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
   task_arn = payload.taskArn
   container_ip = task_arn # used to be the arn and we would use ec2 and ecs to look up the IP
 
-  ret_obj = $ddb_game_manager.update_arn(game_uuid, container_ip)
+  ret_obj = $ddb_game_manager.update_task_ip(game_uuid, container_ip)
 
   if ret_obj == DynamodbGameManager::ObjectNotFound
     status = NOT_FOUND
@@ -38,10 +38,12 @@ def auth_game_container_metadata_put_handler(event:, context:)
     status = SERVER_ERROR
   end
 
-  (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-   ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
-    container_name = container_ip
-    $rabbit_client.send_player_to_host(id, container_name, container_ip)
+  if status == OK
+    (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
+     ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
+      container_name = container_ip
+      $rabbit_client.send_player_to_host(id, container_name, container_ip)
+    end
   end
 
   ret = {
