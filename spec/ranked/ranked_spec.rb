@@ -43,7 +43,7 @@ RSpec.describe '#ranked' do
         queue.queue_player(p2)
         queue.queue_player(p3)
         expect(queue.process_queue.class).to eq Ranked::Match
-        expect(queue.queue.size).to eq 2
+        expect(queue.queue.size).to eq 1
       end
     end
   end
