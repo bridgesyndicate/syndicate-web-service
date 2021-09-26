@@ -2,13 +2,11 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem 'json-schema'
-gem 'aws-sdk-sqs'
 gem 'aws-sdk-dynamodb'
-gem 'aws-sdk-ecs'
-gem 'aws-sdk-ec2'
+gem 'aws-sdk-sqs'
 gem 'bunny'
-
+gem 'elo_rating', github: 'mxhold/elo_rating', branch: 'master'
+gem 'json-schema'
 
 group :test do
   gem 'simplecov', require: false, group: :test
