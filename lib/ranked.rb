@@ -1,7 +1,7 @@
-MAX_QUEUE_TIME = 60
-MAX_ELO_DELTA = 100
-
 class Ranked
+  MAX_QUEUE_TIME = 60
+  MAX_ELO_DELTA = 100
+
   class Player
     attr_accessor :discord_id, :discord_username, :queue_time, :elo
     def initialize params = {}
@@ -16,6 +16,8 @@ class Ranked
   end
 
   class Match
+    attr_accessor :playerA, :playerB
+
     def self.within_elo(playerA, playerB)
       (playerA.elo-playerB.elo).abs <= MAX_ELO_DELTA
     end
@@ -67,10 +69,10 @@ class Ranked
       Match.within_elo(queue[indexA], queue[indexB])
     end
     def new_match(indexA, indexB)
-      ret_val = Match.new(queue[indexA], queue[indexB])
-      queue.delete(queue[indexA])
-      queue.delete(queue[indexB])
-      return ret_val
+      match = Match.new(queue[indexA], queue[indexB])
+      queue.delete(match.playerA)
+      queue.delete(match.playerB)
+      return match
     end
   end
 end

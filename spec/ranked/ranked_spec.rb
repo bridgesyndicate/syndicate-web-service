@@ -1,6 +1,7 @@
 load 'spec_helper.rb'
 require 'ranked'
 require 'pry'
+require 'timecop'
 
 RSpec.describe '#ranked' do
   context 'basic match making' do
@@ -13,11 +14,11 @@ RSpec.describe '#ranked' do
     }
     let (:p2) { Ranked::Player.new(discord_id: rand(100),
                                    discord_username: 'ken',
-                                   queue_time: now + 10)
+                                   queue_time: now )
     }
     let (:p3) { Ranked::Player.new(discord_id: rand(100),
                                    discord_username: 'joe',
-                                   queue_time: now + 20,
+                                   queue_time: now,
                                    elo: 750
                                   )
     }
@@ -36,8 +37,18 @@ RSpec.describe '#ranked' do
         expect(queue.process_queue).to eq nil
         expect(queue.queue.size).to eq 2
       end
+      it 'creates a match after MAX_QUEUE_TIME seconds' do
+        queue.queue_player(p1)
+        queue.queue_player(p2)
+        expect(queue.process_queue).to eq nil
+        expect(queue.queue.size).to eq 2
+        Timecop.freeze(Ranked::MAX_QUEUE_TIME) do
+          expect(queue.process_queue.class).to eq Ranked::Match
+          expect(queue.queue.size).to eq 0
+        end
+      end
     end
-    describe 'with three players queued, two are elo-matchable' do
+    describe 'with three players queued, and two are elo-matchable' do
       it 'makes a match' do
         queue.queue_player(p1)
         queue.queue_player(p2)

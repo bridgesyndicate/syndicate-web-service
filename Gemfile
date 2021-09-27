@@ -17,6 +17,7 @@ end
 
 group :development do
   gem 'pry-byebug'
-  gem 'sinatra'
   gem 'rake'
+  gem 'sinatra'
+  gem 'timecop'
 end
