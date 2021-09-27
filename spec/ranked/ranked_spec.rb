@@ -37,11 +37,15 @@ RSpec.describe '#ranked' do
         expect(queue.process_queue).to eq nil
         expect(queue.queue.size).to eq 2
       end
+    end
+    describe 'with two players past MAX_QUEUE_TIME' do
       it 'creates a match after MAX_QUEUE_TIME seconds' do
         queue.queue_player(p1)
         queue.queue_player(p2)
-        expect(queue.process_queue).to eq nil
-        expect(queue.queue.size).to eq 2
+        Timecop.freeze(0) do
+          expect(queue.process_queue).to eq nil
+          expect(queue.queue.size).to eq 2
+        end
         Timecop.freeze(Ranked::MAX_QUEUE_TIME) do
           expect(queue.process_queue.class).to eq Ranked::Match
           expect(queue.queue.size).to eq 0

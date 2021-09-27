@@ -40,14 +40,6 @@ def auth_game_put_handler(event:, context:)
     status = SERVER_ERROR
   end
 
-  # Warp folks back to the lobby as this game is over on update
-  if status == OK
-    (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-     ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
-      $rabbit_client.send_player_to_host(id, 'lobby', '')
-    end
-  end
-
   ret = {
     "status": status,
     "uuid": game_uuid
