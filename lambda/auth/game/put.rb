@@ -5,6 +5,7 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_put'
+require 'lib/sqs_client.rb'
 require 'ostruct'
 
 def auth_game_put_handler(event:, context:)
@@ -42,8 +43,8 @@ def auth_game_put_handler(event:, context:)
   # Queue the warp job
   if status == OK
     payload = (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-      ret_obj.attributes['game']['red_team_minecraft_uuids'])
-    $sqs_manager.enqueue_with_delay(DELAYED_WARPS, 15, payload)
+               ret_obj.attributes['game']['red_team_minecraft_uuids'])
+    $sqs_manager.enqueue_with_delay(DELAYED_WARPS, 15, payload.to_json)
   end
 
   ret = {

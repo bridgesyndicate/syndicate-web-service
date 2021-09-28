@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<SendMessageResponse xmlns="http://queue.amazonaws.com/doc/2012-11-05/">
+  <SendMessageResult>
+    <MessageId>5f64cd33-ecec-4f60-b9a1-454725bb8e67</MessageId>
+    <MD5OfMessageBody>REPLACE_ME</MD5OfMessageBody>
+  </SendMessageResult>
+  <ResponseMetadata>
+    <RequestId>9669d663-fd7b-5a99-ba7a-8feea0480a91</RequestId>
+  </ResponseMetadata>
+</SendMessageResponse>

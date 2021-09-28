@@ -36,11 +36,11 @@ class MockDynamodbGameManager
   def update_game(game_uuid, game)
     ret_val = OpenStruct.new
     ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
-    t = rand(4) + 1
+    uuids = get_srandom_minecraft_uuids
     ret_val.attributes = {
       'game' => {
-        'blue_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid},
-        'red_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid}
+        'blue_team_minecraft_uuids' => uuids[0, uuids.size/2],
+        'red_team_minecraft_uuids' => uuids[uuids.size/2, uuids.size]
       }
     }
     return ret_val
