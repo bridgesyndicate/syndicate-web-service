@@ -1,6 +1,5 @@
 load 'spec_helper.rb'
 require 'ranked'
-require 'pry'
 require 'timecop'
 
 RSpec.describe '#ranked' do
