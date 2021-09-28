@@ -12,6 +12,7 @@ group :test do
   gem 'simplecov', require: false, group: :test
   gem 'rspec'
   gem 'rspec_junit_formatter'
+  gem 'timecop'
   gem 'webmock'
 end
 
@@ -19,5 +20,4 @@ group :development do
   gem 'pry-byebug'
   gem 'rake'
   gem 'sinatra'
-  gem 'timecop'
 end
