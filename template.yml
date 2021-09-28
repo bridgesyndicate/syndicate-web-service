@@ -52,29 +52,6 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
-        - Statement:
-            - Sid: inlinePolicyAuthGameContainerMetadataPutSqsAll
-              Effect: Allow
-              Action:
-                - sqs:*
-              Resource: 'arn:aws:sqs:us-west-2:595508394202:syndicate_production_player_messages'
-            - Sid: inlinePolicyAuthGameContainerMetadataPutSqsList
-              Effect: Allow
-              Action:
-                - sqs:ListQueues
-              Resource: '*'
-        - Statement:
-            - Sid: inlinePolicyAuthGameContainerMetadataPutEc2
-              Effect: Allow
-              Action:
-                - ec2:DescribeNetworkInterfaces
-              Resource: '*'
-        - Statement:
-            - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
-              Effect: Allow
-              Action:
-                - ecs:DescribeTasks
-              Resource: '*'
       Handler: lambda/auth/game/container_metadata/put.auth_game_container_metadata_put_handler
       Runtime: ruby2.7
       CodeUri: ./
@@ -177,9 +154,20 @@ Resources:
   DelayedWarp:
     Type: AWS::Serverless::Function
     Properties:
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
+        SubnetIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-SubnetLambdaId'
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          RABBIT_URI: !ImportValue
+            'SyndicateVPCAndBroker-AmqpEndpoint'
       Handler: lambda/via-sqs/warp.handler
       Runtime: ruby2.7
       CodeUri: ./
