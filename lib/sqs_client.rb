@@ -27,14 +27,22 @@ class SqsManager
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_development_games'
     when "production_#{GAME}"
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games'
-    when /PLAYER_MESSAGES/
-      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages'
+    when /production_#{DELAYED_WARPS}/
+      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_delayed_warps'
     end
   end
 
   def enqueue(queue_name, message)
     @client.send_message({
                            queue_url: get_queue_url(queue_name),
+                           message_body: message
+                         })
+  end
+
+  def enqueue_with_delay(queue_name, delay, message)
+    @client.send_message({
+                           queue_url: get_queue_url(queue_name),
+                           delay_seconds: delay,
                            message_body: message
                          })
   end

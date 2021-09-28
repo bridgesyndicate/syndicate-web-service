@@ -174,3 +174,19 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
+  DelayedWarp:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Handler: lambda/via-sqs/warp.handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: arn:aws:sqs:us-west-2:595508394202:syndicate_production_delayed_warps
+            BatchSize: 1
+            Enabled: true
