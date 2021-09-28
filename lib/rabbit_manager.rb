@@ -21,7 +21,7 @@ class RabbitClient
       player: minecraft_uuid,
       hostname: container_name,
       host: ip_address,
-      port: 25565
+      port: MINECRAFT_PORT
     }.to_json
     exchange.publish(message)
   end
