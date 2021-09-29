@@ -5,6 +5,7 @@ require 'lib/rabbit_client'
 
 def handler(event:, context:)
 
+  puts event.inspect
   # Warp folks back to the lobby as this game is over on update
   minecraft_uuids = event['body']
   minecraft_uuids.each do |id|
