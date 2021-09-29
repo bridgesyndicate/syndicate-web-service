@@ -73,7 +73,7 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
         - SQSSendMessagePolicy:
-            QueueName: syndicate_production_games
+            QueueName: syndicate_production_delayed_warps
       Handler: lambda/auth/game/put.auth_game_put_handler
       Runtime: ruby2.7
       CodeUri: ./
