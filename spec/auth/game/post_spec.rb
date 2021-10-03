@@ -8,12 +8,7 @@ RSpec.describe '#game_post' do
   context 'lambda_result' do
     let(:event) { { 'body' =>  File.read(post_file) } }
     let(:lambda_result) { auth_game_post_handler(event: event, context: '') }
-    let(:post_file) {'spec/mocks/game/valid-post.json'}
-
-    before(:each) {
-      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
-        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-games.xml'), headers: {})
-    }
+    let(:post_file) {'spec/mocks/game/valid-duel-post.json'}
 
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do
@@ -55,7 +50,29 @@ RSpec.describe '#game_post' do
           expect(JSON.parse(lambda_result[:body])['reason']).to eq 'All discord users must be verified.'
         end
       end
-      describe 'for a valid game post' do
+      describe 'for a valid duel game post, one accepted player' do
+        it 'succeeds' do
+          expect(lambda_result[:statusCode]).to eq 200
+        end
+        it 'returns a game with a uuid' do
+          expect(JSON.parse(lambda_result[:body])['game']['uuid']).
+            to match UUID_REGEX
+        end
+        it 'adds adds blue_team_minecraft_uuids and red_team_minecraft_uuids' do
+          expect(JSON.parse(lambda_result[:body])['game']['blue_team_minecraft_uuids'].size).
+            to eq JSON.parse(lambda_result[:body])['game']['blue_team_discord_ids'].size
+        end
+      end
+
+      describe 'for a queue-generated game, two accepted players' do
+        before(:each) {
+          ENV['srand'] = "10"
+          response = File.read('spec/mocks/web-mock-sqs-enqueue-delayed_warps.xml')
+          response.sub!('REPLACE_ME', 'c318276ee507e4d1b7673ff5dc114461')
+          stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
+            .to_return(status: 200, body: response, headers: {})
+        }
+        let(:post_file) {'spec/mocks/game/valid-queue-post.json'}
         it 'succeeds' do
           expect(lambda_result[:statusCode]).to eq 200
         end

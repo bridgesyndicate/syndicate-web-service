@@ -1,6 +1,5 @@
 require 'time'
 require 'ostruct'
-require 'securerandom'
 
 class MockDynamodbUserManager
   attr_accessor :client, :table_name, :succeed
@@ -48,7 +47,7 @@ class MockDynamodbUserManager
     discord_ids.map do |id|
       if id.match?(/[02468]$/)
         ret = [{
-                 'minecraft_uuid' =>  SecureRandom.uuid,
+                 'minecraft_uuid' =>  get_one_srandom_minecraft_uuid,
                  'created_at' => Time.now.utc.iso8601,
                  'discord_id' => id
                }]

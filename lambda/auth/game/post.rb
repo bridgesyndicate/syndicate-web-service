@@ -6,6 +6,8 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_post'
+require 'lib/sqs_client.rb'
+require 'lib/deep_to_h'
 
 def auth_game_post_handler(event:, context:)
 
@@ -27,7 +29,7 @@ def auth_game_post_handler(event:, context:)
 
   # ensure all the discord_ids are verified (have user records)
 
-  required_users = (game['blue_team_discord_ids'] + game['red_team_discord_ids']).uniq
+  required_users = (game.blue_team_discord_ids + game.red_team_discord_ids).uniq
   ensure_verified_ret = $ddb_user_manager.ensure_verified(required_users)
   verified_count = ensure_verified_ret.map { |r|
     r.items.size}.inject(0) { |sum,x|
@@ -40,16 +42,27 @@ def auth_game_post_handler(event:, context:)
            body: { reason: "All discord users must be verified." }.to_json
   } if status != OK
 
+  # map the minecraft uuids into the game
   lut = ensure_verified_ret.map {|i| i.items.first}.map{|x|
     { x['discord_id'] => x['minecraft_uuid'] } }.reduce({}, :merge)
-  game['blue_team_minecraft_uuids'] = game['blue_team_discord_ids'].map{ |id|
+  game.blue_team_minecraft_uuids = game.blue_team_discord_ids.map{ |id|
     lut[id] }
-  game['red_team_minecraft_uuids'] = game['red_team_discord_ids'].map{ |id|
+  game.red_team_minecraft_uuids = game.red_team_discord_ids.map{ |id|
     lut[id] }
   ret_obj = $ddb_game_manager.put(game)
   status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
 
-  ret = { game: game.to_h }
+  start_game = (game.accepted_by_discord_ids.size == game.required_players)
+
+  game = deep_to_h(game)
+
+  if start_game
+    # queued by our discord bot, start the game
+    sqs_ret = $sqs_manager.enqueue(GAME, game.to_json)
+    status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
+  end
+
+  ret = { game: game }
 
   return { statusCode: status,
            headers: headers_list,

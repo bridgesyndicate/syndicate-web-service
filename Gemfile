@@ -7,6 +7,7 @@ gem 'aws-sdk-sqs'
 gem 'bunny'
 gem 'elo_rating', github: 'mxhold/elo_rating', branch: 'master'
 gem 'json-schema'
+gem 'pry-byebug'
 
 group :test do
   gem 'simplecov', require: false, group: :test
@@ -16,7 +17,6 @@ group :test do
 end
 
 group :development do
-  gem 'pry-byebug'
   gem 'rake'
   gem 'sinatra'
 end

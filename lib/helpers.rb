@@ -13,16 +13,3 @@ MINECRAFT_PORT=2556
 def get_cognito_username ctx
   ctx['requestContext']['authorizer']['claims']["cognito:username"]
 end
-
-def get_srandom_minecraft_uuids
-  srand(ENV['srand'].to_i)
-  (rand(4) + 1).times.map {random_uuid}
-end
-
-def random_uuid
-  [Random.bytes(4).unpack("H*"),
-   Random.bytes(2).unpack("H*"),
-   Random.bytes(2).unpack("H*"),
-   Random.bytes(2).unpack("H*"),
-   Random.bytes(6).unpack("H*")].join('-')
-end

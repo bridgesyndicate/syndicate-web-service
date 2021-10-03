@@ -31,6 +31,8 @@ class SqsManager
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_delayed_warps'
     when /test_#{DELAYED_WARPS}/
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_delayed_warps'
+    when /test_#{GAME}/
+      'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games'
     end
   end
 

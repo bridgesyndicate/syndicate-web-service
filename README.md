@@ -9,6 +9,11 @@ docker run -d -p 8000:8000 amazon/dynamodb-local
 SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
 ```
 
+GUI: `npm install -g dynamodb-admin` then
+```
+SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar dynamodb-admin
+```
+
 ### To develop:
 ```
 SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar ruby server.rb
