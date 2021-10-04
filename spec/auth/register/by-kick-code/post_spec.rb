@@ -14,6 +14,10 @@ RSpec.describe '#kick_code_post' do
       }
     }
     let(:lambda_result) { auth_register_by_kick_code_post_handler(event: event, context: '') }
+    before(:each) {
+      stub_request(:post, "http://localhost:8000/").
+        to_return(status: 200, body: "{}", headers: {})
+    }
 
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do

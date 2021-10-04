@@ -24,9 +24,9 @@ class MockDynamodbKickCodeManager
   def use_once(kick_code)
     if kick_code.match?(/[02468]$/)
       ret = [{
-               updated_at: Time.now.utc.iso8601,
-               kick_code: kick_code,
-               minecraft_uuid: SecureRandom.uuid
+               'updated_at' => Time.now.utc.iso8601,
+               'kick_code' => kick_code,
+               'minecraft_uuid' => SecureRandom.uuid
              }]
     else
       return ObjectNotFound

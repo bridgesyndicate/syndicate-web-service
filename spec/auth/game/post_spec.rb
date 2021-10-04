@@ -10,11 +10,14 @@ RSpec.describe '#game_post' do
     let(:lambda_result) { auth_game_post_handler(event: event, context: '') }
     let(:post_file) {'spec/mocks/game/valid-duel-post.json'}
 
+    before(:each) {
+      body = File.read('spec/mocks/user/by-minecraft-uuid/dynamo-get-found.json')
+      stub_request(:post, "http://localhost:8000/").
+        to_return(status: 200, body: body, headers: {})
+    }
+
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do
-        #WebMock.after_request do |request_signature, response|
-        #  puts "Request #{request_signature} was made and #{response.body} was returned"
-        #end
         expect(lambda_result.class).to eq Hash
       end
 
@@ -33,21 +36,26 @@ RSpec.describe '#game_post' do
 
     describe 'for the post body' do
       describe 'for game post with unvalidated players' do
-        let(:post_file) {'spec/mocks/game/404-post.json'}
         it 'returns 404' do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200, body: File.read('spec/mocks/user/by-discord-id/dynamo-get-404.json'), headers: {})
+            .to_return(status: 200, body: File.read('spec/mocks/user/by-minecraft-uuid/dynamo-get-found.json'), headers: {})
           expect(lambda_result[:statusCode]).to eq 404
         end
         it 'states that users must be verified' do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200, body: File.read('spec/mocks/user/by-discord-id/dynamo-get-404.json'), headers: {})
+            .to_return(status: 200, body: File.read('spec/mocks/user/by-minecraft-uuid/dynamo-get-found.json'), headers: {})
           expect(JSON.parse(lambda_result[:body])['reason']).to eq 'All discord users must be verified.'
         end
       end
       describe 'for game post with a duplicate player' do
         let(:post_file) {'spec/mocks/game/dup-post.json'}
-        it 'returns 404' do
-          expect(lambda_result[:statusCode]).to eq 404
+        it 'returns 400' do
+          expect(lambda_result[:statusCode]).to eq 400
         end
         it 'states that users must be verified' do
-          expect(JSON.parse(lambda_result[:body])['reason']).to eq 'All discord users must be verified.'
+          expect(JSON.parse(lambda_result[:body])['reason']).to eq 'Payload json does not contain at least two discord users.'
         end
       end
       describe 'for a valid duel game post, one accepted player' do
@@ -68,7 +76,7 @@ RSpec.describe '#game_post' do
         before(:each) {
           ENV['srand'] = "10"
           response = File.read('spec/mocks/web-mock-sqs-enqueue-delayed_warps.xml')
-          response.sub!('REPLACE_ME', 'c318276ee507e4d1b7673ff5dc114461')
+          response.sub!('REPLACE_ME', '51c5a3eec5d485063d04f54a0cc7ec2e')
           stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
             .to_return(status: 200, body: response, headers: {})
         }

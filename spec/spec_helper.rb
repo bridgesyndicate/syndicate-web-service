@@ -30,6 +30,7 @@ def webmock_log_request
       headers: req.headers,
       body: req.body
     }
+    puts req.inspect
     puts response.inspect
   end
 end

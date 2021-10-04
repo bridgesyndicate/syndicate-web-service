@@ -116,7 +116,7 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: syndicate_production_users
-      Handler: lambda/auth/user/by-minecraft-uuid/get.auth_user_by_discord_id_get_handler
+      Handler: lambda/auth/user/by-discord-id/get.auth_user_by_discord_id_get_handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:

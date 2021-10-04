@@ -30,6 +30,14 @@ def auth_game_post_handler(event:, context:)
   # ensure all the discord_ids are verified (have user records)
 
   required_users = (game.blue_team_discord_ids + game.red_team_discord_ids).uniq
+
+  status = BAD_REQUEST if required_users.size < 2
+
+  return { statusCode: status,
+           headers: headers_list,
+           body: { reason: "Payload json does not contain at least two discord users."}.to_json
+  } if status != OK
+
   ensure_verified_ret = $ddb_user_manager.ensure_verified(required_users)
   verified_count = ensure_verified_ret.map { |r|
     r.items.size}.inject(0) { |sum,x|
