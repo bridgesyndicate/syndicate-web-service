@@ -7,6 +7,7 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
+require 'lib/object_not_found'
 require 'lib/rabbit_client.rb'
 
 def auth_game_container_metadata_put_handler(event:, context:)

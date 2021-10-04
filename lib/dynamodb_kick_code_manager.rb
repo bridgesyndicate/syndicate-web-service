@@ -1,5 +1,6 @@
 require 'time'
 require 'aws-sdk-dynamodb'
+require 'lib/object_not_found'
 
 class DynamodbKickCodeManager
   attr_accessor :client, :table_name

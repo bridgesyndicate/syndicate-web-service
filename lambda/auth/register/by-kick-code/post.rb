@@ -4,6 +4,7 @@ load 'git_commit_sha.rb'
 require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
+require 'lib/object_not_found'
 
 def auth_register_by_kick_code_post_handler(event:, context:)
 

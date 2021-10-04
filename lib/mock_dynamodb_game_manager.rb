@@ -1,6 +1,6 @@
 require 'time'
 require 'ostruct'
-require 'object_not_found'
+require 'lib/object_not_found'
 
 class MockDynamodbGameManager
   attr_accessor :client, :table_name, :succeed
