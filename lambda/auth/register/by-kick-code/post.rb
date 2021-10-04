@@ -23,12 +23,13 @@ def auth_register_by_kick_code_post_handler(event:, context:)
            body: {}.to_json
   } if status == BAD_REQUEST
 
-  kick = $ddb_kick_code_manager.get(kick_code)
+  kick = $ddb_kick_code_manager.use_once(kick_code)
 
   return { statusCode: NOT_FOUND,
            headers: headers_list,
            body: {}.to_json
-  } if kick.items.empty?
+  } if kick == ObjectNotFound ||
+       kick.items.empty?
 
   kick_record = kick.items.first
 

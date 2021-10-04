@@ -1,5 +1,6 @@
 require 'time'
 require 'ostruct'
+require 'object_not_found'
 
 class MockDynamodbGameManager
   attr_accessor :client, :table_name, :succeed
@@ -52,8 +53,5 @@ class MockDynamodbGameManager
 
   def put(p)
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
-  end
-
-  class ObjectNotFound
   end
 end

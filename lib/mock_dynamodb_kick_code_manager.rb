@@ -1,5 +1,6 @@
 require 'time'
 require 'ostruct'
+require 'object_not_found'
 
 class MockDynamodbKickCodeManager
   attr_accessor :client, :table_name, :succeed
@@ -20,7 +21,7 @@ class MockDynamodbKickCodeManager
     MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
-  def get(kick_code)
+  def use_once(kick_code)
     if kick_code.match?(/[02468]$/)
       ret = [{
                updated_at: Time.now.utc.iso8601,
@@ -28,11 +29,8 @@ class MockDynamodbKickCodeManager
                minecraft_uuid: SecureRandom.uuid
              }]
     else
-      ret = {}
+      return ObjectNotFound
     end
       MockDynamoResults.new(ret)
-  end
-
-  class ObjectNotFound
   end
 end

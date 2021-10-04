@@ -68,6 +68,29 @@ class DynamodbKickCodeManager
     )
   end
 
+  def use_once(kick_code)
+    begin
+      client.update_item( {
+                            table_name: table_name,
+                            key: {
+                              kick_code: kick_code
+                            },
+                            update_expression: 'SET #used_at = :now',
+                            expression_attribute_names: {
+                              '#used_at': 'used_at'
+                            },
+                            expression_attribute_values: {
+                              ':now': Time.now.utc.iso8601
+                            },
+                            condition_expression: 'attribute_not_exists(used_at)',
+                            return_values: 'UPDATED_NEW'
+                          }
+                        )
+    rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
+      return ObjectNotFound
+    end
+  end
+
   class ObjectNotFound
   end
 end

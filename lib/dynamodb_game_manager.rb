@@ -1,5 +1,6 @@
 require 'time'
 require 'aws-sdk-dynamodb'
+require 'object_not_found'
 
 class DynamodbGameManager
   attr_accessor :client, :table_name
@@ -126,8 +127,5 @@ class DynamodbGameManager
         }
       }
     )
-  end
-
-  class ObjectNotFound
   end
 end

@@ -32,7 +32,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
 
   ret_obj = $ddb_game_manager.update_task_ip(game_uuid, container_ip)
 
-  if ret_obj == DynamodbGameManager::ObjectNotFound
+  if ret_obj == ObjectNotFound
     status = NOT_FOUND
   elsif ret_obj.data.class != Aws::DynamoDB::Types::UpdateItemOutput
     status = SERVER_ERROR
