@@ -18,7 +18,7 @@ class DynamodbUserManager
   end
 
   def create_table
-    create_table_impl unless @client.list_tables.table_names.include?(@table_name)
+    create_table_impl unless @client.list_tables.table_names.include?(table_name)
   end
 
   def create_table_impl
@@ -48,15 +48,14 @@ class DynamodbUserManager
           }
         ],
         projection: {
-          projection_type: 'INCLUDE',
-          non_key_attributes: ['minecraft_uuid']
+          projection_type: 'ALL'
         },
         provisioned_throughput: {
           read_capacity_units: 1,
           write_capacity_units: 1
         }
       ],
-      table_name: @table_name
+      table_name: table_name
     }
 
     provisioned_capacity = {
@@ -68,7 +67,7 @@ class DynamodbUserManager
 
     schema = schema.merge(provisioned_capacity)
     puts schema.inspect
-    @client.create_table(schema.merge({ table_name: @table_name }))
+    @client.create_table(schema.merge({ table_name: table_name }))
   end
 
   def put(minecraft_uuid, discord_id, kick_code, kick_code_created_at)
@@ -82,7 +81,7 @@ class DynamodbUserManager
     }
     @client.put_item(
       {
-        table_name: @table_name,
+        table_name: table_name,
         item: item
       }
     )
@@ -92,7 +91,7 @@ class DynamodbUserManager
   def get(minecraft_uuid) ##uid is a reserved word
     client.query(
       {
-        table_name: @table_name,
+        table_name: table_name,
         key_condition_expression: "minecraft_uuid = :minecraft_uuid",
         expression_attribute_values: {
           ":minecraft_uuid" => minecraft_uuid
@@ -105,7 +104,7 @@ class DynamodbUserManager
     discord_ids.map do |id|
       client.query(
         {
-          table_name: @table_name,
+          table_name: table_name,
           index_name: secondary_index_name,
           key_condition_expression: "discord_id = :discord_id",
           expression_attribute_values: {
@@ -114,4 +113,17 @@ class DynamodbUserManager
         })
     end
   end
+
+  def get_by_discord_id(discord_id)
+    client.query(
+      {
+        table_name: table_name,
+        index_name: secondary_index_name,
+        key_condition_expression: "discord_id = :discord_id",
+        expression_attribute_values: {
+          ":discord_id" => discord_id
+        }
+      })
+  end
+
 end

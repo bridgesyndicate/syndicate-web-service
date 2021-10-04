@@ -6,7 +6,7 @@ class AwsCredentials
   attr_accessor :endpoint, :credentials, :region
 
   def initialize
-    if SYNDICATE_ENV == 'development'
+    if ['development', 'test'].include? SYNDICATE_ENV
       @endpoint = 'http://localhost:8000'
     end
     id = ENV['AWS_ACCESS_KEY_ID'] || 'access'

@@ -8,5 +8,5 @@ require 'lib/mock_dynamodb_kick_code_manager'
 require 'lib/mock_dynamodb_user_manager'
 
 $ddb_game_manager    =  SYNDICATE_ENV == 'test' ? MockDynamodbGameManager.new() : DynamodbGameManager.new()
-$ddb_user_manager    =  SYNDICATE_ENV == 'test' ? MockDynamodbUserManager.new() : DynamodbUserManager.new()
 $ddb_kick_code_manager = SYNDICATE_ENV == 'test' ? MockDynamodbKickCodeManager.new() : DynamodbKickCodeManager.new()
+$ddb_user_manager = DynamodbUserManager.new()
