@@ -58,3 +58,8 @@ def seeded_random_integer(seed)
   srand((Digest::MD5.hexdigest seed).to_i(16))
   rand(10**16)
 end
+
+def seeded_random_uuid(seed)
+  srand((Digest::MD5.hexdigest seed).to_i(16))
+  random_uuid
+end

@@ -13,6 +13,15 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
       }
     }
     let(:lambda_result) { auth_user_by_minecraft_uuid_get_handler(event: event, context: '') }
+    before(:example) {
+      response = File.read('spec/mocks/user/by-minecraft-uuid/dynamo-get-found.json')
+      stub_request(:post, "http://localhost:8000/")
+        .to_return(status: 200,
+                   body: response.sub('MINECRAFT_UUID',
+                                      seeded_random_uuid($example_name).to_s)
+                  )
+    }
+
 
     describe 'for the get response body' do
       it 'returns a well-formed response for Lambda' do
@@ -38,7 +47,7 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
           expect(lambda_result[:statusCode]).to eq 200
         end
         it 'returns a user record' do
-          expect(JSON.parse(lambda_result[:body])['user']['minecraftUUID']).
+          expect(JSON.parse(lambda_result[:body])['user']['minecraft_uuid']).
             to match UUID_REGEX
         end
       end
@@ -51,9 +60,15 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
       describe 'for an invalid user' do
         let(:uuid) { SecureRandom.uuid.chop.concat(%w/1 3 5 7 9 a b c d e f/.sample) }
         it 'returns 404' do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200,
+                       body: File.read('spec/mocks/user/by-discord-id/dynamo-get-404.json'))
           expect(lambda_result[:statusCode]).to eq 404
         end
         it 'returns a kick code' do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200,
+                       body: File.read('spec/mocks/user/by-discord-id/dynamo-get-404.json'))
           expect(JSON.parse(lambda_result[:body])['kick_code']).to match KICK_CODE_REGEX
         end
       end
