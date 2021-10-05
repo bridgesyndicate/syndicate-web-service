@@ -91,7 +91,4 @@ class DynamodbKickCodeManager
       return ObjectNotFound
     end
   end
-
-  class ObjectNotFound
-  end
 end
