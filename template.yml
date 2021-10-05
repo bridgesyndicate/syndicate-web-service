@@ -134,7 +134,7 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
-        - DynamoDBReadPolicy:
+        - DynamoDBWritePolicy:
             TableName: syndicate_production_kick_codes
         - DynamoDBWritePolicy:
             TableName: syndicate_production_users

@@ -4,6 +4,8 @@ require 'bundler'
 Bundler.require
 libpath = File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
 $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
+dotpath = File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'dynamodb_game_manager'
 require 'dynamodb_user_manager'
