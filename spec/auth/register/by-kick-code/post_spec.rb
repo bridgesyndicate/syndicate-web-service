@@ -4,8 +4,8 @@ require 'lib/helpers'
 
 RSpec.describe '#kick_code_post' do
   context 'lambda_result' do
-    let(:kick_code) { SecureRandom.alphanumeric.chop.concat(%w/0 2 4 6 8/.sample) }
-    let(:discord_id) { SecureRandom.random_number(10**16) }
+    let(:kick_code) { seeded_random_kick_code($example_name) }
+    let(:discord_id) { seeded_random_integer($example_name) }
     let(:event) {
       {
         'pathParameters' => {
@@ -15,8 +15,8 @@ RSpec.describe '#kick_code_post' do
     }
     let(:lambda_result) { auth_register_by_kick_code_post_handler(event: event, context: '') }
     before(:each) {
-      stub_request(:post, "http://localhost:8000/").
-        to_return(status: 200, body: "{}", headers: {})
+      stub_request(:post, "http://localhost:8000/")
+        .to_return(status: 200, body: File.read('spec/mocks/register/by-kick-code/success.json'), headers: {})
     }
 
     describe 'for the post response' do
@@ -60,8 +60,9 @@ RSpec.describe '#kick_code_post' do
       end
     end
     describe 'for a kick code not in the database' do
-      let(:kick_code) { SecureRandom.alphanumeric.chop.concat(%w/1 3 5 7 9/.sample) }
       it 'returns not found' do
+        stub_request(:post, "http://localhost:8000/")
+          .to_return(status: 400, body: File.read('spec/mocks/register/by-kick-code/failure.json'), headers: {})
         expect(lambda_result[:statusCode]).to eq 404
       end
     end

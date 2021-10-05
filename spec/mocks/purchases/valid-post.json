@@ -1,9 +1,0 @@
-{
-  "purchase": {
-    "customer_uuid": "d487f93c-4617-11eb-b378-0242ac130002",
-    "vendor_uuid": "0be657b6-4618-11eb-b378-0242ac130002",
-    "isbn": "1586484737",
-    "price": 14.52,
-    "delivery_promise": "24hHD"
-  }
-}

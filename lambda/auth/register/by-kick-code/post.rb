@@ -29,10 +29,9 @@ def auth_register_by_kick_code_post_handler(event:, context:)
   return { statusCode: NOT_FOUND,
            headers: headers_list,
            body: {}.to_json
-  } if kick == ObjectNotFound ||
-       kick.items.empty?
+  } if kick == ObjectNotFound
 
-  kick_record = kick.items.first
+  kick_record = kick.attributes
 
   minecraft_uuid = kick_record['minecraft_uuid']
   kick_code_created_at = kick_record['created_at']

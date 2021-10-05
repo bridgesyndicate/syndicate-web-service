@@ -64,3 +64,9 @@ def seeded_random_uuid(seed)
   srand((Digest::MD5.hexdigest seed).to_i(16))
   random_uuid
 end
+
+def seeded_random_kick_code(seed)
+  srand((Digest::MD5.hexdigest seed).to_i(16))
+  16.times.map{(('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a)
+                 .sample}.join
+end

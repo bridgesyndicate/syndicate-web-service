@@ -83,8 +83,8 @@ class DynamodbKickCodeManager
                             expression_attribute_values: {
                               ':now': Time.now.utc.iso8601
                             },
-                            condition_expression: 'attribute_not_exists(used_at)',
-                            return_values: 'UPDATED_NEW'
+                            condition_expression: 'attribute_exists(created_at) AND attribute_not_exists(used_at)',
+                            return_values: 'ALL_NEW'
                           }
                         )
     rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException

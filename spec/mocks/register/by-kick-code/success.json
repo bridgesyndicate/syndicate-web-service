@@ -1,0 +1,16 @@
+{
+  "Attributes": {
+    "minecraft_uuid": {
+      "S": "3bdf3018-3558-46d5-b405-a654cb40e222"
+    },
+    "kick_code": {
+      "S": "WiSsW8Si1GfAZSBd"
+    },
+    "used_at": {
+      "S": "2021-10-05T05:18:45Z"
+    },
+    "created_at": {
+      "S": "2021-10-03T01:47:23Z"
+    }
+  }
+}
