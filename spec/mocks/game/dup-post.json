@@ -22,5 +22,9 @@
   "goals_to_win": 5,
   "game_length_in_seconds": 900,
   "queued_at": 1631664196,
-  "queued_via": "discord duel slash command"
+  "queued_via": "discord duel slash command",
+  "elo_before_game": {
+    "417766998471213062": 1000,
+    "240177490906054658": 1000
+  }
 }

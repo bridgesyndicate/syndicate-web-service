@@ -26,5 +26,9 @@
       "accepted_at": "2021-10-02T15:48:53Z"
     }
   ],
-  "queued_via": "queue match"
+  "queued_via": "queue match",
+  "elo_before_game": {
+    "417766998471213062": 1000,
+    "240177490906054658": 1000
+  }
 }

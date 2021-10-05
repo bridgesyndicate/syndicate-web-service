@@ -4,7 +4,8 @@ class GamePostSchema
       type: :object,
       required: %w/uuid blue_team_discord_ids blue_team_discord_names
                    red_team_discord_ids red_team_discord_names required_players
-                   goals_to_win game_length_in_seconds queued_at queued_via/,
+                   goals_to_win game_length_in_seconds queued_at queued_via
+                   elo_before_game/,
       properties: {
         uuid: {
           type: :uuid
@@ -68,6 +69,9 @@ class GamePostSchema
         },
         queued_via: {
           type: :string
+        },
+        elo_before_game: {
+          type: :object
         }
       }
     }
