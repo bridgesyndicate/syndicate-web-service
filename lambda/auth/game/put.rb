@@ -16,7 +16,6 @@ def auth_game_put_handler(event:, context:)
     "X-git-commit-sha" => $my_git_commit_sha
   }
 
-
   payload = event['body']
   status = JSON::Validator.validate(GamePutSchema.schema, payload,
                                     :strict => true

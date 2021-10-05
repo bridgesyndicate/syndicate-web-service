@@ -61,5 +61,9 @@
   "number_of_joined_players" : 2,
   "final_game_length_formatted" : "02:11",
   "remaining_time_formatted" : "12:01",
-  "remaining_time_in_seconds" : 720
+  "remaining_time_in_seconds" : 720,
+  "elo_before_game": {
+    "694713492951007313": 1100,
+    "240177490906054658": 1750
+  }
 }

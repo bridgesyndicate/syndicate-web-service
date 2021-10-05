@@ -3,7 +3,7 @@ class GamePutSchema
     {
       type: :object,
       required: %w/uuid red_team_minecraft_uuids blue_team_minecraft_uuids
-                   blue_team_discord_ids blue_team_discord_names
+                   blue_team_discord_ids blue_team_discord_names elo_before_game
                    red_team_discord_ids red_team_discord_names required_players
                    goals_to_win game_length_in_seconds queued_at queued_via/,
       properties: {
@@ -147,6 +147,9 @@ class GamePutSchema
         },
         dequeued_at: {
           type: :"date-time"
+        },
+        elo_before_game: {
+          type: :object
         }
       }
     }
