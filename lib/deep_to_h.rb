@@ -5,7 +5,7 @@ def deep_to_h os
     [
       key,
       case value
-      when OpenStruct then value.deep_to_h
+      when OpenStruct then deep_to_h(value)
       when Array then value.map {|el| el.class == OpenStruct ? deep_to_h(el) : el}
       else value
       end
