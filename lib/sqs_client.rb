@@ -33,7 +33,7 @@ class SqsManager
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_delayed_warps'
     when /test_#{GAME}/
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games'
-    when /PLAYER_MESSAGES/
+    when /#{PLAYER_MESSAGES}/
       'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages'
     end
   end
