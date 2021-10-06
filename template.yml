@@ -198,3 +198,37 @@ Resources:
             Queue: arn:aws:sqs:us-west-2:595508394202:syndicate_production_delayed_warps
             BatchSize: 1
             Enabled: true
+  DynamoDBProcessGameStreamFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Handler: lambda/via-stream/games.handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Policies:
+        - SQSSendMessagePolicy:
+            QueueName: syndicate_production_player_messages
+      Events:
+        MyDynamoDBtable:
+          Type: DynamoDB
+          Properties:
+            Stream: !GetAtt DynamoDBProductionGamesTable.StreamArn
+            StartingPosition: TRIM_HORIZON
+            BatchSize: 10
+  DynamoDBProductionGamesTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: syndicate_production_games
+      KeySchema:
+        - AttributeName: game_uuid
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: game_uuid
+          AttributeType: S
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE

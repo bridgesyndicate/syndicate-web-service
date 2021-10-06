@@ -7,6 +7,7 @@ FORBIDDEN = 403
 UUID_REGEX = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/
 KICK_CODE_REGEX = /[a-zA-z0-9]{16}/
 GAME='game'
+PLAYER_MESSAGES='player_messages'
 DELAYED_WARPS='delayed_warps'
 MINECRAFT_PORT=2556
 
