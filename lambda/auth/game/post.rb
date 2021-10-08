@@ -60,6 +60,8 @@ def auth_game_post_handler(event:, context:)
   ret_obj = $ddb_game_manager.put(game)
   status = SERVER_ERROR unless ret_obj.data.class == Aws::DynamoDB::Types::PutItemOutput
 
+  puts "#{$ddb_game_manager.table_name} Object created by POST, uuid #{game.uuid}"
+
   start_game = (game.accepted_by_discord_ids.size == game.required_players)
 
   game = deep_to_h(game)

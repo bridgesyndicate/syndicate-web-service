@@ -101,6 +101,7 @@ class DynamodbUserManager
   end
 
   def ensure_verified(discord_ids)
+    # use batch get instead
     discord_ids.map do |id|
       client.query(
         {
