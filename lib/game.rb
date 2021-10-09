@@ -1,10 +1,42 @@
+require 'pair'
+require 'player'
+
 class Game
-  attr_accessor :game, :winner, :uuid
+  attr_accessor :game, :winner, :uuid, :red, :blue
 
   def initialize game
     @game = game
     @winner = winner
     @uuid = game['uuid']
+    @red = make_team('red')
+    @blue = make_team('blue')
+  end
+
+  def make_team(color)
+    game["#{color}_team_minecraft_uuids"].map.with_index do |uuid, i|
+      Player.new(
+        uuid,
+        game['player_map'].key(uuid),
+        game["#{color}_team_discord_ids"][i],
+        game["#{color}_team_discord_names"][i],
+        BigDecimal(game["elo_before_game"][game["#{color}_team_discord_ids"][i]]).to_i
+      )
+    end
+  end
+
+  def red_by_elo
+    red.sort {|a,b| a.start_elo <=> b.start_elo }
+  end
+
+  def blue_by_elo
+    blue.sort {|a,b| a.start_elo <=> b.start_elo }
+  end
+
+  def get_elo_matched_winning_pairs
+    red_by_elo.map.with_index do |r, i|
+      args = (winner) ? [r, blue_by_elo[i]] : [blue_by_elo[i], r]
+      Pair.new(*args)
+    end
   end
 
   def winner

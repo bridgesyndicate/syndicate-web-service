@@ -13,17 +13,14 @@ end
 
 def compute_elo_changes(hash)
   game = Game.new(hash[:dynamodb][:new_image]['game'])
-  binding.pry;1
-  
-  pairs = game.get_elo_matched_pairs
+  pairs = game.get_elo_matched_winning_pairs
   pairs.each do |pair|
     match = EloRating::Match.new
-    match.add_player(rating: pair.winner.elo, winner: true)
-    match.add_player(rating: pair.loser.elo)
-    match.updated_ratings # => [1988, 2012]
-    puts 'foo'
-    puts 'bar'
+    match.add_player(rating: pair.winner.start_elo, winner: true)
+    match.add_player(rating: pair.loser.start_elo)
+    pair.update_elo(*match.updated_ratings)
   end
+    binding.pry;1
 end
 
 def handler(event:, context:)
@@ -33,7 +30,7 @@ def handler(event:, context:)
     .each do |record|
     hash = record.to_h
     $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
-    compute_elo_changes(hash) if elo_change_present(hash)
+    results = compute_elo_changes(hash) if elo_change_present(hash)
     # update each user record
     # update each user in the leaderboard table
   end
