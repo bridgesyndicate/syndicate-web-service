@@ -6,7 +6,7 @@ require 'lib/helpers'
 require 'lib/sqs_client.rb'
 
 def handler(event:, context:)
-  puts event
+  puts event.class
   Aws::DynamoDBStreams::AttributeTranslator
     .from_event(event)
     .each do |record|
