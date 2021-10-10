@@ -15,7 +15,7 @@ phases:
       - bundle config set without development
       - bundle config set path vendor/bundle
       - bundle install
-      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml --exclude-pattern spec/via-stream/games_spec.rb
     finally:
       - rm -rf vendor/bundle
       - rm -rf creds/
@@ -32,8 +32,6 @@ phases:
   post_build:
     commands:
       - export BUCKET=syndicate-web-service-cfn-artifacts
-      - aws sts get-caller-identity
-      - aws s3 cp README.md s3://syndicate-web-service-cfn-artifacts/
       - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
 reports:
     rspec_reports:
