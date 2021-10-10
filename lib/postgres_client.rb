@@ -13,8 +13,16 @@ class PostgresClient
     "postgres://AmazonPgUsername:AmazonPgPassword@#{hostname}/postgres"
   end
 
+  def test_double
+    Double.new
+  end
+
+  def get_conn
+    SYNDICATE_ENV == 'test' ? test_double : @conn = PG::Connection.open(conn_string)
+  end
+
   def initialize
-    @conn = PG::Connection.open(conn_string)
+    @conn = get_conn
     @prepared = false
   end
 
@@ -31,6 +39,20 @@ class PostgresClient
                                 '(discord_id, minecraft_uuid, elo, losses) '+
                                 'values ($1, $2, $3, 1)')
       @prepared = true
+    end
+  end
+
+  class Double
+    def exec_prepared(*args)
+      Tuples.new
+    end
+    def prepare(*args)
+    end
+  end
+
+  class Tuples
+    def cmd_tuples
+      1
     end
   end
 end
