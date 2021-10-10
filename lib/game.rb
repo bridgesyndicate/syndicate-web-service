@@ -1,5 +1,5 @@
-require 'pair'
-require 'player'
+require 'lib/pair'
+require 'lib/player'
 
 class Game
   attr_accessor :game, :winner, :uuid, :red, :blue
