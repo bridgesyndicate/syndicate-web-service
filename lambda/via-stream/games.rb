@@ -4,7 +4,9 @@ require 'json'
 require 'lib/aws_credentials'
 require 'lib/game'
 require 'lib/helpers'
-require 'lib/sqs_client.rb'
+require 'lib/postgres_client'
+require 'lib/sqs_client'
+require 'lib/dynamo_client'
 
 def elo_change_present(hash)
   hash[:event_name] == 'MODIFY' and
@@ -20,18 +22,46 @@ def compute_elo_changes(hash)
     match.add_player(rating: pair.loser.start_elo)
     pair.update_elo(*match.updated_ratings)
   end
-    binding.pry;1
+end
+
+def update_leaderboard(batch)
+  PostgresClient.instance.prepare
+  batch.each do |m|
+    resw = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
+                                                     m.winner.discord_id
+                                                   ])
+    puts resw.inspect
+    if resw.cmd_tuples == 0
+      reswi = $pg_conn.exec_prepared('new_winner', [ m.winner.discord_id,
+                                                    m.winner.minecraft_uuid,
+                                                    m.winner.end_elo,
+                                                   ])
+    end
+
+    resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
+                                                    m.loser.discord_id
+                                                  ])
+    if resl.cmd_tuples == 0
+      resli = $pg_conn.exec_prepared('new_loser', [ m.loser.discord_id,
+                                                    m.loser.minecraft_uuid,
+                                                    m.loser.end_elo,
+                                                   ])
+    end
+  end
 end
 
 def handler(event:, context:)
-  puts event.class
   Aws::DynamoDBStreams::AttributeTranslator
     .from_event(event)
     .each do |record|
     hash = record.to_h
+    uuid = hash[:dynamodb][:new_image]["game"]["uuid"]
+    puts "game #{uuid} event: #{hash[:event_id]}"
     $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
-    results = compute_elo_changes(hash) if elo_change_present(hash)
-    # update each user record
-    # update each user in the leaderboard table
+    batch = compute_elo_changes(hash) if elo_change_present(hash)
+    $ddb_user_manager.batch_update(batch)
+    puts "game #{uuid} saved update user records"
+    update_leaderboard(batch)
+    puts "game #{uuid} updated leaderboard"
   end
 end

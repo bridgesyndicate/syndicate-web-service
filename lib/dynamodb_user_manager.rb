@@ -127,4 +127,30 @@ class DynamodbUserManager
       })
   end
 
+  def update_elo(minecraft_uuid, elo)
+    client.update_item(
+      {
+        table_name: table_name,
+        key: {
+          minecraft_uuid: minecraft_uuid
+        },
+        update_expression: 'SET #updated_at = :now, #elo = :elo',
+        expression_attribute_names: {
+          '#updated_at': 'updated_at',
+          '#elo': 'elo',
+        },
+        expression_attribute_values: {
+          ':now': Time.now.utc.iso8601,
+          ':elo': elo
+        },
+        return_values: 'ALL_NEW'
+      }
+    )
+  end
+
+  def batch_update(batch)
+    batch.map {|p| [p.winner, p.loser]}.flatten.each do |player|
+      update_elo(player.minecraft_uuid, player.end_elo)
+    end
+  end
 end

@@ -204,12 +204,16 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          POSTGRES_HOST: !ImportValue
+            'SyndicateVPCAndBroker-RDSEndpoint'
       Handler: lambda/via-stream/games.handler
       Runtime: ruby2.7
       CodeUri: ./
       Policies:
         - SQSSendMessagePolicy:
             QueueName: syndicate_production_player_messages
+        - DynamoDBWritePolicy:
+            TableName: syndicate_production_users
       Events:
         MyDynamoDBtable:
           Type: DynamoDB

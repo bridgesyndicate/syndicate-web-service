@@ -8,12 +8,14 @@ gem 'aws-sdk-sqs'
 gem 'bunny'
 gem 'elo_rating', github: 'mxhold/elo_rating', branch: 'master'
 gem 'json-schema'
+gem 'pg'
 gem 'pry-byebug'
 
 group :test do
   gem 'simplecov', require: false, group: :test
   gem 'rspec'
   gem 'rspec_junit_formatter'
+  gem 'timecop'
   gem 'webmock'
 end
 

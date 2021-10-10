@@ -12,6 +12,7 @@ require 'dynamodb_user_manager'
 require 'dynamodb_kick_code_manager'
 require 'helpers'
 require 'aws_credentials'
+require 'postgres_client'
 
 task default: %w/create_tables/
 
@@ -19,6 +20,18 @@ task :create_tables do
   %w/game user kick_code/.each do |table|
     Rake::Task["create_#{table}_table"].execute
   end
+end
+
+task :create_lb_table do
+  CMD = <<HERE
+CREATE TABLE syndicate_leader_board (discord_id bigint primary key not null, minecraft_uuid varchar(36) not null, elo integer not null, wins integer not null default 0, losses integer not null default 0, ties integer not null default 0);
+CREATE UNIQUE INDEX discord_id_unique_idx on syndicate_leader_board(discord_id);
+CREATE UNIQUE INDEX minecraft_uuid_unique_idx on syndicate_leader_board(minecraft_uuid);
+CREATE INDEX wins_idx on syndicate_leader_board(wins);
+CREATE INDEX losses_idx on syndicate_leader_board(losses);
+CREATE INDEX ties_idx on syndicate_leader_board(ties);
+HERE
+  puts $pg_conn.exec(CMD)
 end
 
 task :create_game_table do

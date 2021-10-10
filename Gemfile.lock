@@ -45,6 +45,7 @@ GEM
     method_source (1.0.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -90,6 +91,7 @@ GEM
       rbtree
       set (~> 1.0)
     tilt (2.0.10)
+    timecop (0.9.4)
     webmock (3.13.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -105,12 +107,14 @@ DEPENDENCIES
   bunny
   elo_rating!
   json-schema
+  pg
   pry-byebug
   rake
   rspec
   rspec_junit_formatter
   simplecov
   sinatra
+  timecop
   webmock
 
 BUNDLED WITH
