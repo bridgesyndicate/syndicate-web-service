@@ -15,7 +15,7 @@ phases:
       - bundle config set without development
       - bundle config set path vendor/bundle
       - bundle install
-      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml --exclude-pattern spec/via-stream/games_spec.rb
+      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
     finally:
       - rm -rf vendor/bundle
       - rm -rf creds/
