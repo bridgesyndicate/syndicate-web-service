@@ -30,7 +30,6 @@ def update_leaderboard(batch)
     resw = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
                                                      m.winner.discord_id
                                                    ])
-    puts resw.inspect
     if resw.cmd_tuples == 0
       reswi = $pg_conn.exec_prepared('new_winner', [ m.winner.discord_id,
                                                     m.winner.minecraft_uuid,
@@ -64,4 +63,5 @@ def handler(event:, context:)
     update_leaderboard(batch)
     puts "game #{uuid} updated leaderboard"
   end
+  return true
 end
