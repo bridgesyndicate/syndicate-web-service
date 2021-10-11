@@ -57,11 +57,16 @@ def handler(event:, context:)
     uuid = hash[:dynamodb][:new_image]["game"]["uuid"]
     puts "game #{uuid} event: #{hash[:event_id]}"
     $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
-    batch = compute_elo_changes(hash) if elo_change_present(hash)
-    $ddb_user_manager.batch_update(batch)
-    puts "game #{uuid} saved update user records"
-    update_leaderboard(batch)
-    puts "game #{uuid} updated leaderboard"
+    begin
+      batch = compute_elo_changes(hash) if elo_change_present(hash)
+      $ddb_user_manager.batch_update(batch)
+      puts "game #{uuid} saved update user records"
+      update_leaderboard(batch)
+      puts "game #{uuid} updated leaderboard"
+    rescue Exception => e
+      puts "error: cannot compute elo for #{uuid}"
+      puts e.inspect
+    end
   end
   return true
 end

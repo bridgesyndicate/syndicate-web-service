@@ -251,4 +251,4 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: libpqSo5dot5
-      ContentUri: 's3://syndicate-lambda-layers/2021-10-10-01-lib-pg-layer.zip'
+      ContentUri: 's3://syndicate-lambda-layers/2021-10-10-1633934311-lib-pg-layer.zip'
