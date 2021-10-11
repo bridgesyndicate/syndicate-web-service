@@ -2,6 +2,11 @@
 
 set -e
 
+cat >Dockerfile <<EOF
+FROM public.ecr.aws/lambda/ruby:2.7
+RUN yum install -y unzip postgresql-libs
+EOF
+
 rm -rf lib
 
 docker build -t pg-layer-source -f ./Dockerfile .
