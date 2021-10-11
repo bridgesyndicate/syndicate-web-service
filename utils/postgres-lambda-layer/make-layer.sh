@@ -26,9 +26,3 @@ docker cp dummy:/usr/lib64/libnss3.so lib
 docker rm -f dummy
 
 zip -r $(date +%Y-%m-%d-%s)-lib-pg-layer.zip lib
-
-
-
-
-
-
