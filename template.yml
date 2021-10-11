@@ -201,6 +201,15 @@ Resources:
   DynamoDBProcessGameStreamFunction:
     Type: AWS::Serverless::Function
     Properties:
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-PostgresIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
+        SubnetIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-SubnetLambdaId'
       Layers:
         - !Ref LayerPGLib
       Environment:
