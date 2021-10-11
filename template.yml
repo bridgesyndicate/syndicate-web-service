@@ -201,6 +201,8 @@ Resources:
   DynamoDBProcessGameStreamFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Layers:
+        - !Ref LayerPGLib
       Environment:
         Variables:
           SYNDICATE_ENV: production
@@ -236,8 +238,6 @@ Resources:
         WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_IMAGE
-      Layers:
-        - !Ref LayerPGLib
   LayerPGLib:
     Type: AWS::Serverless::LayerVersion
     Properties:
