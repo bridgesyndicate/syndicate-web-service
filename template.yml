@@ -242,8 +242,4 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: libpqSo5dot5
-      Content:
-        S3Bucket: syndicate-lambda-layers
-        S3Key: 2021-10-10-01-lib-pg-layer.zip
-      CompatibleRuntimes:
-        - ruby2.7
+      ContentUri: 's3://S3Bucket: syndicate-lambda-layers/2021-10-10-01-lib-pg-layer.zip'
