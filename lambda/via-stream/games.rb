@@ -1,5 +1,6 @@
 load 'git_commit_sha.rb'
 require 'aws-sdk-dynamodbstreams'
+require 'elo_rating'
 require 'json'
 require 'lib/aws_credentials'
 require 'lib/game'
