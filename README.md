@@ -40,6 +40,15 @@ rspec ./spec/controllers/foo_spec.rb:10
 
 ```
 
+Local codebuild testing is a godsend:
+```
+docker build -t aws/codebuild/standard:5.0 .
+docker pull amazon/aws-codebuild-local:latest --disable-content-trust=false
+wget https://raw.githubusercontent.com/aws/aws-codebuild-docker-images/master/local_builds/codebuild_build.sh
+chmod +x codebuild_build.sh
+./codebuild_build.sh -i aws/codebuild/standard:5.0 -a ./artifacts -s ~/syndicate-web-service/
+```
+
 
 ### To start the local server:
 ```

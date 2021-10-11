@@ -70,3 +70,28 @@ def seeded_random_kick_code(seed)
   16.times.map{(('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a)
                  .sample}.join
 end
+
+def build_test_json(opts={})
+  {
+    'TableName' => 'syndicate_test_users',
+    'Key' => {
+      'minecraft_uuid': {
+                          'S': opts[:uuid]
+                        }
+    },
+    'UpdateExpression': 'SET #updated_at = :now, #elo = :elo',
+   'ExpressionAttributeNames': {
+                                 '#updated_at': 'updated_at',
+                                '#elo': 'elo'
+                               },
+   'ExpressionAttributeValues': {
+                                  ':now': {
+                                            'S': '2021-10-19T22:37:00Z'
+                                          },
+                                 ':elo': {
+                                           'N': opts[:elo]
+                                         }
+                                },
+   'ReturnValues': 'ALL_NEW'
+  }.to_json
+end
