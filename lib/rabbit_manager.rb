@@ -6,7 +6,8 @@ class RabbitClient
   def initialize()
     if ENV['RABBIT_URI']
       props = AMQ::Settings.parse_amqp_url(ENV['RABBIT_URI'])
-      props.merge!(user: 'AmazonMqUsername', pass: 'AmazonMqPassword', ssl: true)
+      props.merge!(user: 'AmazonMqUsername', pass: 'AmazonMqPassword',
+                   ssl: true, automatic_recovery: true)
       @connection = Bunny.new(props)
     else
       @connection = Bunny.new
