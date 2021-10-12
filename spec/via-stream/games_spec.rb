@@ -4,20 +4,20 @@ require 'lambda/via-stream/games'
 require 'lib/helpers'
 
 RSpec.describe '#games stream' do
-  let(:event) { JSON.parse(File.read('spec/mocks/stream/game-2x2.json')) }
+  let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
 
-  describe 'compute elo changes' do
+  shared_examples 'end-of-match processing' do
     let(:hash) { Aws::DynamoDBStreams::AttributeTranslator
                    .from_event(event).first.to_h
     }
     it 'computes elo changes in pairs' do
-      expect(compute_elo_changes(hash).size).to eq 2
+      expect(compute_elo_changes(hash).size).to eq num_pairs
     end
     it 'computes the right winners' do
-      expect(compute_elo_changes(hash).map {|p| p.loser.discord_name }).to eq ['viceversa', 'ellis']
+      expect(compute_elo_changes(hash).map {|p| p.winner.discord_name }).to eq winners
     end
     it 'computes the right losers' do
-      expect(compute_elo_changes(hash).map {|p| p.winner.discord_name }).to eq ['bdamja', 'ken']
+      expect(compute_elo_changes(hash).map {|p| p.loser.discord_name }).to eq losers
     end
     it 'increases the winners elo' do
       expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
@@ -27,6 +27,30 @@ RSpec.describe '#games stream' do
       expect(compute_elo_changes(hash).map {|p| p.loser.end_elo - p.loser.start_elo })
         .to all(be_negative)
     end
+  end
+
+  describe 'red-wins-2x2' do
+    let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
+    let(:num_pairs) {2}
+    let(:winners) { %w/bdamja ken/ }
+    let(:losers) { %w/viceversa ellis/ }
+    it_behaves_like 'end-of-match processing'
+  end
+
+  describe 'blue-wins-1x1' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game-blue-wins-1x1.json')) }
+    let(:num_pairs) {1}
+    let(:winners) { %w/viceversa/ }
+    let(:losers) { %w/bdamja/ }
+    it_behaves_like 'end-of-match processing'
+  end
+
+  describe 'red-wins-1x1' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game-red-wins-1x1.json')) }
+    let(:num_pairs) {1}
+    let(:winners) { %w/bdamja/ }
+    let(:losers) { %w/viceversa/ }
+    it_behaves_like 'end-of-match processing'
   end
 
   describe 'handler' do
