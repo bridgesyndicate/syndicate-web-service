@@ -8,9 +8,11 @@ require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/object_not_found'
-require 'lib/rabbit_client.rb'
+require 'lib/rabbit_client_factory'
 
 def auth_game_container_metadata_put_handler(event:, context:)
+
+  rabbit_client = RabbitClientFactory.produce
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
@@ -44,7 +46,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
      ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
       container_name = container_ip
       puts "rabbit send_player_to_host #{id} #{container_name} #{container_ip}"
-      $rabbit_client.send_player_to_host(id, container_name, container_ip)
+      rabbit_client.send_player_to_host(id, container_name, container_ip)
     end
   end
 
@@ -53,7 +55,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
     ip: container_ip
   }
   puts "returning status #{status}"
-  $rabbit_client.shutdown
+  rabbit_client.shutdown
   return { statusCode: status,
            headers: headers_list,
            body: ret.to_json

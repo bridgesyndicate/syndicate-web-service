@@ -1,12 +1,12 @@
-require 'lib/rabbit_manager.rb'
-require 'lib/mock_rabbit_manager.rb'
+require 'lib/rabbit_client'
+require 'lib/mock_rabbit_client'
 
 DEFAULT_QUEUE = 'default'
 
 
 class RabbitClientFactory
-  def initialize
-    SYNDICATE_ENV == 'test' ? MockRabbitClient.new() : RabbitClient.new()
+  def self.produce
+    SYNDICATE_ENV == 'test' ? MockRabbitClient.new : RabbitClient.new
   end
 end
 
