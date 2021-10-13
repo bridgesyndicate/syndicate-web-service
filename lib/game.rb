@@ -35,7 +35,9 @@ class Game
   def get_elo_matched_winning_pairs
     red_by_elo.map.with_index do |r, i|
       args = (winner==1) ? [r, blue_by_elo[i]] : [blue_by_elo[i], r]
-      Pair.new(*args)
+      pair = Pair.new(*args)
+      pair.tie = winner == 0
+      pair
     end
   end
 

@@ -44,6 +44,7 @@ def auth_game_put_handler(event:, context:)
   if status == OK
     payload = (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
                ret_obj.attributes['game']['red_team_minecraft_uuids'])
+    puts "warp enqueue_with_delay #{payload.inspect}"
     $sqs_manager.enqueue_with_delay(DELAYED_WARPS, 15, payload.to_json)
   end
 

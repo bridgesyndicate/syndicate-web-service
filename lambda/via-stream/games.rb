@@ -9,9 +9,18 @@ require 'lib/postgres_client'
 require 'lib/sqs_client'
 require 'lib/dynamo_client'
 
-def elo_change_present(hash)
+def elo_change_present?(hash)
   hash[:event_name] == 'MODIFY' and
     !!hash[:dynamodb][:new_image]['game']['game_score']
+end
+
+def ddb_insert?(hash)
+  hash[:event_name] == 'INSERT'
+end
+
+def ddb_task_ip_modify?(hash)
+  hash[:event_name] == 'MODIFY' and
+    !!hash[:dynamodb][:new_image]['game']['taskIP']
 end
 
 def compute_elo_changes(hash)
@@ -55,19 +64,15 @@ def handler(event:, context:)
     .from_event(event)
     .each do |record|
     hash = record.to_h
-    begin
+    unless ddb_insert?(hash) or ddb_task_ip_modify?(hash)
       uuid = hash[:dynamodb][:new_image]["game"]["uuid"]
-      puts "game #{uuid} event: #{hash[:event_id]}"
-      $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
-      batch = compute_elo_changes(hash) if elo_change_present(hash)
+      puts "sending sqs game #{uuid} event: #{hash[:event_id]}"
+      $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json) 
+      batch = compute_elo_changes(hash) if elo_change_present?(hash)
       $ddb_user_manager.batch_update(batch)
       puts "game #{uuid} saved update user records"
       update_leaderboard(batch)
       puts "game #{uuid} updated leaderboard"
-    rescue Exception => e
-      puts "error: cannot compute elo for #{uuid}"
-      puts e.inspect
     end
   end
-  return true
 end

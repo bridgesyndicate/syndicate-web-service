@@ -10,6 +10,7 @@ def handler(event:, context:)
                       .map{|record| JSON.parse(record['body']) }
                       .flatten
   minecraft_uuids.each do |id|
+    puts "warp player to lobby #{id}"
     $rabbit_client.send_player_to_host(id, 'lobby', '')
   end
 end
