@@ -55,7 +55,6 @@ class DynamodbGameManager
         condition_expression: 'attribute_exists(game_uuid)',
         return_values: 'ALL_NEW'
       )
-      puts "(end) update_task_ip(#{game_uuid}, #{taskIP})"
     rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
       ObjectNotFound
     end
