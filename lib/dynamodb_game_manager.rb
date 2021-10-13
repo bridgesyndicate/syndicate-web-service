@@ -45,6 +45,7 @@ class DynamodbGameManager
   end
 
   def update_task_ip(game_uuid, taskIP)
+    puts "(begin) update_task_ip(#{game_uuid}, #{taskIP})"
     begin
       client.update_item(
         table_name: table_name,
@@ -54,6 +55,7 @@ class DynamodbGameManager
         condition_expression: 'attribute_exists(game_uuid)',
         return_values: 'ALL_NEW'
       )
+      puts "(end) update_task_ip(#{game_uuid}, #{taskIP})"
     rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
       ObjectNotFound
     end

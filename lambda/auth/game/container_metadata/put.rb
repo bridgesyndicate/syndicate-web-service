@@ -32,7 +32,6 @@ def auth_game_container_metadata_put_handler(event:, context:)
   container_ip = task_arn # used to be the arn and we would use ec2 and ecs to look up the IP
 
   ret_obj = $ddb_game_manager.update_task_ip(game_uuid, container_ip)
-  puts "updated game #{game} with container_ip #{container_ip}"
 
   if ret_obj == ObjectNotFound
     status = NOT_FOUND
