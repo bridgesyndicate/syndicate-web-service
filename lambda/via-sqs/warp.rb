@@ -13,4 +13,5 @@ def handler(event:, context:)
     puts "warp player #{id} to lobby"
     $rabbit_client.send_player_to_host(id, 'lobby', '')
   end
+  $rabbit_client.shutdown
 end

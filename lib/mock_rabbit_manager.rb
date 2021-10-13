@@ -10,4 +10,7 @@ class MockRabbitClient
   def send_player_to_host(minecraft_uuid, container_name, ip_address)
     {}
   end
+
+  def shutdown
+  end
 end

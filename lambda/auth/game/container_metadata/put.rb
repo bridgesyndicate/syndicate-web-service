@@ -53,6 +53,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
     ip: container_ip
   }
   puts "returning status #{status}"
+  $rabbit_client.shutdown
   return { statusCode: status,
            headers: headers_list,
            body: ret.to_json
