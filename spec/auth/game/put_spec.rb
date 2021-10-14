@@ -9,15 +9,6 @@ RSpec.describe '#auth_game_put' do
     let(:post_body) { File.read('spec/mocks/game/valid-put.json')}
     let(:lambda_result) { auth_game_put_handler(event: event, context: '') }
 
-    before(:each) {
-      response = File.read('spec/mocks/web-mock-sqs-enqueue-delayed_warps.xml')
-      ENV['srand'] = rand(2**32).to_s
-      message = get_srandom_minecraft_uuids.to_json
-      response.sub!('REPLACE_ME', Digest::MD5.hexdigest(message))
-      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_delayed_warps')
-        .to_return(status: 200, body: response, headers: {})
-    }
-
     describe 'for the post response' do
       it 'returns a well-formed response for Lambda' do
         expect(lambda_result.class).to eq Hash

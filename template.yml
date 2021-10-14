@@ -72,8 +72,6 @@ Resources:
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
-        - SQSSendMessagePolicy:
-            QueueName: syndicate_production_delayed_warps
       Handler: lambda/auth/game/put.auth_game_put_handler
       Runtime: ruby2.7
       CodeUri: ./
@@ -171,33 +169,6 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
-  DelayedWarp:
-    Type: AWS::Serverless::Function
-    Properties:
-      VpcConfig:
-        SecurityGroupIds:
-          - !ImportValue
-            'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
-          - !ImportValue
-            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
-        SubnetIds:
-          - !ImportValue
-            'SyndicateVPCAndBroker-SubnetLambdaId'
-      Environment:
-        Variables:
-          SYNDICATE_ENV: production
-          RABBIT_URI: !ImportValue
-            'SyndicateVPCAndBroker-AmqpEndpoint'
-      Handler: lambda/via-sqs/warp.handler
-      Runtime: ruby2.7
-      CodeUri: ./
-      Events:
-        SQSEvent:
-          Type: SQS
-          Properties:
-            Queue: arn:aws:sqs:us-west-2:595508394202:syndicate_production_delayed_warps
-            BatchSize: 1
-            Enabled: true
   DynamoDBProcessGameStreamFunction:
     Type: AWS::Serverless::Function
     Properties:

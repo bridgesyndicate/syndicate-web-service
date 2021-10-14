@@ -75,7 +75,7 @@ RSpec.describe '#game_post' do
       describe 'for a queue-generated game, two accepted players' do
         before(:each) {
           ENV['srand'] = "10"
-          response = File.read('spec/mocks/web-mock-sqs-enqueue-delayed_warps.xml')
+          response = File.read('spec/mocks/web-mock-sqs-enqueue-response.xml')
           response.sub!('REPLACE_ME', '0b9246244abe9701b361e2199479f263')
           stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
             .to_return(status: 200, body: response, headers: {})
