@@ -1,0 +1,189 @@
+{
+  "Records": [
+    {
+      "eventID": "7b348c27f877a5cb2feca840422d5295",
+      "eventName": "MODIFY",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-west-2",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1633743479,
+        "Keys": {
+          "game_uuid": {
+            "S": "47d23b54-1d16-4c91-ba24-67fb56bc3e61"
+          }
+        },
+        "NewImage": {
+          "game_uuid": {
+            "S": "e2b54bee-3689-4112-bf5a-453f41ce793f"
+          },
+          "updated_at": {
+            "S": "2021-10-14T04:36:37Z"
+          },
+          "created_at": {
+            "S": "2021-10-14T04:36:37Z"
+          },
+          "game": {
+            "M": {
+              "game_started_at": {
+                "N": "0"
+              },
+              "required_players": {
+                "N": "2"
+              },
+              "game_score": {
+                "M": {
+                  "red": {
+                    "N": "0"
+                  },
+                  "blue": {
+                    "N": "0"
+                  }
+                }
+              },
+              "queued_via": {
+                "S": "queue match"
+              },
+              "uuid": {
+                "S": "e2b54bee-3689-4112-bf5a-453f41ce793f"
+              },
+              "blue_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "417766998471213061"
+                  }
+                ]
+              },
+              "elo_before_game": {
+                "M": {
+                  "417766998471213061": {
+                    "N": "991"
+                  },
+                  "246107858712788993": {
+                    "N": "1000"
+                  }
+                }
+              },
+              "player_map": {
+                "M": {
+                  "vice9": {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                }
+              },
+              "final_game_length_formatted": {
+                "S": ""
+              },
+              "state": {
+                "S": "ABORTED"
+              },
+              "joined_players": {
+                "L": [
+                  {
+                    "S": "vice9"
+                  }
+                ]
+              },
+              "goals_to_win": {
+                "N": "1"
+              },
+              "red_team_discord_names": {
+                "L": [
+                  {
+                    "S": "bdamja"
+                  }
+                ]
+              },
+              "goals_scored": {
+                "L": []
+              },
+              "blue_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                ]
+              },
+              "queued_at": {
+                "S": "2021-10-14T04:36:36Z"
+              },
+              "red_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  }
+                ]
+              },
+              "game_ended_at": {
+                "N": "0"
+              },
+              "kills_registered": {
+                "L": []
+              },
+              "number_of_joined_players": {
+                "N": "1"
+              },
+              "remaining_time_in_seconds": {
+                "N": "-1"
+              },
+              "blue_team_discord_names": {
+                "L": [
+                  {
+                    "S": "viceversa"
+                  }
+                ]
+              },
+              "accepted_by_discord_ids": {
+                "L": [
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2021-10-14T04:36:36Z"
+                      },
+                      "discord_id": {
+                        "S": "417766998471213061"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2021-10-14T04:36:36Z"
+                      },
+                      "discord_id": {
+                        "S": "246107858712788993"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dequeued_at": {
+                "S": "2021-10-14T04:36:38.105Z"
+              },
+              "remaining_time_formatted": {
+                "S": ""
+              },
+              "red_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "246107858712788993"
+                  }
+                ]
+              },
+              "game_length_in_seconds": {
+                "N": "120"
+              },
+              "task_ip": {
+                "S": "10.0.6.255"
+              }
+            }
+          }
+        },
+        "SequenceNumber": "9689000000000016739044563",
+        "SizeBytes": 5397,
+        "StreamViewType": "NEW_IMAGE"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:us-west-2:595508394202:table/syndicate_production_games/stream/2021-10-06T23:13:58.394"
+    }
+  ]
+}

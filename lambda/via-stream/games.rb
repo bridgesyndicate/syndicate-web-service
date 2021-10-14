@@ -9,9 +9,10 @@ require 'lib/postgres_client'
 require 'lib/sqs_client'
 require 'lib/dynamo_client'
 
-def elo_change_present?(hash)
+def game_ended_with_score?(hash)
   hash[:event_name] == 'MODIFY' and
-    !!hash[:dynamodb][:new_image]['game']['game_score']
+    !!hash[:dynamodb][:new_image]['game']['game_score'] and
+    hash[:dynamodb][:new_image]['game']['state'] == 'AFTER_GAME'
 end
 
 def ddb_insert?(hash)
@@ -66,13 +67,15 @@ def handler(event:, context:)
     hash = record.to_h
     unless ddb_insert?(hash) or ddb_task_ip_modify?(hash)
       uuid = hash[:dynamodb][:new_image]["game"]["uuid"]
-      puts "sending sqs game #{uuid} event: #{hash[:event_id]}"
-      $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json) 
-      batch = compute_elo_changes(hash) if elo_change_present?(hash)
-      $ddb_user_manager.batch_update(batch)
-      puts "game #{uuid} saved update user records"
-      update_leaderboard(batch)
-      puts "game #{uuid} updated leaderboard"
+      if game_ended_with_score?(hash)
+        puts "sending sqs game #{uuid} event: #{hash[:event_id]}"
+        $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
+        batch = compute_elo_changes(hash)
+        $ddb_user_manager.batch_update(batch)
+        puts "game #{uuid} saved update user records"
+        update_leaderboard(batch)
+        puts "game #{uuid} updated leaderboard"
+      end
     end
   end
 end

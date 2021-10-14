@@ -123,5 +123,12 @@ RSpec.describe '#games stream' do
         handler(event: event, context: {})
       end
     end
+    describe 'does not send sqs nor update elo when the game is aborted' do
+      let(:event) { JSON.parse(File.read'spec/mocks/stream/game-modify-with-abort.json') }
+      it '' do
+        expect($sqs_manager).to_not receive(:enqueue)
+        handler(event: event, context: {})
+      end
+    end
   end
 end
