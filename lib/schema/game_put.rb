@@ -152,7 +152,8 @@ class GamePutSchema
           type: :object
         },
         map_name: {
-          type: :string
+          type: :string,
+          required: false
         }
       }
     }

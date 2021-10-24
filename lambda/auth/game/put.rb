@@ -10,19 +10,16 @@ require 'lib/sqs_client.rb'
 require 'ostruct'
 
 def auth_game_put_handler(event:, context:)
-
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
     "X-git-commit-sha" => $my_git_commit_sha
   }
 
   payload = event['body']
-  status = JSON::Validator.validate(GamePutSchema.schema, payload,
-                                    :strict => true
+  status = JSON::Validator.validate(GamePutSchema.schema, payload
                                    ) ? OK : BAD_REQUEST
 
-  puts JSON::Validator.fully_validate(GamePutSchema.schema, payload,
-                                    :strict => true
+  puts JSON::Validator.fully_validate(GamePutSchema.schema, payload
                                 ) if status == BAD_REQUEST && SYNDICATE_ENV == 'development'
   return { statusCode: status,
            headers: headers_list,
