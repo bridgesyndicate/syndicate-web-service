@@ -150,6 +150,9 @@ class GamePutSchema
         },
         elo_before_game: {
           type: :object
+        },
+        map_name: {
+          type: :string
         }
       }
     }

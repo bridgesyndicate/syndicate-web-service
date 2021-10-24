@@ -9,6 +9,17 @@ docker run -d -p 8000:8000 amazon/dynamodb-local
 SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
 ```
 
+You need a local rabbit mq in docker:
+```
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 rabbitmq:3
+```
+
+You need a local postgres server in docker:
+
+```
+docker run -d -p5432:5432 -e POSTGRES_USER=AmazonPgUsername -e POSTGRES_PASSWORD=AmazonPgPassword -e POSTGRES_HOST_AUTH_METHOD=trust postgres:12.8
+```
+
 GUI: `npm install -g dynamodb-admin` then
 ```
 SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar dynamodb-admin

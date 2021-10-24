@@ -33,7 +33,7 @@ class RabbitClient
     # global, "$rabbit_client"
     # e.g.     "this connection is not open. Was Bunny::Session#start invoked? Is automatic recovery enabled?"
     # and "read would block", "Function<OpenSSL::SSL::SSLErrorWaitReadable>"
-    channel.close
-    connection.close
+    channel.close if channel
+    connection.close if connection
   end
 end
