@@ -36,7 +36,7 @@ class Game
     red_by_elo.map.with_index do |r, i|
       args = (winner==1) ? [r, blue_by_elo[i]] : [blue_by_elo[i], r]
       pair = Pair.new(*args)
-      pair.tie = winner == 0
+      pair.set_tie if winner == 0
       pair
     end
   end

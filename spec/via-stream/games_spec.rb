@@ -65,11 +65,20 @@ RSpec.describe '#games stream' do
     let(:winners) { %w/bdamja ken/ }
     let(:losers) { %w/viceversa ellis/ }
     it_behaves_like 'end-of-match processing for all'
-    it 'does not change any elos' do
+    it 'changes elos by half' do
       expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
-        .to all(eq 0)
-      expect(compute_elo_changes(hash).map {|p| p.loser.end_elo - p.loser.start_elo })
-        .to all(eq 0)
+        .to eq [-9,-8] # see note in games.rb about who is the winner, sorry.
+    end
+  end
+
+    describe 'tie-1x1' do
+    let(:event) { JSON.parse(File.read'spec/mocks/stream/game-tie-1x1.json') }
+    let(:num_pairs) {1}
+    let(:winners) { %w/bdamja/ }
+    let(:losers) { %w/viceversa/ }
+    it 'changes elos by half' do
+      expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
+        .to eq [-12]
     end
   end
 

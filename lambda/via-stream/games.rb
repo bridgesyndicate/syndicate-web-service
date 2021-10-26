@@ -28,10 +28,18 @@ def compute_elo_changes(hash)
   game = Game.new(hash[:dynamodb][:new_image]['game'])
   pairs = game.get_elo_matched_winning_pairs
   pairs.each do |pair|
-    match = EloRating::Match.new
-    match.add_player(rating: pair.winner.start_elo, winner: true)
-    match.add_player(rating: pair.loser.start_elo)
-    pair.update_elo(*match.updated_ratings)
+    if pair.tie
+      adjust = EloRating.rating_adjustment(
+        EloRating.expected_score(pair.loser.start_elo,
+                                 pair.winner.start_elo), 0)/2
+      adjust = adjust.round
+      pair.update_elo(adjust, -adjust)
+    else
+      match = EloRating::Match.new
+      match.add_player(rating: pair.winner.start_elo, winner: true)
+      match.add_player(rating: pair.loser.start_elo)
+      pair.update_elo(*match.updated_ratings)
+    end
   end
 end
 
