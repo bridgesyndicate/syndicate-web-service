@@ -46,24 +46,44 @@ end
 def update_leaderboard(batch)
   PostgresClient.instance.prepare
   batch.each do |m|
-    resw = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
-                                                     m.winner.discord_id
-                                                   ])
-    if resw.cmd_tuples == 0
-      reswi = $pg_conn.exec_prepared('new_winner', [ m.winner.discord_id,
+    if m.tie
+      resw = $pg_conn.exec_prepared('update_tie', [ m.winner.end_elo,
+                                                    m.winner.discord_id
+                                                  ])
+      if resw.cmd_tuples == 0
+        reswi = $pg_conn.exec_prepared('new_tie', [ m.winner.discord_id,
                                                     m.winner.minecraft_uuid,
                                                     m.winner.end_elo,
-                                                   ])
-    end
-
-    resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
+                                                  ])
+      end
+      resw = $pg_conn.exec_prepared('update_tie', [ m.loser.end_elo,
                                                     m.loser.discord_id
                                                   ])
-    if resl.cmd_tuples == 0
-      resli = $pg_conn.exec_prepared('new_loser', [ m.loser.discord_id,
+      if resw.cmd_tuples == 0
+        reswi = $pg_conn.exec_prepared('new_tie', [ m.loser.discord_id,
                                                     m.loser.minecraft_uuid,
                                                     m.loser.end_elo,
-                                                   ])
+                                                  ])
+      end
+    else
+      resw = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
+                                                       m.winner.discord_id
+                                                     ])
+      if resw.cmd_tuples == 0
+        reswi = $pg_conn.exec_prepared('new_winner', [ m.winner.discord_id,
+                                                       m.winner.minecraft_uuid,
+                                                       m.winner.end_elo,
+                                                     ])
+      end
+      resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
+                                                      m.loser.discord_id
+                                                    ])
+      if resl.cmd_tuples == 0
+        resli = $pg_conn.exec_prepared('new_loser', [ m.loser.discord_id,
+                                                      m.loser.minecraft_uuid,
+                                                      m.loser.end_elo,
+                                                    ])
+      end
     end
   end
 end

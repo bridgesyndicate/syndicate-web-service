@@ -32,11 +32,16 @@ class PostgresClient
                                     'set elo=$1, wins=wins+1 where discord_id=$2')
       conn.prepare('update_loser', 'UPDATE syndicate_leader_board ' +
                                    'set elo=$1, losses=losses+1 where discord_id=$2')
+      conn.prepare('update_tie', 'UPDATE syndicate_leader_board ' +
+                                   'set elo=$1, ties=ties+1 where discord_id=$2')
       conn.prepare('new_winner', 'INSERT INTO syndicate_leader_board ' +
                                  '(discord_id, minecraft_uuid, elo, wins) '+
                                  'values ($1, $2, $3, 1)')
       conn.prepare('new_loser', 'INSERT INTO syndicate_leader_board ' +
                                 '(discord_id, minecraft_uuid, elo, losses) '+
+                                'values ($1, $2, $3, 1)')
+      conn.prepare('new_tie', 'INSERT INTO syndicate_leader_board ' +
+                                '(discord_id, minecraft_uuid, elo, ties) '+
                                 'values ($1, $2, $3, 1)')
       @prepared = true
     end
@@ -44,15 +49,18 @@ class PostgresClient
 
   class Double
     def exec_prepared(*args)
-      Tuples.new
+      Tuples.new(1)
     end
     def prepare(*args)
     end
   end
 
   class Tuples
+    def initialize rows
+      @rows = rows
+    end
     def cmd_tuples
-      1
+      @rows
     end
   end
 end

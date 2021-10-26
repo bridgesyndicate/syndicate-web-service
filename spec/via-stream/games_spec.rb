@@ -89,6 +89,76 @@ RSpec.describe '#games stream' do
       handler(event: event, context: {})
     end
   end
+  describe 'postgres' do
+    describe 'without a tie' do
+      it 'update the database when winners and loser exist' do
+        expect($sqs_manager).to receive(:enqueue).once
+        expect($ddb_user_manager).to receive(:batch_update).once
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_winner', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(1)).exactly(2)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_loser', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(1)).exactly(2)
+        handler(event: event, context: {})
+      end
+      it 'creates users' do
+        expect($sqs_manager).to receive(:enqueue).once
+        expect($ddb_user_manager).to receive(:batch_update).once
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_winner', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('new_winner', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_loser', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('new_loser', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+        handler(event: event, context: {})
+      end
+    end
+    describe 'with a tie' do
+      let(:event) { JSON.parse(File.read'spec/mocks/stream/game-tie-1x1.json') }
+      it 'update the existing users' do
+        expect($sqs_manager).to receive(:enqueue).once
+        expect($ddb_user_manager).to receive(:batch_update).once
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_tie', any_args)
+                              .and_return(PostgresClient::Tuples.new(1)).exactly(2)
+        handler(event: event, context: {})
+      end
+      it 'creates users' do
+        expect($sqs_manager).to receive(:enqueue).once
+        expect($ddb_user_manager).to receive(:batch_update).once
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_tie', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(1)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('new_tie', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(1)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('update_tie', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(1)
+        expect($pg_conn).to receive(:exec_prepared)
+                              .with('new_tie', any_args)
+                              .ordered
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(1)
+        handler(event: event, context: {})
+      end
+    end
+  end
   describe 'DynamoDDB calls' do
     before(:each) {
       # https://github.com/travisjeffery/timecop/issues/41
