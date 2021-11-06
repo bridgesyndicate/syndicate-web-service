@@ -92,13 +92,15 @@ def handler(event:, context:)
   Aws::DynamoDBStreams::AttributeTranslator
     .from_event(event)
     .each do |record|
-    hash = record.to_h
-    unless ddb_insert?(hash) or ddb_task_ip_modify?(hash)
-      uuid = hash[:dynamodb][:new_image]["game"]["uuid"]
-      if game_ended_with_score?(hash)
-        puts "sending sqs game #{uuid} event: #{hash[:event_id]}"
-        $sqs_manager.enqueue(PLAYER_MESSAGES, hash.to_json)
-        batch = compute_elo_changes(hash)
+    game_hash = record.to_h
+    unless ddb_insert?(game_hash) or ddb_task_ip_modify?(game_hash)
+      uuid = game_hash[:dynamodb][:new_image]["game"]["uuid"]
+      if game_ended_with_score?(game_hash)
+        batch = compute_elo_changes(game_hash)
+        elo_info = Oj::dump(batch)
+        game_hash[:dynamodb][:new_image]["game"]["elo_info"] = JSON.parse(elo_info)
+        puts "sending sqs game #{uuid} event: #{game_hash[:event_id]}"
+        $sqs_manager.enqueue(PLAYER_MESSAGES, game_hash.to_json)
         $ddb_user_manager.batch_update(batch)
         puts "game #{uuid} saved update user records"
         update_leaderboard(batch)

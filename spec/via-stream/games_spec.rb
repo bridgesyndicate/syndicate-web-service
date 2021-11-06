@@ -96,6 +96,17 @@ RSpec.describe '#games stream' do
       handler(event: event, context: {})
     end
   end
+
+  describe 'sqs message' do
+    it 'contains the elo changes' do
+      allow($ddb_user_manager).to receive(:batch_update)
+      expect($sqs_manager).to receive(:enqueue)
+                                .with('player_messages',
+                                      File.read('spec/mocks/stream/sqs-with-elo.json').chop)
+      handler(event: event, context: {})
+    end
+  end
+
   describe 'postgres' do
     describe 'without a tie' do
       it 'update the database when winners and loser exist' do

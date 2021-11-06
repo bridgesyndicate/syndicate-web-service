@@ -8,6 +8,7 @@ gem 'aws-sdk-sqs'
 gem 'bunny'
 gem 'elo_rating'
 gem 'json-schema'
+gem 'oj'
 gem 'pg', '~> 0.18.4'
 gem 'pry-byebug'
 

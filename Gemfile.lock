@@ -39,6 +39,7 @@ GEM
     method_source (1.0.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    oj (3.13.9)
     pg (0.18.4)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -101,6 +102,7 @@ DEPENDENCIES
   bunny
   elo_rating
   json-schema
+  oj
   pg (~> 0.18.4)
   pry-byebug
   rake
