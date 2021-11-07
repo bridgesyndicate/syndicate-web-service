@@ -5,6 +5,7 @@ SimpleCov.start
 
 ENV['SYNDICATE_ENV'] = 'test'
 ENV['AWS_REGION'] = 'us-east-1'
+ENV['TZ'] = 'UTC'
 
 Bundler.require(:default, 'test')
 
@@ -14,13 +15,13 @@ $LOAD_PATH.unshift(root) unless $LOAD_PATH.include?(root)
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 # WebMock.allow_net_connect!
+RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = nil
 
 RSpec.configure do |config|
   config.before :example do |x|
     $example_name = x.metadata[:full_description]
   end
 end
-
 
 def webmock_log_request
   WebMock.after_request do |req, response|
@@ -34,8 +35,6 @@ def webmock_log_request
     puts response.inspect
   end
 end
-
-
 
 def get_srandom_minecraft_uuids
   srand(ENV['srand'].to_i)
