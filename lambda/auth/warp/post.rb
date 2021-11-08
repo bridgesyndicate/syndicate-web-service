@@ -3,8 +3,11 @@ require 'json'
 require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
+require 'lib/rabbit_client_factory'
 
 def auth_warp_post_handler(event:, context:)
+
+  rabbit_client = RabbitClientFactory.produce
 
   headers_list = {
     "Access-Control-Allow-Origin" => "*",
@@ -41,7 +44,6 @@ def auth_warp_post_handler(event:, context:)
   end
 
   puts "auth/warp/post rabbit send_player_to_host #{minecraft_uuid} #{task_ip}"
-  rabbit_client = RabbitClientFactory.produce
   rabbit_client.send_player_to_host(minecraft_uuid, task_ip, task_ip)
 
   return { statusCode: status,
