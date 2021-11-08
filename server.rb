@@ -11,6 +11,7 @@ require 'lambda/auth/game/put'
 require 'lambda/auth/register/by-kick-code/post'
 require 'lambda/auth/user/by-discord-id/get'
 require 'lambda/auth/user/by-minecraft-uuid/get'
+require 'lambda/auth/warp/post'
 require 'pry'
 require 'sinatra'
 require 'sinatra_shim/auth/game/accept/post'
@@ -20,6 +21,7 @@ require 'sinatra_shim/auth/game/put'
 require 'sinatra_shim/auth/register/by-kick-code/post'
 require 'sinatra_shim/auth/user/by-discord-id/get'
 require 'sinatra_shim/auth/user/by-minecraft-uuid/get'
+require 'sinatra_shim/auth/warp/post'
 
 helpers AuthGameAcceptPost
 helpers AuthGameContainerMetadataPut
@@ -28,6 +30,7 @@ helpers AuthGamePut
 helpers AuthRegisterByKickCodePost
 helpers AuthUserByDiscordIdGet
 helpers AuthUserByMinecraftUuidGet
+helpers AuthWarp
 
 set :bind, '0.0.0.0'
 
@@ -86,4 +89,13 @@ post '/auth/game/accept/*' do
     }
   }
   auth_game_accept_post(event)
+end
+
+post '/auth/warp/by-discord-id/*' do
+  event = {
+    'pathParameters' => {
+      'proxy' =>  "#{params[:splat][0]}"
+    }
+  }
+  auth_warp_post(event)
 end

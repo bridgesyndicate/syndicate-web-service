@@ -169,6 +169,28 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
+  AuthWarpPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_games
+      Handler: lambda/auth/warp/post.auth_warp_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/warp/by-discord-id/{proxy+}
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
   DynamoDBProcessGameStreamFunction:
     Type: AWS::Serverless::Function
     Properties:

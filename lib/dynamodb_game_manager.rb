@@ -118,13 +118,13 @@ class DynamodbGameManager
     ret
   end
 
-  def get(pile_uuid) ##uid is a reserved word
+  def get(game_uuid)
     client.query(
       {
         table_name: table_name,
-        key_condition_expression: "pile_uuid = :pile_uuid",
+        key_condition_expression: "game_uuid = :game_uuid",
         expression_attribute_values: {
-          ":pile_uuid" => pile_uuid
+          ":game_uuid" => game_uuid
         }
       }
     )
