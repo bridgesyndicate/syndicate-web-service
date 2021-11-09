@@ -72,13 +72,13 @@ end
 task :test_post do
   # see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Sigv4/Signer.html
   # see https://docs.aws.amazon.com/apigateway/api-reference/signing-requests/
-  body = File.read('./spec/mocks/game/valid-post.json')
-  BASE_URL = 'https://knopfnsxoh.execute-api.us-west-2.amazonaws.com/Prod/auth/game'
+  body = File.read('./spec/mocks/empty-post.json')
+  BASE_URL = 'https://knopfnsxoh.execute-api.us-west-2.amazonaws.com/Prod/auth/warp/by-discord-id/240177490906054658/to-game/f732edb6-f984-4bd7-b3ba-e60444c0d8f7'
   signer = Aws::Sigv4::Signer.new(
                                   service: 'execute-api',
                                   region: 'us-west-2',
-                                  access_key_id: 'AKIAYVJYQ7DNBK4E3CVM',
-                                  secret_access_key: '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'
+                                  access_key_id: ENV['DEV_AWS_ACCESS_KEY_ID'],
+                                  secret_access_key: ENV['DEV_AWS_SECRET_KEY']
                                   )
 
   signature = signer.sign_request(
@@ -94,7 +94,7 @@ task :test_post do
   header_list.each do |header|
     req[header] = signature.headers[header]
   end
-  req.body = File.read('./spec/mocks/game/valid-post.json')
+  req.body = body
   res = https.request(req)
   puts "Response #{res.code} #{res.message}: #{res.body}"
 end

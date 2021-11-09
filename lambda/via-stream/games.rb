@@ -8,7 +8,6 @@ require 'lib/helpers'
 require 'lib/postgres_client'
 require 'lib/sqs_client'
 require 'lib/dynamo_client'
-require 'oj'
 
 def game_ended_with_score?(hash)
   hash[:event_name] == 'MODIFY' and
@@ -98,7 +97,7 @@ def handler(event:, context:)
       uuid = game_hash[:dynamodb][:new_image]["game"]["uuid"]
       if game_ended_with_score?(game_hash)
         batch = compute_elo_changes(game_hash)
-        elo_info = Oj::dump(batch)
+        elo_info = batch.to_json
         game_hash[:dynamodb][:new_image]["game"]["elo_info"] = JSON.parse(elo_info)
         puts "sending sqs game #{uuid} event: #{game_hash[:event_id]}"
         $sqs_manager.enqueue(PLAYER_MESSAGES, game_hash.to_json)
