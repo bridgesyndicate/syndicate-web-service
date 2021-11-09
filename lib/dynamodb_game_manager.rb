@@ -122,6 +122,7 @@ class DynamodbGameManager
     client.query(
       {
         table_name: table_name,
+        consistent_read: true,
         key_condition_expression: "game_uuid = :game_uuid",
         expression_attribute_values: {
           ":game_uuid" => game_uuid
