@@ -8,6 +8,7 @@ require 'lib/helpers'
 require 'lib/postgres_client'
 require 'lib/sqs_client'
 require 'lib/dynamo_client'
+require 'oj'
 
 def game_ended_with_score?(hash)
   hash[:event_name] == 'MODIFY' and
