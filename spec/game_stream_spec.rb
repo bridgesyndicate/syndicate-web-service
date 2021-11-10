@@ -25,6 +25,16 @@ describe 'GameStream' do
       expect(JSON.parse(game_stream.to_json).class).to be Hash
     end
   end
+  context 'added task ip' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/updated-task-ip.json')) }
+    let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
+                                         .from_event(event).first)
+    }
+    it 'parses as a task_ip update event' do
+      expect(game_stream.ddb_task_ip_modify?).to eq true
+    end
+
+  end
   context 'finished game' do
     let(:event) { JSON.parse(File.read('spec/mocks/stream/game-red-wins-2x2.json')) }
     let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
