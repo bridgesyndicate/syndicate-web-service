@@ -1,33 +1,40 @@
 load 'spec_helper.rb'
+require 'lib/helpers'
 require 'timecop'
 require 'lambda/via-stream/games'
-require 'lib/helpers'
+require 'lib/game_stream'
 
 RSpec.describe '#games stream' do
   let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
-  let(:hash) { Aws::DynamoDBStreams::AttributeTranslator
-                 .from_event(event).first.to_h
+  let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
+                                       .from_event(event).first)
   }
 
   shared_examples 'end-of-match processing for all' do
+    before() do
+      game_stream.compute_elo_changes
+    end
     it 'computes elo changes in pairs' do
-      expect(compute_elo_changes(hash).size).to eq num_pairs
+      expect(game_stream.batch.size).to eq num_pairs
     end
   end
 
   shared_examples 'end-of-match processing for non-ties' do
+    before() do
+      game_stream.compute_elo_changes
+    end
     it 'computes the right winners' do
-      expect(compute_elo_changes(hash).map {|p| p.winner.discord_name }).to eq winners
+      expect(game_stream.batch.map {|p| p.winner.discord_name }).to eq winners
     end
     it 'computes the right losers' do
-      expect(compute_elo_changes(hash).map {|p| p.loser.discord_name }).to eq losers
+      expect(game_stream.batch.map {|p| p.loser.discord_name }).to eq losers
     end
     it 'increases the winners elo' do
-      expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
+      expect(game_stream.batch.map {|p| p.winner.end_elo - p.winner.start_elo })
         .to all(be_positive)
     end
     it 'decreases the losers elo' do
-      expect(compute_elo_changes(hash).map {|p| p.loser.end_elo - p.loser.start_elo })
+      expect(game_stream.batch.map {|p| p.loser.end_elo - p.loser.start_elo })
         .to all(be_negative)
     end
   end
@@ -65,8 +72,11 @@ RSpec.describe '#games stream' do
     let(:winners) { %w/bdamja ken/ }
     let(:losers) { %w/viceversa ellis/ }
     it_behaves_like 'end-of-match processing for all'
+    before() do
+      game_stream.compute_elo_changes
+    end
     it 'changes elos by half' do
-      expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
+      expect(game_stream.batch.map {|p| p.winner.end_elo - p.winner.start_elo })
         .to eq [9,8] # see note in games.rb about who is the winner, sorry.
     end
   end
@@ -76,14 +86,17 @@ RSpec.describe '#games stream' do
     let(:num_pairs) {1}
     let(:winners) { %w/bdamja/ }
     let(:losers) { %w/viceversa/ }
+    before() do
+      game_stream.compute_elo_changes
+    end
     it 'changes elos by half' do
-      expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
+      expect(game_stream.batch.map {|p| p.winner.end_elo - p.winner.start_elo })
         .to eq [12]
     end
     describe 'another tie-1x1' do
       let(:event) { JSON.parse(File.read'spec/mocks/stream/another-game-tie-1x1.json') }
       it 'changes elos by half' do
-        expect(compute_elo_changes(hash).map {|p| p.winner.end_elo - p.winner.start_elo })
+        expect(game_stream.batch.map {|p| p.winner.end_elo - p.winner.start_elo })
           .to eq [7]
       end
     end
