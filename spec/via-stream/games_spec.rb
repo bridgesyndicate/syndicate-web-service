@@ -220,16 +220,16 @@ RSpec.describe '#games stream' do
       handler(event: event, context: {})
     end
     describe 'does not enqueue a message for a newly inserted dynamo record' do
-      let(:event) { JSON.parse(File.read'spec/mocks/stream/game-insert.json') }
-      it '' do
+      let(:event) { JSON.parse(File.read'spec/mocks/stream/newly-queued-1x1.json') }
+      it 'does not queue a sqs' do
         expect($sqs_manager).to_not receive(:enqueue)
         handler(event: event, context: {})
       end
     end
-    describe 'does not enqueue a message when the game update its task ip' do
-      let(:event) { JSON.parse(File.read'spec/mocks/stream/game-modify-with-task-id.json') }
-      it '' do
-        expect($sqs_manager).to_not receive(:enqueue)
+    describe 'enqueues a message when the game update its task ip' do
+      let(:event) { JSON.parse(File.read'spec/mocks/stream/updated-task-ip.json') }
+      it 'sends a message' do
+        expect($sqs_manager).to receive(:enqueue).once
         handler(event: event, context: {})
       end
     end

@@ -15,7 +15,7 @@ phases:
       - bundle config set without development
       - bundle config set path vendor/bundle
       - bundle install
-      - bundle exec rspec spec/ --format RspecJunitFormatter --out out/report.xml
+      - bundle exec rspec -fd spec/ --format RspecJunitFormatter --out out/report.xml
     finally:
       - rm -rf vendor/bundle
       - rm -rf creds/
