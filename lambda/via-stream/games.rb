@@ -1,10 +1,10 @@
 load 'git_commit_sha.rb'
+require 'lib/helpers'
 require 'aws-sdk-dynamodbstreams'
 require 'elo_rating'
 require 'json'
 require 'lib/aws_credentials'
 require 'lib/game_stream'
-require 'lib/helpers'
 require 'lib/sqs_client'
 require 'lib/dynamo_client'
 
