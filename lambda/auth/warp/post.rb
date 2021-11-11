@@ -43,6 +43,8 @@ def auth_warp_post_handler(event:, context:)
     task_ip = game.items.first['game']['task_ip']
   end
 
+  raise 'task ip is empty' if task_ip.nil?
+
   puts "auth/warp/post rabbit send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
   rabbit_client.send_player_to_host(minecraft_uuid, task_ip, task_ip)
 
