@@ -20,7 +20,7 @@ class GameStream
     game_hash[:event_name] == 'MODIFY' and
       !game_ended_with_score? and
       !game_hash[:dynamodb][:new_image]['game']['state'] and # this is a quirk of the way we update, should be "Before_game"
-      !!game_hash[:dynamodb][:new_image]['game']['taskIP']
+      !!game_hash[:dynamodb][:new_image]['game']['task_ip']
   end
 
   def event_id

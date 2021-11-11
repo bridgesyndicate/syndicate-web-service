@@ -25,7 +25,7 @@
               "uuid": {
                 "S": "26ccc40d-710d-4b78-9840-ee25b30e9831"
               },
-              "taskIP": {
+              "task_ip": {
                 "S": "10.2.2.3"
               },
               "blue_team_discord_ids": {

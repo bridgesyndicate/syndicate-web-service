@@ -44,14 +44,14 @@ class DynamodbGameManager
     client.create_table(schema.merge({ table_name: table_name }))
   end
 
-  def update_task_ip(game_uuid, taskIP)
-    puts "(begin) update_task_ip(#{game_uuid}, #{taskIP})"
+  def update_task_ip(game_uuid, task_ip)
+    puts "(begin) update_task_ip(#{game_uuid}, #{task_ip})"
     begin
       client.update_item(
         table_name: table_name,
         key: { "game_uuid": game_uuid },
-        update_expression: 'SET game.taskIP=:pVal',
-        expression_attribute_values: { ':pVal' => taskIP },
+        update_expression: 'SET game.task_ip=:pVal',
+        expression_attribute_values: { ':pVal' => task_ip },
         condition_expression: 'attribute_exists(game_uuid)',
         return_values: 'ALL_NEW'
       )
