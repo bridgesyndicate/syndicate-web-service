@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 libpath = File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
 $LOAD_PATH.unshift(libpath) unless $LOAD_PATH.include?(libpath)
 dotpath = File.expand_path(File.dirname(__FILE__))
@@ -17,7 +19,6 @@ require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'securerandom'
 
-code = SecureRandom.alphanumeric
-$ddb_kick_code_manager.put(code, SecureRandom.uuid)
 binding.pry;1
-use_once(code)
+puts 'foo'
+exit

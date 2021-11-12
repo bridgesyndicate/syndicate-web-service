@@ -16,6 +16,11 @@ class GameStream
     game_hash[:dynamodb][:new_image]["game"]["uuid"]
   end
 
+  def player_uuids
+    game_hash[:dynamodb][:new_image]["game"]["red_team_minecraft_uuids"] +
+      game_hash[:dynamodb][:new_image]["game"]["blue_team_minecraft_uuids"]
+  end
+
   def ddb_task_ip_modify?
     game_hash[:event_name] == 'MODIFY' and
       !game_ended_with_score? and

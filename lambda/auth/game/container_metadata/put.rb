@@ -9,7 +9,6 @@ require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/object_not_found'
 require 'lib/rabbit_client_factory'
-require 'lib/warp'
 
 def auth_game_container_metadata_put_handler(event:, context:)
 
@@ -42,11 +41,10 @@ def auth_game_container_metadata_put_handler(event:, context:)
   end
 
   if status == OK
-    rabbit_client.send_player_to_host(
+    rabbit_client.send_players_to_host(
                                       (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-                                       ret_obj.attributes['game']['red_team_minecraft_uuids'])
-                                        .map { |id| Warp.new(id, container_ip) }
-                                      )
+                                       ret_obj.attributes['game']['red_team_minecraft_uuids']),
+                                      container_ip)
   end
 
   ret = {

@@ -4,6 +4,8 @@ require 'warp'
 class RabbitClient
   attr_accessor :connection, :channel
 
+  LOBBY_NAME = 'lobby'.freeze
+
   def initialize()
     if ENV['RABBIT_URI']
       props = AMQ::Settings.parse_amqp_url(ENV['RABBIT_URI'])
@@ -16,10 +18,23 @@ class RabbitClient
     connection.start
   end
 
-  def send_player_to_host(warp_list)
+  def clear_warp_cache_for_players(minecraft_uuids)
+    warp(minecraft_uuids
+           .map {|uuid| Warp.new(uuid, LOBBY_NAME)}
+        )
+  end
+
+  def send_players_to_host(minecraft_uuids, hostname)
+    warp(minecraft_uuids
+           .map {|uuid| Warp.new(uuid, hostname)}
+        )
+  end
+
+  def warp(warp_list)
     @channel = connection.create_channel
     exchange = channel.fanout(DEFAULT_QUEUE)
     message = { warp_list: warp_list }.to_json
+    puts message
     exchange.publish(message)
   end
 

@@ -4,7 +4,6 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/rabbit_client_factory'
-require 'lib/warp'
 
 def auth_warp_post_handler(event:, context:)
 
@@ -47,7 +46,7 @@ def auth_warp_post_handler(event:, context:)
   end
 
   puts "send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
-  rabbit_client.send_player_to_host(Array(Warp.new(minecraft_uuid, task_ip)))
+  rabbit_client.send_players_to_host(Array(minecraft_uuid), task_ip)
 
   return { statusCode: status,
            headers: headers_list,

@@ -6,6 +6,7 @@ require 'json'
 require 'lib/aws_credentials'
 require 'lib/game_stream'
 require 'lib/sqs_client'
+require 'lib/rabbit_client_factory'
 require 'lib/dynamo_client'
 
 def handler(event:, context:)
@@ -26,7 +27,8 @@ def handler(event:, context:)
         puts "game #{game_stream.uuid} saved update user records"
         game_stream.update_leaderboard
         puts "game #{game_stream.uuid} updated leaderboard"
-        XXXXXXXXXXXXXX Warp those fuckers 
+        rabbit_client = RabbitClientFactory.produce
+        rabbit_client.clear_warp_cache_for_players(game_stream.player_uuids)
       end
     end
   end
