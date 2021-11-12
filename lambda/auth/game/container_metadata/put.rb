@@ -9,6 +9,7 @@ require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/object_not_found'
 require 'lib/rabbit_client_factory'
+require 'lib/warp'
 
 def auth_game_container_metadata_put_handler(event:, context:)
 
@@ -30,8 +31,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
 
   payload = JSON.parse(payload, object_class: OpenStruct)
   game_uuid = payload.uuid
-  task_arn = payload.taskArn
-  container_ip = task_arn # used to be the arn and we would use ec2 and ecs to look up the IP
+  container_ip = payload.taskArn # was the arn we would use to lookup IP
 
   ret_obj = $ddb_game_manager.update_task_ip(game_uuid, container_ip)
 
@@ -42,12 +42,11 @@ def auth_game_container_metadata_put_handler(event:, context:)
   end
 
   if status == OK
-    (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
-     ret_obj.attributes['game']['red_team_minecraft_uuids']).each do |id|
-      container_name = container_ip
-      puts "rabbit send_player_to_host #{id} #{container_name} #{container_ip}"
-      rabbit_client.send_player_to_host(id, container_name, container_ip)
-    end
+    rabbit_client.send_player_to_host(
+                                      (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
+                                       ret_obj.attributes['game']['red_team_minecraft_uuids'])
+                                        .map { |id| Warp.new(id, container_ip) }
+                                      )
   end
 
   ret = {

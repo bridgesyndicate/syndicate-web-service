@@ -7,8 +7,8 @@ class MockRabbitClient
     @connection = {}
   end
 
-  def send_player_to_host(minecraft_uuid, container_name, ip_address)
-    {}
+  def send_player_to_host(warp_list)
+    { warp_list: warp_list }.to_json
   end
 
   def shutdown

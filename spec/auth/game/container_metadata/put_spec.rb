@@ -7,7 +7,7 @@ RSpec.describe '#auth_game_container_metadata_put' do
     let(:event) { { 'body' =>  post_body } }
     let(:lambda_result) { auth_game_container_metadata_put_handler(event: event, context: '') }
     let(:valid_uuid) { '87d2ebbf-3016-4ab8-97e6-c06e410b3359' }
-    let(:task_arn) { 'arn:aws:ecs:us-west-2:595508394202:task/default/0e0a0ac6d3274d999589c70836da031e' }
+    let(:task_arn) { Faker::Internet.ip_v4_address }
     let(:invalid_uuid) { SecureRandom.uuid }
     let(:valid_post) { JSON.generate({ uuid: valid_uuid, taskArn: task_arn }) }
     let(:invalid_post) { JSON.generate({ doobar: "foo", uuid: invalid_uuid, taskArn:'foo' }) }

@@ -1,4 +1,5 @@
 require 'bunny'
+require 'warp'
 
 class RabbitClient
   attr_accessor :connection, :channel
@@ -15,15 +16,10 @@ class RabbitClient
     connection.start
   end
 
-  def send_player_to_host(minecraft_uuid, container_name, ip_address)
+  def send_player_to_host(warp_list)
     @channel = connection.create_channel
     exchange = channel.fanout(DEFAULT_QUEUE)
-    message = {
-      player: minecraft_uuid,
-      hostname: container_name,
-      host: ip_address,
-      port: MINECRAFT_PORT
-    }.to_json
+    message = { warp_list: warp_list }.to_json
     exchange.publish(message)
   end
 

@@ -26,6 +26,7 @@ def handler(event:, context:)
         puts "game #{game_stream.uuid} saved update user records"
         game_stream.update_leaderboard
         puts "game #{game_stream.uuid} updated leaderboard"
+        XXXXXXXXXXXXXX Warp those fuckers 
       end
     end
   end
