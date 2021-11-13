@@ -211,6 +211,8 @@ Resources:
             'SyndicateVPCAndBroker-PostgresIngressSecurityGroupId'
           - !ImportValue
             'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
         SubnetIds:
           - !ImportValue
             'SyndicateVPCAndBroker-SubnetLambdaId'
@@ -221,6 +223,8 @@ Resources:
           SYNDICATE_ENV: production
           POSTGRES_HOST: !ImportValue
             'SyndicateVPCAndBroker-RDSEndpoint'
+          RABBIT_URI: !ImportValue
+            'SyndicateVPCAndBroker-AmqpEndpoint'
       Handler: lambda/via-stream/games.handler
       Runtime: ruby2.7
       CodeUri: ./
