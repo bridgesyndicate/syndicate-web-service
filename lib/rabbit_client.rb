@@ -1,5 +1,5 @@
 require 'bunny'
-require 'warp'
+require 'lib/warp'
 
 class RabbitClient
   attr_accessor :connection, :channel
