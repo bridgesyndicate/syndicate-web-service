@@ -1,5 +1,5 @@
 require 'bunny'
-require 'warp'
+require 'lib/warp'
 
 class MockRabbitClient
   attr_accessor :connection
