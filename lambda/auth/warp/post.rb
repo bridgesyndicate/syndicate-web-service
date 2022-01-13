@@ -48,8 +48,10 @@ def auth_warp_post_handler(event:, context:)
   puts "send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
   rabbit_client.send_players_to_host(Array(minecraft_uuid), task_ip)
 
+  ret = { task_ip: task_ip }
+
   return { statusCode: status,
            headers: headers_list,
-           body: task_ip.to_json }
+           body: ret.to_json }
 
 end

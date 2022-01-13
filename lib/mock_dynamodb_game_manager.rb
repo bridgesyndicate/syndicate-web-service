@@ -34,6 +34,17 @@ class MockDynamodbGameManager
     end
   end
 
+  def get(game_uuid)
+    ret = [
+      {
+        'game' => {
+          'task_ip' => '192.168.1.1'
+        }
+      }
+    ]
+    MockDynamoResults.new(ret)
+  end
+
   def update_game(game_uuid, game)
     ret_val = OpenStruct.new
     ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
