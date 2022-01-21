@@ -20,7 +20,7 @@ class RabbitClient
 
   def clear_warp_cache_for_players(minecraft_uuids)
     warp(minecraft_uuids
-           .map {|uuid| Warp.new(uuid, LOBBY_NAME)}
+           .map {|uuid| Warp.new(uuid, LOBBY_NAME, false)}
         )
   end
 
