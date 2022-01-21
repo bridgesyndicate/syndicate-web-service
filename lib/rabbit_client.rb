@@ -24,9 +24,15 @@ class RabbitClient
         )
   end
 
-  def send_players_to_host(minecraft_uuids, hostname)
+  def send_players_to_host_no_cache(minecraft_uuids, hostname)
     warp(minecraft_uuids
-           .map {|uuid| Warp.new(uuid, hostname)}
+           .map {|uuid| Warp.new(uuid, hostname, false)}
+        )
+  end
+
+  def send_players_to_host_cached(minecraft_uuids, hostname)
+    warp(minecraft_uuids
+           .map {|uuid| Warp.new(uuid, hostname, true)}
         )
   end
 

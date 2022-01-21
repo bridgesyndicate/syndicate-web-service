@@ -41,7 +41,7 @@ def auth_game_container_metadata_put_handler(event:, context:)
   end
 
   if status == OK
-    rabbit_client.send_players_to_host(
+    rabbit_client.send_players_to_host_cached(
                                       (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
                                        ret_obj.attributes['game']['red_team_minecraft_uuids']),
                                       container_ip)
