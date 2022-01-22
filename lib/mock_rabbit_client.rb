@@ -12,13 +12,19 @@ class MockRabbitClient
 
   def clear_warp_cache_for_players(minecraft_uuids)
     warp(minecraft_uuids
-           .map {|uuid| Warp.new(uuid, LOBBY_NAME)}
+           .map {|uuid| Warp.new(uuid, LOBBY_NAME, false)}
         )
   end
 
-  def send_players_to_host(minecraft_uuids, hostname)
+  def send_players_to_host_no_cache(minecraft_uuids, hostname)
     warp(minecraft_uuids
-           .map {|uuid| Warp.new(uuid, hostname)}
+           .map {|uuid| Warp.new(uuid, hostname, false)}
+        )
+  end
+
+  def send_players_to_host_cached(minecraft_uuids, hostname)
+    warp(minecraft_uuids
+           .map {|uuid| Warp.new(uuid, hostname, true)}
         )
   end
 

@@ -19,6 +19,7 @@ def auth_warp_post_handler(event:, context:)
     game_uuid = event['pathParameters']['proxy'].split('/')[2]
     raise unless discord_id.match(/\d+/)
     raise unless game_uuid.match(UUID_REGEX)
+    raise unless event['body'].empty?
   rescue
     return { statusCode: BAD_REQUEST,
              headers: headers_list,
