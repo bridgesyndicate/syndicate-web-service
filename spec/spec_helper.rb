@@ -14,7 +14,7 @@ $LOAD_PATH.unshift(root) unless $LOAD_PATH.include?(root)
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
-# WebMock.allow_net_connect!
+#WebMock.allow_net_connect!
 RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = nil
 
 RSpec.configure do |config|

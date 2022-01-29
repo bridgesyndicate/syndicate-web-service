@@ -1,0 +1,94 @@
+{
+  "Attributes": {
+    "created_at": {
+      "S": "2021-11-15T00:41:05Z"
+    },
+    "game": {
+      "M": {
+        "blue_team_discord_names": {
+          "L": [
+            {
+              "S": "viceversa"
+            }
+          ]
+        },
+        "accepted_by_discord_ids": {
+          "L": [
+            {
+              "M": {
+                "accepted_at": {
+                  "S": "2022-01-28T23:27:33Z"
+                },
+                "discord_id": {
+                  "S": "8218632252036512"
+                }
+              }
+            },
+            {
+              "M": {
+                "accepted_at": {
+                  "S": "2022-01-28T23:24:02Z"
+                },
+                "discord_id": {
+                  "S": "4177669984712130"
+                }
+              }
+            }
+          ]
+        },
+        "queued_at": {
+          "N": "1631664196"
+        },
+        "required_players": {
+          "N": "2"
+        },
+        "queued_via": {
+          "S": "discord duel slash command"
+        },
+        "red_team_discord_ids": {
+          "L": [
+            {
+              "S": "2401774909060546"
+            }
+          ]
+        },
+        "game_length_in_seconds": {
+          "N": "900"
+        },
+        "blue_team_discord_ids": {
+          "L": [
+            {
+              "S": "4177669984712130"
+            }
+          ]
+        },
+        "elo_before_game": {
+          "M": {
+            "417766998471213062": {
+              "N": "1000"
+            },
+            "240177490906054658": {
+              "N": "1000"
+            }
+          }
+        },
+        "goals_to_win": {
+          "N": "5"
+        },
+        "red_team_discord_names": {
+          "L": [
+            {
+              "S": "ken"
+            }
+          ]
+        }
+      }
+    },
+    "updated_at": {
+      "S": "2022-01-28T23:27:33Z"
+    },
+    "game_uuid": {
+      "S": "dea056d3-b352-49ae-a2e1-10e37586f091"
+    }
+  }
+}

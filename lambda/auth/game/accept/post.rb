@@ -7,6 +7,13 @@ require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/sqs_client.rb'
 
+def accepted_by_one_player_from_both_teams?(accepted_list, red_list, blue_list)
+  accepted_list.any? do |a|
+    blue_list.include?(a['discord_id']) or
+      red_list.include?(a['discord_id'])
+  end
+end
+
 def auth_game_accept_post_handler(event:, context:)
 
   headers_list = {
@@ -20,6 +27,8 @@ def auth_game_accept_post_handler(event:, context:)
   status = ( uuid.match?(UUID_REGEX) &&
              discord_id.match?(/\d+/) ) ? OK : BAD_REQUEST
 
+  status = BAD_REQUEST if event['body'].size > 0
+
   return { statusCode: status,
            headers: headers_list,
            body: {}.to_json
@@ -31,18 +40,18 @@ def auth_game_accept_post_handler(event:, context:)
 
   # check to see if all players have accepted
 
-  accept_list = ret.attributes['game']['accepted_by_discord_ids']
+  accepted_list = ret.attributes['game']['accepted_by_discord_ids']
 
-  if accept_list.map{|i| i['discord_id']}.uniq.size ==
-     ret.attributes['game']['required_players'].to_i
-
+  if accepted_by_one_player_from_both_teams?(accepted_list,
+                      ret.attributes['game']['red_team_discord_ids'],
+                      ret.attributes['game']['blue_team_discord_ids'])
     sqs_ret = $sqs_manager.enqueue(GAME, ret.attributes['game'].to_json)
     status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
   end
 
   return { statusCode: status,
            headers: headers_list,
-           body: ret.to_json
+           body: ret.attributes['game'].to_json
   }
 
 end
