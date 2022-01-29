@@ -7,7 +7,7 @@ RSpec.describe '#accept post' do
   context 'lambda_result' do
     let(:discord_id) { seeded_random_integer($example_name).to_s }
     let(:game_uuid) { 'dea056d3-b352-49ae-a2e1-10e37586f091' }
-    let (:post_body) {""}
+    let (:post_body) {nil}
     let(:event) {
       {
         'body' => post_body,

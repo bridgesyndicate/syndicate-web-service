@@ -25,7 +25,7 @@ def auth_game_accept_post_handler(event:, context:)
   status = ( uuid.match?(UUID_REGEX) &&
              discord_id.match?(/\d+/) ) ? OK : BAD_REQUEST
 
-  status = BAD_REQUEST if event['body'].size > 0
+  status = BAD_REQUEST if !event['body'].nil?
 
   return { statusCode: status,
            headers: headers_list,
