@@ -78,6 +78,34 @@ RSpec.describe '#accept post' do
           expect(lambda_result[:statusCode]).to eq 200
         end
       end
+
+      describe 'for a 4x4 with two acceptances on the same team it does not queue' do
+        before(:each) do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200,
+                       body: File.read('spec/mocks/ddb/add_accepted_by_discord_id-4x4-not-accepted.json'),
+                       headers: {})
+        end
+
+        it 'returns a 200' do
+          expect(lambda_result[:statusCode]).to eq 200
+        end
+      end
+
+      describe 'for a 4x4 with two acceptances on the same team it does not queue' do
+        before(:each) do
+          sqs_ret = OpenStruct.new( message_id: SecureRandom.uuid)
+          expect($sqs_manager).to receive(:enqueue).and_return(sqs_ret)
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200,
+                       body: File.read('spec/mocks/ddb/add_accepted_by_discord_id-4x4-accepted.json'),
+                       headers: {})
+        end
+
+        it 'returns a 200' do
+          expect(lambda_result[:statusCode]).to eq 200
+        end
+      end
     end
   end
 end

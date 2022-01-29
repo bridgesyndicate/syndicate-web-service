@@ -8,10 +8,8 @@ require 'lib/helpers'
 require 'lib/sqs_client.rb'
 
 def accepted_by_one_player_from_both_teams?(accepted_list, red_list, blue_list)
-  accepted_list.any? do |a|
-    blue_list.include?(a['discord_id']) or
-      red_list.include?(a['discord_id'])
-  end
+  accepted_list.any? { |a| blue_list.include?(a['discord_id']) } and
+    accepted_list.any? { |a| red_list.include?(a['discord_id']) }
 end
 
 def auth_game_accept_post_handler(event:, context:)
