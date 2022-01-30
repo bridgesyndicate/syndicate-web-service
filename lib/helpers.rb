@@ -15,5 +15,5 @@ def get_cognito_username ctx
 end
 
 def syn_logger(msg)
-  puts msge if SYNDICATE_ENV != 'test'
+  puts msg if SYNDICATE_ENV != 'test'
 end
