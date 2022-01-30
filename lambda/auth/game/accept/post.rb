@@ -44,7 +44,8 @@ def auth_game_accept_post_handler(event:, context:)
                       ret.attributes['game']['red_team_discord_ids'],
                       ret.attributes['game']['blue_team_discord_ids'])
     syn_logger "game #{uuid} has been accepted by both teams, sending sqs"
-    sqs_ret = $sqs_manager.enqueue(GAME, ret.attributes['game'].to_json)
+    game = deep_to_h(ret.attributes['game'])
+    sqs_ret = $sqs_manager.enqueue(GAME, game.to_json)
     status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
   end
 
