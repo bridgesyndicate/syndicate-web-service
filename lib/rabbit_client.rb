@@ -40,12 +40,12 @@ class RabbitClient
     @channel = connection.create_channel
     exchange = channel.fanout(DEFAULT_QUEUE)
     message = { warp_list: warp_list }.to_json
-    puts message
+    syn_logger message
     exchange.publish(message)
   end
 
   def shutdown
-    puts "Shutting down rabbit #{connection}"
+    syn_logger "Shutting down rabbit #{connection}"
     # it seems Lambda runs share state when using the
     # global, "$rabbit_client"
     # e.g.     "this connection is not open. Was Bunny::Session#start invoked? Is automatic recovery enabled?"

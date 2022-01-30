@@ -36,7 +36,7 @@ def auth_warp_post_handler(event:, context:)
     minecraft_uuid = user.items.first['minecraft_uuid'] # TODO: make a User model
   end
 
-  puts "minecraft_uuid: #{minecraft_uuid}, discord_id: #{discord_id}"
+  syn_logger "minecraft_uuid: #{minecraft_uuid}, discord_id: #{discord_id}"
 
   game = $ddb_game_manager.get(game_uuid)
 
@@ -46,7 +46,7 @@ def auth_warp_post_handler(event:, context:)
     task_ip = game.items.first['game']['task_ip']
   end
 
-  puts "send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
+  syn_logger "send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
   rabbit_client.send_players_to_host_no_cache(Array(minecraft_uuid), task_ip)
   rabbit_client.shutdown
   ret = { task_ip: task_ip }

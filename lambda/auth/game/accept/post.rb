@@ -43,6 +43,7 @@ def auth_game_accept_post_handler(event:, context:)
   if accepted_by_one_player_from_both_teams?(accepted_list,
                       ret.attributes['game']['red_team_discord_ids'],
                       ret.attributes['game']['blue_team_discord_ids'])
+    syn_logger "game #{uuid} has been accepted by both teams, sending sqs"
     sqs_ret = $sqs_manager.enqueue(GAME, ret.attributes['game'].to_json)
     status = SERVER_ERROR unless sqs_ret.message_id.match(UUID_REGEX)
   end

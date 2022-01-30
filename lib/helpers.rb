@@ -13,3 +13,7 @@ MINECRAFT_PORT=2556
 def get_cognito_username ctx
   ctx['requestContext']['authorizer']['claims']["cognito:username"]
 end
+
+def syn_logger(msg)
+  puts msge if SYNDICATE_ENV != 'test'
+end

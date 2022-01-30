@@ -30,7 +30,6 @@ class MockRabbitClient
 
   def warp(warp_list)
     message = { warp_list: warp_list }.to_json
-    puts message
   end
 
   def shutdown
