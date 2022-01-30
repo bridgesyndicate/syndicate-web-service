@@ -6,6 +6,7 @@ require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'lib/sqs_client.rb'
+require 'lib/deep_to_h'
 
 def accepted_by_one_player_from_both_teams?(accepted_list, red_list, blue_list)
   accepted_list.any? { |a| blue_list.include?(a['discord_id']) } and
