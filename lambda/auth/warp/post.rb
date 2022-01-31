@@ -19,11 +19,11 @@ def auth_warp_post_handler(event:, context:)
     game_uuid = event['pathParameters']['proxy'].split('/')[2]
     raise unless discord_id.match(/\d+/)
     raise unless game_uuid.match(UUID_REGEX)
-    raise unless event['body'].empty?
+    raise unless event['body'].nil?
   rescue
-    error = { error: "discord_id: #{discord_id.match(/\d+/)}," +
-              "game_uuid: #{game_uuid.match(UUID_REGEX)}," +
-              "event_body: #{event['body'].empty?}" }
+    error = { error: "discord_id: #{discord_id}," +
+              "game_uuid: #{game_uuid}," +
+              "event_body: #{event['body']}" }
     syn_logger error.inspect
     return { statusCode: BAD_REQUEST,
              headers: headers_list,

@@ -8,7 +8,7 @@ RSpec.describe '#warp_post' do
   context 'lambda_result' do
     let(:discord_id) { seeded_random_integer($example_name).to_s }
     let(:game_uuid) { SecureRandom.uuid }
-    let (:post_body) {""}
+    let (:post_body) {nil}
     let(:event) {
       {
         'body' => post_body,
@@ -17,7 +17,7 @@ RSpec.describe '#warp_post' do
         }
       }
     }
-    
+
     let(:lambda_result) { auth_warp_post_handler(event: event, context: '') }
 
     before(:example) {
