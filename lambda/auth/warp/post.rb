@@ -21,9 +21,13 @@ def auth_warp_post_handler(event:, context:)
     raise unless game_uuid.match(UUID_REGEX)
     raise unless event['body'].empty?
   rescue
+    error = { error: "discord_id: #{discord_id.match(/\d+/)}," +
+              "game_uuid: #{game_uuid.match(UUID_REGEX)}," +
+              "event_body: #{event['body'].empty?}" }
+    syn_logger error.inspect
     return { statusCode: BAD_REQUEST,
              headers: headers_list,
-             body: {}.to_json
+             body: error.to_json
     }
   end
 
@@ -31,6 +35,7 @@ def auth_warp_post_handler(event:, context:)
 
   user = $ddb_user_manager.get_by_discord_id(discord_id)
   if user.items.empty?
+    syn_logger "user #{discord_id} not found"
     status = NOT_FOUND
   else
     minecraft_uuid = user.items.first['minecraft_uuid'] # TODO: make a User model
