@@ -29,9 +29,6 @@ def auth_user_by_discord_id_get_handler(event:, context:)
     status = NOT_FOUND
   else
     user = user.items.first # TODO: make a User model
-    user.transform_values! do |value|
-      value.class == BigDecimal ? value.to_f : value
-    end
   end
 
   return { statusCode: status,

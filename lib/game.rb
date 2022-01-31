@@ -19,7 +19,7 @@ class Game
         game['player_map'].key(uuid),
         game["#{color}_team_discord_ids"][i],
         game["#{color}_team_discord_names"][i],
-        BigDecimal(game["elo_before_game"][game["#{color}_team_discord_ids"][i]]).to_i
+        game["elo_before_game"][game["#{color}_team_discord_ids"][i]]
       )
     end
   end
@@ -43,8 +43,6 @@ class Game
 
   def winner
     score = game['game_score']
-    score['red'] = BigDecimal(score['red']).to_i
-    score['blue'] = BigDecimal(score['blue']).to_i
     diff = score['red'] - score['blue']
     if diff > 0
       1

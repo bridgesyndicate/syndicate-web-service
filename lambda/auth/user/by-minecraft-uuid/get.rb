@@ -32,9 +32,6 @@ def auth_user_by_minecraft_uuid_get_handler(event:, context:)
   else
     status = OK
     user = user.items.first # TODO: make a User model
-    user.transform_values! do |value|
-      value.class == BigDecimal ? value.to_f : value
-    end
     ret = {
       user: user
     }

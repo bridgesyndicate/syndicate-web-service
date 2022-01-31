@@ -111,11 +111,7 @@ class DynamodbGameManager
                                    },
       return_values: 'ALL_NEW'
     }
-    ret = client.update_item(params)
-    ret.attributes['game'].transform_values! do |value|
-      value.class == BigDecimal ? value.to_f : value
-    end
-    ret
+    client.update_item(params)
   end
 
   def get(game_uuid)
