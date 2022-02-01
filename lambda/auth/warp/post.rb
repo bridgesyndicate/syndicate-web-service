@@ -32,24 +32,46 @@ def auth_warp_post_handler(event:, context:)
   end
 
   status = OK
+  reason = ''
 
   user = $ddb_user_manager.get_by_discord_id(discord_id)
+
   if user.items.empty?
     syn_logger "user #{discord_id} not found"
     status = NOT_FOUND
-  else
-    minecraft_uuid = user.items.first['minecraft_uuid'] # TODO: make a User model
+    reason = 'User not found'
   end
 
+  return { statusCode: status,
+           headers: headers_list,
+           body: { reason: reason }.to_json } if status != OK
+
+  minecraft_uuid = user.items.first['minecraft_uuid'] # TODO: make a User model
   syn_logger "minecraft_uuid: #{minecraft_uuid}, discord_id: #{discord_id}"
 
   game = $ddb_game_manager.get(game_uuid)
 
   if game.items.empty?
+    syn_logger "game #{game_uuid} not found"
     status = NOT_FOUND
-  else
-    task_ip = game.items.first['game']['task_ip']
+    reason = 'Game not found'
   end
+
+  return { statusCode: status,
+           headers: headers_list,
+           body: {reason: reason }.to_json } if status != OK
+
+  if game.items.first['game']['state']
+    status = NOT_FOUND
+    reason = 'Game is over'
+  end
+
+
+  return { statusCode: status,
+           headers: headers_list,
+           body: {reason: reason }.to_json } if status != OK
+
+  task_ip = game.items.first['game']['task_ip']
 
   syn_logger "send_player_to_host discord_id #{discord_id}, game: #{game_uuid}, minecraft_uuid: #{minecraft_uuid}, task_ip: #{task_ip}"
   rabbit_client.send_players_to_host_no_cache(Array(minecraft_uuid), task_ip)
@@ -59,5 +81,4 @@ def auth_warp_post_handler(event:, context:)
   return { statusCode: status,
            headers: headers_list,
            body: ret.to_json }
-
 end
