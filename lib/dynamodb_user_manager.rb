@@ -153,4 +153,17 @@ class DynamodbUserManager
       update_elo(player.minecraft_uuid, player.end_elo)
     end
   end
+
+  # BatchGetItem can only read from the base table, and not from
+  # indexes (LSI, GSI). Therefore, you need to perform several query operations
+  # in parallel on your GSI to achieve a similar effect.
+  def batch_get_by_discord_ids(users)
+    users.map do |user|
+      response = get_by_discord_id(user)
+      if response.items.size == 1
+        item = response.items.first
+        { "#{item['discord_id']}" => item['elo'] }
+      end
+    end.reduce(Hash.new, :merge)
+  end
 end

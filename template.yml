@@ -125,6 +125,26 @@ Resources:
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
+  AuthUserByDiscordIdPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/user/by-discord-id/post.auth_user_by_discord_id_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/user/by-discord-id
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
   AuthRegisterByKickCodePost:
     Type: AWS::Serverless::Function
     Properties:
