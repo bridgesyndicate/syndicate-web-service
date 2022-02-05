@@ -6,7 +6,6 @@ dotpath = File.expand_path(File.dirname(__FILE__))
 $LOAD_PATH.unshift(dotpath) unless $LOAD_PATH.include?(dotpath)
 
 require 'aws_credentials'
-require 'lambda/auth/game/accept/post'
 require 'lambda/auth/game/container_metadata/put'
 require 'lambda/auth/game/post'
 require 'lambda/auth/game/put'
