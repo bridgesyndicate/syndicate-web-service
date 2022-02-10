@@ -49,4 +49,17 @@ describe 'GameStream' do
       expect(game_stream.game_ended_with_score?).to eq true
     end
   end
+  context 'zero-zero tie' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/zero-zero-tie-for-real-1x1.json')) }
+    let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
+                                         .from_event(event).first)
+    }
+    it 'has integers not BigDecimals' do
+      game_stream.compute_elo_changes
+      expect(game_stream.batch.map {|p| p.winner.start_elo.class}
+               .uniq
+               .first)
+        .to eq Integer
+    end
+  end
 end

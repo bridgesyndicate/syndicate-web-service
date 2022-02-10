@@ -10,6 +10,8 @@ require 'lib/rabbit_client_factory'
 require 'lib/dynamo_client'
 
 def handler(event:, context:)
+  syn_logger event.class
+  syn_logger event
   syn_logger event.inspect
   Aws::DynamoDBStreams::AttributeTranslator
     .from_event(event)

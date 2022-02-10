@@ -5,7 +5,7 @@ class Game
   attr_accessor :game, :winner, :uuid, :red, :blue
 
   def initialize game
-    @game = game
+    @game = JSON.parse(game.to_json) # gets rid of BigDecimals
     @winner = winner
     @uuid = game['uuid']
     @red = make_team('red')
