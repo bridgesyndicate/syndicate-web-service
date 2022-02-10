@@ -36,6 +36,11 @@ class GameStream
     game_hash.to_json
   end
 
+  def game_aborted?
+    game_hash[:event_name] == 'MODIFY' and
+      game_hash[:dynamodb][:new_image]['game']['state'] == 'ABORTED'
+  end
+
   def game_ended_with_score?
     game_hash[:event_name] == 'MODIFY' and
       !!game_hash[:dynamodb][:new_image]['game']['game_score'] and

@@ -25,6 +25,18 @@ describe 'GameStream' do
       expect(JSON.parse(game_stream.to_json).class).to be Hash
     end
   end
+  context 'aborted' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game-modify-with-abort.json')) }
+    let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
+                                         .from_event(event).first)
+    }
+    it 'parses as an aborted game' do
+      expect(game_stream.game_aborted?).to eq true
+    end
+    it 'as players to clear cache for' do
+      expect(game_stream.player_uuids.size).to eq 2
+    end
+  end
   context 'added task ip' do
     let(:event) { JSON.parse(File.read('spec/mocks/stream/updated-task-ip.json')) }
     let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
@@ -33,7 +45,6 @@ describe 'GameStream' do
     it 'parses as a task_ip update event' do
       expect(game_stream.ddb_task_ip_modify?).to eq true
     end
-
   end
   context 'finished game' do
     let(:event) { JSON.parse(File.read('spec/mocks/stream/game-red-wins-2x2.json')) }

@@ -19,6 +19,11 @@ def handler(event:, context:)
       if game_stream.ddb_task_ip_modify?
         syn_logger "sending new game sqs for #{game_stream.uuid} event: #{game_stream.event_id}"
         $sqs_manager.enqueue(PLAYER_MESSAGES, game_stream.to_json)
+      elsif game_stream.game_aborted?
+        $sqs_manager.enqueue(PLAYER_MESSAGES, game_stream.to_json)
+        rabbit_client = RabbitClientFactory.produce
+        rabbit_client.clear_warp_cache_for_players(game_stream.player_uuids)
+        rabbit_client.shutdown
       elsif game_stream.game_ended_with_score?
         syn_logger "sending game end sqs for #{game_stream.uuid} event: #{game_stream.event_id}"
         game_stream.compute_elo_changes
@@ -29,6 +34,7 @@ def handler(event:, context:)
         syn_logger "game #{game_stream.uuid} updated leaderboard"
         rabbit_client = RabbitClientFactory.produce
         rabbit_client.clear_warp_cache_for_players(game_stream.player_uuids)
+        rabbit_client.shutdown
       end
     end
   end
