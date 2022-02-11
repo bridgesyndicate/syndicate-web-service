@@ -23,7 +23,7 @@ def handler(event:, context:)
         rescue Exception => e
           syn_logger "Exception in game_stream.ddb_task_ip_modify?"
           syn_logger e
-          syn_logger e.inspect
+          syn_logger e.backtrace
         end
       elsif game_stream.game_aborted?
         begin
@@ -34,7 +34,7 @@ def handler(event:, context:)
         rescue Exception => e
           syn_logger "Exception in game_stream.game_aborted?"
           syn_logger e
-          syn_logger e.inspect
+          syn_logger e.backtrace
         end
       elsif game_stream.game_ended_with_score?
         begin
@@ -51,7 +51,7 @@ def handler(event:, context:)
         rescue Exception => e
           syn_logger "Exception in game_stream.game_ended_with_score?"
           syn_logger e
-          syn_logger e.inspect
+          syn_logger e.backtrace
         end
       end
     end
