@@ -45,7 +45,7 @@ class DynamodbGameManager
   end
 
   def update_task_ip(game_uuid, task_ip)
-    puts "(begin) update_task_ip(#{game_uuid}, #{task_ip})"
+    syn_logger "(begin) update_task_ip(#{game_uuid}, #{task_ip})"
     begin
       client.update_item(
         table_name: table_name,

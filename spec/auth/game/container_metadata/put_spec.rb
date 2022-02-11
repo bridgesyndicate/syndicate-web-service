@@ -12,17 +12,22 @@ RSpec.describe '#auth_game_container_metadata_put' do
     let(:valid_post) { JSON.generate({ uuid: valid_uuid, taskArn: task_arn }) }
     let(:invalid_post) { JSON.generate({ doobar: "foo", uuid: invalid_uuid, taskArn:'foo' }) }
     let(:post_body) { valid_post }
+    let(:ddb_response) { File.read('spec/mocks/game/ddb/update-with-container-metadata.json') }
 
-    before(:each) {
-      stub_request(:post, "https://ecs.us-west-2.amazonaws.com/")
-        .to_return(status: 200, body: File.read('spec/mocks/web-mock-ecs-describe-tasks.json'), headers: {})
-      stub_request(:post, "https://ec2.us-west-2.amazonaws.com/")
-        .to_return(status: 200, body: File.read('spec/mocks/web-mock-ec2-describe-network-interface.xml'), headers: {})
-      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_player_messages')
-        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-player-messages.xml'), headers: {})
-      stub_request(:post, 'https://sqs.us-west-2.amazonaws.com/595508394202/syndicate_production_games')
-        .to_return(status: 200, body: File.read('spec/mocks/web-mock-sqs-enqueue-production-player-messages.xml'), headers: {})
-    }
+    before(:all) do
+#      webmock_log_request
+      $stash = $ddb_game_manager
+      $ddb_game_manager = DynamodbGameManager.new()
+    end
+
+    after(:all) do
+      $ddb_game_manager = $stash
+    end
+
+    before(:each) do
+      stub_request(:post, "http://localhost:8000/")
+        .to_return(status: 200, body: ddb_response , headers: {})
+    end
 
     describe 'for the post response' do
       it_behaves_like 'lambda function'
