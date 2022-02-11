@@ -14,9 +14,10 @@ require 'lambda/auth/user/by-minecraft-uuid/get'
 require 'pry'
 
 require 'lib/aws_credentials'
-require 'lib/dynamo_client.rb'
+require 'lib/dynamo_client'
 require 'lib/helpers'
 require 'securerandom'
+require 'lib/cloudwatch_client'
 
 binding.pry;1
 puts 'foo'

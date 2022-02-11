@@ -27,6 +27,9 @@ RSpec.describe '#auth_game_container_metadata_put' do
     before(:each) do
       stub_request(:post, "http://localhost:8000/")
         .to_return(status: 200, body: ddb_response , headers: {})
+
+      stub_request(:post, "https://monitoring.us-east-1.amazonaws.com/")
+        .to_return(status: 200, body: "", headers: {})
     end
 
     describe 'for the post response' do
@@ -35,10 +38,13 @@ RSpec.describe '#auth_game_container_metadata_put' do
 
     describe 'for the body' do
       describe 'for a valid update' do
-        it 'it succeeds' do
+        it 'succeeds' do
           #WebMock.after_request do |request_signature, response|
           #  puts "Request #{request_signature} was made and #{response.body} was returned"
           #end
+          expect(lambda_result[:statusCode]).to eq 200
+        end
+        it 'sends a cloudwatch metric for the queue time' do
           expect(lambda_result[:statusCode]).to eq 200
         end
       end

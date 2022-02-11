@@ -9,6 +9,7 @@ require 'lib/helpers'
 require 'lib/schema/game_container_metadata_put'
 require 'lib/object_not_found'
 require 'lib/rabbit_client_factory'
+require 'lib/cloudwatch_client'
 
 def auth_game_container_metadata_put_handler(event:, context:)
 
@@ -45,6 +46,13 @@ def auth_game_container_metadata_put_handler(event:, context:)
                                       (ret_obj.attributes['game']['blue_team_minecraft_uuids'] +
                                        ret_obj.attributes['game']['red_team_minecraft_uuids']),
                                       container_ip)
+  end
+
+  begin
+    delay = Time.now-Time.parse(ret_obj.attributes['game']['queued_at'])
+    CloudwatchClient.put_queue_delay_data(delay)
+  rescue Exception => e
+    puts e.backtrace
   end
 
   ret = {
