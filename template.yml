@@ -50,6 +50,7 @@ Resources:
           RABBIT_URI: !ImportValue
             'SyndicateVPCAndBroker-AmqpEndpoint'
       Policies:
+        - CloudWatchPutMetricPolicy: {}
         - DynamoDBWritePolicy:
             TableName: syndicate_production_games
       Handler: lambda/auth/game/container_metadata/put.auth_game_container_metadata_put_handler
