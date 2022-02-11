@@ -17,34 +17,6 @@ class MockDynamodbGameManager
     @succeed = true
   end
 
-  def update_task_ip(game_uuid, task_arn)
-    if @succeed
-      ret_val = OpenStruct.new
-      ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
-      t = rand(4) + 1
-      ret_val.attributes = {
-        'game' => {
-          'blue_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid},
-          'red_team_minecraft_uuids' =>  t.times.map {SecureRandom.uuid}
-        }
-      }
-      return ret_val
-    else
-      ObjectNotFound
-    end
-  end
-
-  def get(game_uuid)
-    ret = [
-      {
-        'game' => {
-          'task_ip' => '192.168.1.1'
-        }
-      }
-    ]
-    MockDynamoResults.new(ret)
-  end
-
   def update_game(game_uuid, game)
     ret_val = OpenStruct.new
     ret_val.data = Aws::DynamoDB::Types::UpdateItemOutput.new
@@ -56,10 +28,6 @@ class MockDynamodbGameManager
       }
     }
     return ret_val
-  end
-
-  def add_pile_uuid(username, uuid)
-    MockDynamoSeahorse.new(Aws::DynamoDB::Types::PutItemOutput.new)
   end
 
   def put(p)
