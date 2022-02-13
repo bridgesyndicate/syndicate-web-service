@@ -1,0 +1,29 @@
+{
+  "Items": [
+    {
+      "minecraft_uuid": {
+        "S": "MINECRAFT_UUID"
+      },
+      "updated_at": {
+        "S": "2021-09-25T02:37:20Z"
+      },
+      "foo": {
+        "S": "bar"
+      },
+      "kick_code": {
+        "S": "W6ga9szVgyFThkxO"
+      },
+      "created_at": {
+        "S": "2021-09-25T02:37:20Z"
+      },
+      "kick_code_created_at": {
+        "S": "2021-09-25T02:36:27Z"
+      },
+      "discord_id": {
+        "S": "240177490906054658"
+      }
+    }
+  ],
+  "Count": 1,
+  "ScannedCount": 1
+}

@@ -106,6 +106,26 @@ Resources:
             Method: GET
             RestApiId:
               Ref: ApiGatewayApi
+  AuthUserByMinecraftNameGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/user/by-minecraft-name/get.auth_user_by_minecraft_name_get_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/user/by-minecraft-name/{proxy+}
+            Method: GET
+            RestApiId:
+              Ref: ApiGatewayApi
   AuthUserByDiscordIdGet:
     Type: AWS::Serverless::Function
     Properties:

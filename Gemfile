@@ -8,9 +8,11 @@ gem 'aws-sdk-dynamodbstreams'
 gem 'aws-sdk-sqs'
 gem 'bunny'
 gem 'elo_rating'
+gem 'faraday'
 gem 'json-schema'
 gem 'pg', '~> 0.18.4'
 gem 'pry-byebug'
+gem 'ruby-uuid'
 
 group :test do
   # gem 'pg_tester', wants ancient pg 0.18
