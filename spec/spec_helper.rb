@@ -1,7 +1,11 @@
 require 'simplecov'
 require 'webmock/rspec'
 
-SimpleCov.start
+SimpleCov.start do
+  add_group 'Controllers', 'lambda/'
+  add_filter 'lib/sinatra_shim/'
+  add_filter 'spec/'
+end
 
 ENV['SYNDICATE_ENV'] = 'test'
 ENV['AWS_REGION'] = 'us-east-1'
