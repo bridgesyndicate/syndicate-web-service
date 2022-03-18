@@ -279,3 +279,17 @@ Resources:
     Properties:
       LayerName: libpqSo5dot5
       ContentUri: 's3://syndicate-lambda-layers/2021-10-10-1633934311-lib-pg-layer.zip'
+  GameContainerScaleOut:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Handler: lambda/cron/scale_out.handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0/5 * * * * *)
