@@ -291,7 +291,7 @@ Resources:
             - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
               Effect: Allow
               Action:
-                - ecs:DescribeTasks
+                - ecs:DescribeServices
               Resource: '*'
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
