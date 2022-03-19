@@ -12,13 +12,15 @@ class CloudwatchClient
   end
 
   def self.get_container_metadata_delay
+    right_now = Time.now
+    five_minutes_ago = right_now - 300
     client.get_metric_statistics({
                                    namespace: "syndicate_production",
                                    metric_name: METRIC_NAME,
-                                   start_time: '2022-02-14T03:40:00Z',
-                                   end_time: '2022-02-14T04:40:00Z',
+                                   start_time: five_minutes_ago.utc.iso8601,
+                                   end_time: right_now.utc.iso8601,
                                    period: 300,
-                                   statistics: %w/Maximum/
+                                   statistics: %w/Average/
                                  })
   end
 

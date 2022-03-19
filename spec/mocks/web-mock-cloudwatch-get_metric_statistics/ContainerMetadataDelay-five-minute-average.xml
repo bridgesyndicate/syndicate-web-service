@@ -1,0 +1,15 @@
+<GetMetricStatisticsResponse xmlns="http://monitoring.amazonaws.com/doc/2010-08-01/">
+  <GetMetricStatisticsResult>
+    <Datapoints>
+      <member>
+        <Unit>Seconds</Unit>
+        <Average>2.220701642</Average>
+        <Timestamp>2022-02-14T04:10:00Z</Timestamp>
+      </member>
+    </Datapoints>
+    <Label>ContainerMetadataDelay</Label>
+  </GetMetricStatisticsResult>
+  <ResponseMetadata>
+    <RequestId>9e88d76f-56d8-469b-b64c-616c84ca9da1</RequestId>
+  </ResponseMetadata>
+</GetMetricStatisticsResponse>
