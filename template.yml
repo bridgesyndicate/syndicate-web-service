@@ -285,6 +285,14 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+      Policies:
+        - CloudWatchPutMetricPolicy: {}
+        - Statement:
+            - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
+              Effect: Allow
+              Action:
+                - ecs:DescribeTasks
+              Resource: '*'
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
       CodeUri: ./
