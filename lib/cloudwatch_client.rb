@@ -1,5 +1,5 @@
 require 'aws-sdk-cloudwatch'
-require 'aws_credentials'
+require 'lib/aws_credentials'
 
 class CloudwatchClient
 
