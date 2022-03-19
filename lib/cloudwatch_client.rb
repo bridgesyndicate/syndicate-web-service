@@ -44,7 +44,7 @@ class CloudwatchClient
                                namespace: "syndicate_#{SYNDICATE_ENV}",
                                metric_data: [
                                  {
-                                   metric_name: 'GameContainerDesiredCount'
+                                   metric_name: 'GameContainerDesiredCount',
                                    timestamp: Time.now,
                                    value: count,
                                    unit: 'Count'
