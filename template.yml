@@ -285,7 +285,7 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
-      Handler: lambda/cron/scale_out.handler
+      Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:
