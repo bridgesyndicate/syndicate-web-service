@@ -1,22 +1,27 @@
 require 'aws-sdk-ecs'
+require 'lib/aws_credentials'
 
-class EcsManager
+class ECSClient
+
+  CLUSTER = 'SyndicateECSCluster'
+  REGION = 'us-east-2'
+  SERVICE = 'SyndicateBridgeECSService'
+
   attr_accessor :client
 
-  def initialize()
-    @client = Aws::ECS::Client.new(region: AwsCredentials.instance.region,
-                                        credentials: AwsCredentials.instance.credentials
-                                   )
+  def self.client
+    @@client ||= Aws::ECS::Client.new(region: REGION,
+                                      credentials: AwsCredentials.instance.credentials
+                                      )
   end
 
-  def get_iface_for_task_arn(task_arn)
-    resp = client.describe_tasks({ tasks: [task_arn] })
-    if resp.failures
-      'missing'
-    else
-      resp.to_h[:tasks][0][:attachments][0][:details].select{|e| e[:name] == 'networkInterfaceId'}[0][:value]
-    end
+  def self.get_desired_count_for_bridge_service
+    client.describe_services({
+                               cluster: CLUSTER,
+                               services: [SERVICE]
+                             })
+      .services
+      .first
+      .desired_count
   end
 end
-
-$ecs_client = EcsManager.new

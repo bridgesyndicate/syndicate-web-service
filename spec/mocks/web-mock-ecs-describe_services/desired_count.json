@@ -1,0 +1,583 @@
+{
+  "services": [
+    {
+      "version": 0,
+      "taskDefinition": "arn:aws:ecs:us-east-2:595508394202:task-definition/SyndicateBridgeTaskDefinition:5",
+      "status": "ACTIVE",
+      "serviceRegistries": [],
+      "serviceName": "SyndicateBridgeECSService",
+      "serviceArn": "arn:aws:ecs:us-east-2:595508394202:service/SyndicateECSCluster/SyndicateBridgeECSService",
+      "schedulingStrategy": "REPLICA",
+      "runningCount": 0,
+      "runStatus": "SteadyState",
+      "roleArn": "arn:aws:iam::595508394202:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+      "propagateTags": "NONE",
+      "platformVersion": "LATEST",
+      "enableExecuteCommand": true,
+      "enableECSManagedTags": false,
+      "desiredCount": 1,
+      "deployments": [
+        {
+          "updatedAt": 1647668122.952,
+          "pendingCount": 0,
+          "networkConfiguration": {
+            "awsvpcConfiguration": {
+              "subnets": [
+                "subnet-02fb1f76eb1218cdf"
+              ],
+              "securityGroups": [
+                "sg-0a3438c7a37460f7e"
+              ],
+              "assignPublicIp": "DISABLED"
+            }
+          },
+          "launchType": "FARGATE",
+          "id": "ecs-svc/8598433674679597407",
+          "failedTasks": 0,
+          "failedLaunchTaskCount": 0,
+          "desiredCount": 0,
+          "createdAt": 1647230503.847,
+          "platformFamily": "Linux",
+          "platformVersion": "1.4.0",
+          "replacedTaskCount": 0,
+          "rolloutState": "COMPLETED",
+          "rolloutStateReason": "ECS deployment ecs-svc/8598433674679597407 completed.",
+          "runningCount": 0,
+          "status": "PRIMARY",
+          "taskDefinition": "arn:aws:ecs:us-east-2:595508394202:task-definition/SyndicateBridgeTaskDefinition:5"
+        }
+      ],
+      "deploymentConfiguration": {
+        "minimumHealthyPercent": 100,
+        "maximumPercent": 200,
+        "deploymentCircuitBreaker": {
+          "rollback": false,
+          "enable": false
+        }
+      },
+      "createdBy": "arn:aws:iam::595508394202:user/ken",
+      "createdAt": 1644441608.735,
+      "clusterArn": "arn:aws:ecs:us-east-2:595508394202:cluster/SyndicateECSCluster",
+      "events": [
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b47b9fef-da25-4904-a3ca-2d2120d0c9fb",
+          "createdAt": 1647668122.958
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 2 running tasks: (task cb4754f46d9d4c1f955268aa1349278b) (task c239763bb0684d599ae95aadf9dbf94a).",
+          "id": "eacfd433-2696-42f6-8920-fbeffd541a03",
+          "createdAt": 1647668113.616
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "ec236a58-fea8-4d85-89f9-a954a237ef0e",
+          "createdAt": 1647667356.032
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task cb4754f46d9d4c1f955268aa1349278b).",
+          "id": "cb86ed24-a46d-40d6-a08a-3a7371796f78",
+          "createdAt": 1647667327.856
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task c239763bb0684d599ae95aadf9dbf94a).",
+          "id": "ef3c208d-b752-4672-98f6-d6f99128b46a",
+          "createdAt": 1647667318.354
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "73d020d9-d2b1-4d4c-a927-3e792e6f948b",
+          "createdAt": 1647667257.901
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task c6dc7470839b4261ba240d9eb0e89e33).",
+          "id": "9e89bef7-25c9-4bc7-aa82-35a064081275",
+          "createdAt": 1647667220.643
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task d0cbcef4964841e2a4897d9d5614efc0).",
+          "id": "d9ceb2f3-78fb-44ba-8057-130c4c2db21b",
+          "createdAt": 1647667210.446
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b8b8fb36-9269-4db5-ba95-699f1efdddd7",
+          "createdAt": 1647667177.732
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task cb3e670e31b64fe0b76e309fb71c4480).",
+          "id": "799b6c43-7d4c-4947-afb2-11ba251c74d5",
+          "createdAt": 1647667136.77
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 09a12a27732a4208bf998b83baf56725).",
+          "id": "0550ebc2-6488-4de6-be5b-b5461d28abcd",
+          "createdAt": 1647667106.904
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "deee174f-6115-467b-b9da-0048dc122eb3",
+          "createdAt": 1647667075.191
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 3415f177d5e44ee3931223c6186c1f73).",
+          "id": "345787c5-c5e2-4777-9953-be3fe9e1f7e8",
+          "createdAt": 1647667038.804
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task a86e03c7654c463ebee1cb00a36ec702).",
+          "id": "aa5014d4-4d4e-40a7-99a0-5ba8f69bfaf9",
+          "createdAt": 1647667028.53
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "4e3eaa0c-c306-43a8-bd63-aedafc95d3a3",
+          "createdAt": 1647666966.281
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task ad6bc2e203b44fbda3eac54d7bc49f58).",
+          "id": "a3281069-be48-4acf-b6e6-d218a56a940f",
+          "createdAt": 1647666937.385
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 34bbaf28e6df4a43ba954c40dc2b4115).",
+          "id": "8f7d9b47-00a4-4343-bc89-2a86c94aee1e",
+          "createdAt": 1647666927.309
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "d6faff92-987b-4d23-8707-bd7bcf509686",
+          "createdAt": 1647666895.638
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task bfecbcde071949acb8cda104738745c6).",
+          "id": "3e968dfd-27a6-4f51-aea9-df7dc79d9bb5",
+          "createdAt": 1647666857.468
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 0465b225ce2b4a4cb3714c0446530247).",
+          "id": "ebb76b46-88db-47f9-bade-256a6f96ca27",
+          "createdAt": 1647666828.151
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "d722a155-f68c-4b5d-bda5-b0a17770ca3e",
+          "createdAt": 1647666797.221
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task eb5245bb37a4445caf7053de0c22778c).",
+          "id": "4e098a41-529f-4b3b-8c9d-77b527fcd7f6",
+          "createdAt": 1647666758.918
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 2d655ca5cd6d4786a207a5b3c1b43ec6).",
+          "id": "3bf2e2fb-b5cc-4213-82d4-09dc1fe5dc5f",
+          "createdAt": 1647666749.335
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "05dcf995-43e8-42bb-a9c2-86d6a6f37be6",
+          "createdAt": 1647666355.281
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 2 tasks: (task d5f0049b135542b9978a440df2e2d174) (task 59e288a167514312a4e6311c042aadd3).",
+          "id": "ec1f690a-97dd-49cb-a24b-fb7360096169",
+          "createdAt": 1647666318.694
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "6a754a7e-0655-4bc7-ae85-bc8dceea3a64",
+          "createdAt": 1647664534.982
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 2 running tasks: (task 4227fe05fffb4721830160ecb9bd1206) (task 60a75c280bef47298bf44d6f39a60cf4).",
+          "id": "46ea12ac-3b0e-404b-935d-aed5c63280fa",
+          "createdAt": 1647664524.828
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "2b75e354-5cf1-4e42-9741-e996aed4dd1a",
+          "createdAt": 1647663998.232
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 2 tasks: (task 4227fe05fffb4721830160ecb9bd1206) (task 60a75c280bef47298bf44d6f39a60cf4).",
+          "id": "331b8e47-b417-4b44-b153-e4078e7711dd",
+          "createdAt": 1647663961.577
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b9780af6-7693-462b-b5f3-59dff695fbc9",
+          "createdAt": 1647663934.071
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "674b7b04-69b5-4a88-90c5-fc9cd63f8696",
+          "createdAt": 1647642315.951
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 1 running tasks: (task 69b7f07b559443339f79c69b15f7472d).",
+          "id": "df59ed83-5cad-47bf-92b7-39751ca7ec1d",
+          "createdAt": 1647642311.277
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "3f1c4be6-3313-4023-88a5-9f781e0627d4",
+          "createdAt": 1647642220.188
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 69b7f07b559443339f79c69b15f7472d).",
+          "id": "f54c86b1-9a96-4cb0-822d-302d5997af71",
+          "createdAt": 1647642180.999
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "5672f68a-782f-42e6-8b13-de6fa48beba7",
+          "createdAt": 1647641176.956
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "5fdf9c22-c867-4b29-aebb-612070851520",
+          "createdAt": 1647619570.312
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "aca37eee-9950-45fb-90b1-771a1f61e51d",
+          "createdAt": 1647597950.866
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "9cccf4df-218c-49c6-868f-d6d7ff9e4812",
+          "createdAt": 1647576343.522
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "e57a6927-cec6-48f0-b834-e73913347fbc",
+          "createdAt": 1647554724.13
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "7b22262d-fbfb-4944-b8df-3600c3fe13a7",
+          "createdAt": 1647533095.011
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "dd3c1fd5-b852-4231-8a03-5d207a9e0fb9",
+          "createdAt": 1647511486.044
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "e62a075b-94d1-4f90-996e-2d8e72ab950a",
+          "createdAt": 1647489867.312
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "d890565c-9f29-484d-a83c-68880d9ccdde",
+          "createdAt": 1647468236.469
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b089d4b1-86a3-42f1-8f16-d79afc1f8155",
+          "createdAt": 1647446629.602
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "009e6242-9344-4f75-8155-866b6daf65f8",
+          "createdAt": 1647425027.649
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "f97b693c-89eb-45c0-bccd-c431acc87c1d",
+          "createdAt": 1647403414.323
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "18bab804-a9ca-4db8-95d5-a10795240e56",
+          "createdAt": 1647381808.901
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "995f1df1-af01-44ab-a1ed-9bf5def607af",
+          "createdAt": 1647360208.128
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "877ae5d6-1e6f-4f6d-ad18-cef40e1d4d2a",
+          "createdAt": 1647338593.645
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "87ed85fb-c7cc-45d2-9bb0-8bea20f01699",
+          "createdAt": 1647316985.734
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "61bbb6f7-6701-4f51-a779-ff2faf9846d4",
+          "createdAt": 1647295376.909
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b62caad7-9cdb-423e-9cac-742e1f646b45",
+          "createdAt": 1647273763.402
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "787e588e-1404-4574-a4ef-16b381b081df",
+          "createdAt": 1647252157.593
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b0bf3861-a3c6-4c6f-87c6-6bdd8c0f7aca",
+          "createdAt": 1647230547.821
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) (deployment ecs-svc/8598433674679597407) deployment completed.",
+          "id": "8400a174-ae2e-4f54-b8fc-94459308ab6e",
+          "createdAt": 1647230547.82
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b68dec1e-439a-471f-85e7-98fe027fbb0b",
+          "createdAt": 1647230026.861
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "51ef5422-b74c-4cd8-92ca-7158ee7a51fa",
+          "createdAt": 1647208417.81
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "fcadd733-567d-4c17-8511-a824a6487099",
+          "createdAt": 1647186795.72
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "01adb074-47fb-4921-9dbc-95f2ba3ded77",
+          "createdAt": 1647165165.078
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "dc29110d-9b05-4c91-99dd-080bd4879c62",
+          "createdAt": 1647143563.256
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "a6f9af16-6721-4634-9bd8-b41571fb934a",
+          "createdAt": 1647121942.318
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "94595880-1ea2-45a2-8b8e-ec6f2bab3869",
+          "createdAt": 1647100330.262
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "07c35d5b-4644-42f3-8feb-9164d6a3409b",
+          "createdAt": 1647078718.442
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "0ccdc5f6-fef9-4f86-8e6e-e72f619924b0",
+          "createdAt": 1647057105.665
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "7e840c8a-70ae-480e-8b23-673b15932257",
+          "createdAt": 1647035476.489
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "93f1c581-f9ee-4133-91a6-32edbecc2bcb",
+          "createdAt": 1647013857.415
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b64e9480-c1bf-444b-8cd1-4cba913f7232",
+          "createdAt": 1646992237.791
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "02c18cad-31fe-4a07-a752-95957f31ba8b",
+          "createdAt": 1646970637.367
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "02951b41-85f7-4d91-8fab-4845b1b5485f",
+          "createdAt": 1646949010.808
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 1 running tasks: (task 9850ba153ff1464a80ecdde25e42a4f8).",
+          "id": "6783889c-c0ae-4bd4-b8cc-b93e6b4d9ef7",
+          "createdAt": 1646949001.902
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "b52bb80c-7222-4777-878e-ef2a2046b389",
+          "createdAt": 1646948550.598
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 9850ba153ff1464a80ecdde25e42a4f8).",
+          "id": "0c6d2856-d1d6-40a4-b41f-d62aec610a39",
+          "createdAt": 1646948511.422
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "52bf043b-a051-450e-849c-afbd78075c39",
+          "createdAt": 1646948239.353
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) (deployment ecs-svc/2039534066832558803) deployment completed.",
+          "id": "9701f5a5-e68b-42b9-a3a6-867740b2eed7",
+          "createdAt": 1646948239.352
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "1c31c552-20b0-4470-a93b-c96a50220b28",
+          "createdAt": 1646945685.742
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "40763b26-7d80-4bba-8127-8968c89a1b1b",
+          "createdAt": 1646924063.761
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "90c61805-ca58-45e8-a80e-0e22cde5ad69",
+          "createdAt": 1646902441.293
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "e7d7c373-8ecb-4cc0-ac0a-ecb4a7adcda4",
+          "createdAt": 1646880811.237
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "25c5840b-6d38-4f36-acfc-2d0bcb58e358",
+          "createdAt": 1646859193.463
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "4ff4d82e-f0ef-4832-b17b-38d861eeb977",
+          "createdAt": 1646837588.635
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "e587f6ce-6659-470f-beda-7a50c2227138",
+          "createdAt": 1646815986.022
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "27b04441-e16b-4ba0-a071-4e8d8ce7c0b6",
+          "createdAt": 1646794361.347
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "895c7a32-b18a-454d-bff6-e444e578d38f",
+          "createdAt": 1646772733.604
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) (deployment ecs-svc/2154153370775418088) deployment completed.",
+          "id": "4634fa5b-a4c3-4b47-9598-5f9efcd823ee",
+          "createdAt": 1646772733.603
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "5cabbbf5-5f8b-48ed-80fd-d3b2c3ae0785",
+          "createdAt": 1646772373.669
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 1 running tasks: (task 909358fcbba94501a5e727e7139b3983).",
+          "id": "b4d204d0-a8e6-43d2-b00d-70f24f07a8cd",
+          "createdAt": 1646772367.266
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "fc3a7e24-ccfb-4f09-a627-4288b48dfb51",
+          "createdAt": 1646771102.631
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 909358fcbba94501a5e727e7139b3983).",
+          "id": "59ead80f-afe2-4646-a2d0-01be28d436be",
+          "createdAt": 1646771063.006
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "11ac8979-9267-462d-ab10-02d1869327f3",
+          "createdAt": 1646771033.547
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) (deployment ecs-svc/1250862467738114966) deployment completed.",
+          "id": "0c243c4a-8e98-4947-8e89-4d9749c35a0f",
+          "createdAt": 1646771033.546
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "e1638456-7671-44c5-ab5b-100e38104dd5",
+          "createdAt": 1646763800.183
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 1 running tasks: (task a78d4ed926154f268ef251486c07d42b).",
+          "id": "49499b3a-a7e8-4eab-950c-b5cfe9d15825",
+          "createdAt": 1646763789.603
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "6e7e38c7-4a4d-4f2a-8f1a-106668b426cf",
+          "createdAt": 1646760288.779
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task a78d4ed926154f268ef251486c07d42b).",
+          "id": "3aec4387-4268-4067-86ab-bb3d45a6ee2a",
+          "createdAt": 1646760253.198
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "45cc3bfc-2f6e-4ff0-841b-1eb39fdfbd93",
+          "createdAt": 1646760131.303
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "38ec3488-44e8-4b7e-9211-e35d60d8d469",
+          "createdAt": 1646738527.137
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "cbea51b9-c123-4a7c-b9a4-9a197b5bcd0f",
+          "createdAt": 1646716902.525
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has stopped 1 running tasks: (task 046f880ff65f478d90fc2207c9df3881).",
+          "id": "961dd29b-25b9-43c4-8c5a-ac2bab9c99a7",
+          "createdAt": 1646716892.442
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has reached a steady state.",
+          "id": "93aedd79-6fe4-4b97-808c-a2ed2b683d72",
+          "createdAt": 1646714958.234
+        },
+        {
+          "message": "(service SyndicateBridgeECSService) has started 1 tasks: (task 046f880ff65f478d90fc2207c9df3881).",
+          "id": "65cc656d-9ec8-4a3e-87d0-cb7da7e46f98",
+          "createdAt": 1646714927.964
+        }
+      ],
+      "launchType": "FARGATE",
+      "loadBalancers": [],
+      "networkConfiguration": {
+        "awsvpcConfiguration": {
+          "subnets": [
+            "subnet-02fb1f76eb1218cdf"
+          ],
+          "securityGroups": [
+            "sg-0a3438c7a37460f7e"
+          ],
+          "assignPublicIp": "DISABLED"
+        }
+      },
+      "pendingCount": 0,
+      "placementConstraints": [],
+      "placementStrategy": [],
+      "platformFamily": "Linux"
+    }
+  ],
+  "failures": []
+}

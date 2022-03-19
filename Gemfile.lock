@@ -20,6 +20,9 @@ GEM
     aws-sdk-dynamodbstreams (1.31.0)
       aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-ecs (1.84.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-sqs (1.42.0)
       aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
@@ -111,6 +114,7 @@ DEPENDENCIES
   aws-sdk-cloudwatch
   aws-sdk-dynamodb
   aws-sdk-dynamodbstreams
+  aws-sdk-ecs
   aws-sdk-sqs
   bunny
   elo_rating
