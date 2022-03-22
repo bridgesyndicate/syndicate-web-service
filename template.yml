@@ -308,6 +308,12 @@ Resources:
               Condition:
                 StringEquals:
                   'iam:PassedToService': ecs-tasks.amazonaws.com
+        - Statement:
+            - Sid: inlinePolicyGameContainerScaleOutEcsPassRole
+              Effect: Allow
+              Action:
+                - iam:PassRole
+              Resource: arn:aws:iam::595508394202:role/ecsTaskExecutionRole
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
       CodeUri: ./
