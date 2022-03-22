@@ -24,6 +24,7 @@ class ECSClient
 
   def self.run_task
     client.run_task({
+                      enable_execute_command: true,
                       cluster: CLUSTER,
                       network_configuration: {
                         awsvpc_configuration: {
