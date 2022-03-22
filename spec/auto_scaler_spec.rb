@@ -6,12 +6,13 @@ RSpec.describe '#auto_scaler' do
 
   describe 'for MIN and MAX' do
     let(:delay) { AutoScaler::MAX_TASK_START_DELAY_SECONDS - 1 }
+    let(:config) { {} }
     before(:each) do
       stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
         .to_return(status: 200,
                    body: File.read('spec/mocks/web-mock-ecs-run-task/success.json'),
                    headers: {})
-      @auto_scaler = AutoScaler.new(current_tasks, delay)
+      @auto_scaler = AutoScaler.new(current_tasks, delay, config)
       @auto_scaler.scale
     end
 
@@ -43,5 +44,18 @@ RSpec.describe '#auto_scaler' do
         expect(@auto_scaler.tasks.size).to eq AutoScaler::MAX_TASKS
       end
     end
+
+    describe 'with not tasks and MIN set to zero, idle' do
+      let(:current_tasks) { [] }
+      let(:config) {
+        {
+          min_tasks: 0
+        }
+      }
+      it 'does not add a task when set to idle' do
+        expect(@auto_scaler.tasks.size).to eq 0
+      end
+    end
+
   end
 end

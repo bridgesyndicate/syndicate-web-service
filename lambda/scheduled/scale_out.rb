@@ -12,7 +12,7 @@ def handler(event:, context:)
     .task_arns
   CloudwatchClient.put_game_container_task_count(tasks.size)
   delay = CloudwatchClient.get_container_metadata_delay
-  auto_scaler = AutoScaler.new(tasks, delay)
+  auto_scaler = AutoScaler.new(tasks, delay, {})
   auto_scaler.scale
   syn_logger "tasks: #{auto_scaler.tasks}"
   syn_logger "delay: #{delay}"
