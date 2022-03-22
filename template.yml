@@ -307,7 +307,7 @@ Resources:
               Resource: "*"
               Condition:
                 StringEquals:
-                  'iam:PassedToService': ec2.amazonaws.com
+                  'iam:PassedToService': ecs-tasks.amazonaws.com
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
       CodeUri: ./
