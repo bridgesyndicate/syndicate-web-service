@@ -319,7 +319,7 @@ Resources:
               Effect: Allow
               Action:
                 - appconfig:GetConfiguration
-              Resource: arn:aws:appconfig:us-east-2:595508394202:application/7c6z7a5
+              Resource: "*"
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
       CodeUri: ./
