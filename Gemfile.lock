@@ -6,6 +6,9 @@ GEM
     amq-protocol (2.3.2)
     aws-eventstream (1.1.1)
     aws-partitions (1.482.0)
+    aws-sdk-appconfig (1.16.0)
+      aws-sdk-core (~> 3, >= 3.119.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-cloudwatch (1.54.0)
       aws-sdk-core (~> 3, >= 3.119.0)
       aws-sigv4 (~> 1.1)
@@ -111,6 +114,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-appconfig
   aws-sdk-cloudwatch
   aws-sdk-dynamodb
   aws-sdk-dynamodbstreams

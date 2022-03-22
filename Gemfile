@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
+gem 'aws-sdk-appconfig'
 gem 'aws-sdk-cloudwatch'
 gem 'aws-sdk-dynamodb'
 gem 'aws-sdk-dynamodbstreams'

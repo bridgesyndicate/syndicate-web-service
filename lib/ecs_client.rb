@@ -29,7 +29,7 @@ class ECSClient
                         awsvpc_configuration: {
                           subnets: ["subnet-02fb1f76eb1218cdf"],
                           security_groups: ["sg-0a3438c7a37460f7e"],
-                          assign_public_ip: "ENABLED"
+                          assign_public_ip: "DISABLED"
                         },
                       },
                       task_definition: "SyndicateBridgeTaskDefinition"
