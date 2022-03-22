@@ -288,10 +288,16 @@ Resources:
       Policies:
         - CloudWatchPutMetricPolicy: {}
         - Statement:
-            - Sid: inlinePolicyAuthGameContainerMetadataPutEcs
+            - Sid: inlinePolicyGameContainerScaleOutEcsListTasks
               Effect: Allow
               Action:
-                - ecs:DescribeServices
+                - ecs:ListTasks
+              Resource: '*'
+        - Statement:
+            - Sid: inlinePolicyGameContainerScaleOutEcsRunTask
+              Effect: Allow
+              Action:
+                - ecs:RunTask
               Resource: '*'
       Handler: lambda/scheduled/scale_out.handler
       Runtime: ruby2.7
