@@ -286,6 +286,8 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
+        - EcsRunTaskPolicy:
+            TaskDefinition: SyndicateBridgeTaskDefinition
         - CloudWatchPutMetricPolicy: {}
         - Statement:
             - Sid: inlinePolicyGameContainerScaleOutEcsListTasks
