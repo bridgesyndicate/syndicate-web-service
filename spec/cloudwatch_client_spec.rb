@@ -14,13 +14,9 @@ RSpec.describe '#cloudwatch_client' do
     it 'gets a client' do
       expect(CloudwatchClient.client).to be_a Aws::CloudWatch::Client
     end
-    it 'gets ContainerMetadataDelay average data' do
-      expect(CloudwatchClient.get_container_metadata_delay).to be_a Seahorse::Client::Response
-    end
     it 'ContainerMetadataDelay average data has one datapoint' do
-      expect(CloudwatchClient.get_container_metadata_delay
-               .datapoints
-               .count).to eq 1
+      expect(CloudwatchClient.get_container_metadata_delay)
+        .to eq 2.220701642
     end
   end
 end

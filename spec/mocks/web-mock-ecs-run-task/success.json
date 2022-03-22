@@ -1,0 +1,65 @@
+{
+  "tasks": [
+    {
+      "version": 1,
+      "taskDefinitionArn": "arn:aws:ecs:us-east-2:595508394202:task-definition/SyndicateBridgeTaskDefinition:5",
+      "taskArn": "arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/a402af2a9c794661953f9ce85e14e9d7",
+      "tags": [],
+      "platformVersion": "1.4.0",
+      "platformFamily": "Linux",
+      "createdAt": 1647916647.341,
+      "cpu": "512",
+      "containers": [
+        {
+          "taskArn": "arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/a402af2a9c794661953f9ce85e14e9d7",
+          "networkInterfaces": [],
+          "name": "SyndicateBridgeTask",
+          "lastStatus": "PENDING",
+          "image": "595508394202.dkr.ecr.us-west-2.amazonaws.com/syn-bridge-servers:latest",
+          "cpu": "0",
+          "containerArn": "arn:aws:ecs:us-east-2:595508394202:container/SyndicateECSCluster/a402af2a9c794661953f9ce85e14e9d7/8a3a0426-1399-4789-aa2b-9eb5e1ddfa26"
+        }
+      ],
+      "clusterArn": "arn:aws:ecs:us-east-2:595508394202:cluster/SyndicateECSCluster",
+      "capacityProviderName": "FARGATE_SPOT",
+      "availabilityZone": "us-east-2a",
+      "attributes": [
+        {
+          "value": "x86_64",
+          "name": "ecs.cpu-architecture"
+        }
+      ],
+      "attachments": [
+        {
+          "type": "ElasticNetworkInterface",
+          "status": "PRECREATED",
+          "id": "037b09a0-63ee-478c-a1a2-b131e1dae8e0",
+          "details": [
+            {
+              "value": "subnet-02fb1f76eb1218cdf",
+              "name": "subnetId"
+            }
+          ]
+        }
+      ],
+      "desiredStatus": "RUNNING",
+      "enableExecuteCommand": false,
+      "ephemeralStorage": {
+        "sizeInGiB": 20
+      },
+      "group": "family:SyndicateBridgeTaskDefinition",
+      "lastStatus": "PROVISIONING",
+      "launchType": "FARGATE",
+      "memory": "1024",
+      "overrides": {
+        "inferenceAcceleratorOverrides": [],
+        "containerOverrides": [
+          {
+            "name": "SyndicateBridgeTask"
+          }
+        ]
+      }
+    }
+  ],
+  "failures": []
+}

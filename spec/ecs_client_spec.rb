@@ -3,19 +3,34 @@ require 'helpers'
 require 'ecs_client'
 
 RSpec.describe '#cloudwatch_client' do
-  before(:each) do
-    stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
-      .to_return(status: 200,
-                 body: File.read('spec/mocks/web-mock-ecs-describe_services/desired_count.json'),
-                 headers: {})
-  end
-  
-  describe 'for getting ContainerMetadataDelay' do
+  describe 'for the client' do
     it 'gets a client' do
       expect(ECSClient.client).to be_a Aws::ECS::Client
     end
-    it 'gets the desired_count_for_service' do
-      expect(ECSClient.get_desired_count_for_bridge_service).to eq 1
+  end
+
+  describe 'task list' do
+    before(:each) do
+      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+        .to_return(status: 200,
+                   body: File.read('spec/mocks/web-mock-ecs-list-tasks/one-task.json'),
+                   headers: {})
+    end
+    it 'gets the task list' do
+      expect(ECSClient.list_tasks.task_arns.size).to eq 1
+    end
+  end
+
+  describe 'run task' do
+    before(:each) do
+      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+        .to_return(status: 200,
+                   body: File.read('spec/mocks/web-mock-ecs-run-task/success.json'),
+                   headers: {})
+    end
+
+    it 'launches a task' do
+      expect(ECSClient.run_task).to match %r!arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/[a-z0-9]{32}!
     end
   end
 end

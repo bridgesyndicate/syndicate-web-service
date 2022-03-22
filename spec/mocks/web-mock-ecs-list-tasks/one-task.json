@@ -1,0 +1,5 @@
+{
+  "taskArns": [
+    "arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/308bb1c20e7946cfa8e0bb71bff3a6a1"
+  ]
+}

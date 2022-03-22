@@ -5,7 +5,7 @@ class ECSClient
 
   CLUSTER = 'SyndicateECSCluster'
   REGION = 'us-east-2'
-  SERVICE = 'SyndicateBridgeECSService'
+  FAMILY = 'SyndicateBridgeTaskDefinition'
 
   attr_accessor :client
 
@@ -15,13 +15,29 @@ class ECSClient
                                       )
   end
 
-  def self.get_desired_count_for_bridge_service
-    client.describe_services({
-                               cluster: CLUSTER,
-                               services: [SERVICE]
-                             })
-      .services
+  def self.list_tasks
+    client.list_tasks({
+                        cluster: CLUSTER,
+                        family: FAMILY,
+                      })
+  end
+
+  def self.run_task
+    client.run_task({
+                      cluster: CLUSTER,
+                      network_configuration: {
+                        awsvpc_configuration: {
+                          subnets: ["subnet-02fb1f76eb1218cdf"],
+                          security_groups: ["sg-0a3438c7a37460f7e"],
+                          assign_public_ip: "ENABLED"
+                        },
+                      },
+                      task_definition: "SyndicateBridgeTaskDefinition"
+                    })
+      .tasks
       .first
-      .desired_count
+      .containers
+      .first
+      .task_arn
   end
 end

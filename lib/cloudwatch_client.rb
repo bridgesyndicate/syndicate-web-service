@@ -21,7 +21,7 @@ class CloudwatchClient
                                    end_time: right_now.utc.iso8601,
                                    period: 300,
                                    statistics: %w/Average/
-                                 })
+                                 }).datapoints.first.average rescue 0
   end
 
   def self.put_queue_delay_data(seconds)
@@ -39,12 +39,12 @@ class CloudwatchClient
                             )
   end
 
-  def self.put_game_container_desired_count(count)
+  def self.put_game_container_task_count(count)
     client.put_metric_data({
                                namespace: "syndicate_#{SYNDICATE_ENV}",
                                metric_data: [
                                  {
-                                   metric_name: 'GameContainerDesiredCount',
+                                   metric_name: 'GameContainerTaskCount',
                                    timestamp: Time.now,
                                    value: count,
                                    unit: 'Count'
