@@ -8,6 +8,7 @@ require 'lambda/auth/game/container_metadata/put'
 require 'lambda/auth/game/post'
 require 'lambda/auth/game/put'
 require 'lambda/auth/register/by-kick-code/post'
+require 'lambda/auth/scale_in/post'
 require 'lambda/auth/user/by-discord-id/get'
 require 'lambda/auth/user/by-minecraft-uuid/get'
 require 'lambda/auth/warp/post'
@@ -17,6 +18,7 @@ require 'sinatra_shim/auth/game/container_metadata/put'
 require 'sinatra_shim/auth/game/post'
 require 'sinatra_shim/auth/game/put'
 require 'sinatra_shim/auth/register/by-kick-code/post'
+require 'sinatra_shim/auth/scale_in/post'
 require 'sinatra_shim/auth/user/by-discord-id/get'
 require 'sinatra_shim/auth/user/by-minecraft-uuid/get'
 require 'sinatra_shim/auth/warp/post'
@@ -25,6 +27,7 @@ helpers AuthGameContainerMetadataPut
 helpers AuthGamePost
 helpers AuthGamePut
 helpers AuthRegisterByKickCodePost
+helpers AuthScaleInPost
 helpers AuthUserByDiscordIdGet
 helpers AuthUserByMinecraftUuidGet
 helpers AuthWarp
@@ -86,4 +89,11 @@ post '/auth/warp/by-discord-id/*' do
     }
   }
   auth_warp_post(event)
+end
+
+post '/auth/scale_in' do
+  event = {
+    'body' =>  request.body.read
+  }
+  auth_scale_in_post(event)
 end
