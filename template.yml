@@ -328,3 +328,20 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: rate(5 minutes)
+  AuthScaleInPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Handler: lambda/auth/scale_in/post.auth_scale_in_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/scale-in
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi

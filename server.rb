@@ -91,7 +91,7 @@ post '/auth/warp/by-discord-id/*' do
   auth_warp_post(event)
 end
 
-post '/auth/scale_in' do
+post '/auth/scale-in' do
   event = {
     'body' =>  request.body.read
   }
