@@ -40,7 +40,8 @@ RSpec.describe '#auto_scaler' do
 
     describe 'with MAX tasks' do
       let(:current_tasks) { AutoScaler::MAX_TASKS.times.map { SecureRandom.uuid} }
-      it 'does not add a task when above MAX' do
+      let(:delay) { AutoScaler::MAX_TASK_START_DELAY_SECONDS + 1 }
+      it 'does not add a task when above MAX and over MAX_DELAY' do
         expect(@auto_scaler.tasks.size).to eq AutoScaler::MAX_TASKS
       end
     end

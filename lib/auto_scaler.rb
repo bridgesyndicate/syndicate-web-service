@@ -10,10 +10,14 @@ class AutoScaler
     config[:min_tasks] || MIN_TASKS
   end
 
+  def max_tasks
+    config[:max_tasks] || MAX_TASKS
+  end
+
   def max_task_start_delay_seconds
     config[:max_task_start_delay_seconds] || MAX_TASK_START_DELAY_SECONDS
   end
-  
+
   def initialize(tasks, delay, config)
     @tasks = tasks.clone
     @delay = delay
@@ -29,6 +33,6 @@ class AutoScaler
       run_task
       return
     end
-    run_task if delay >= max_task_start_delay_seconds
+    run_task if tasks.size < max_tasks and delay >= max_task_start_delay_seconds
   end
 end
