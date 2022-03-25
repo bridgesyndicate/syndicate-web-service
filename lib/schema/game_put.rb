@@ -94,6 +94,9 @@ class GamePutSchema
         task_ip: {
           type: :string
         },
+        task_arn: {
+          type: :string
+        },
         uuid: {
           type: :uuid
         },
