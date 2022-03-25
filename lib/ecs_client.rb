@@ -43,5 +43,9 @@ class ECSClient
   end
 
   def self.stop_task(task_arn)
+    client.stop_task({
+                       task: task_arn,
+                       cluster: CLUSTER
+                     })
   end
 end

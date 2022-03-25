@@ -1,0 +1,101 @@
+{
+  "task": {
+    "version": 4,
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:595508394202:task-definition/SyndicateBridgeTaskDefinition:5",
+    "taskArn": "arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d1e",
+    "tags": [],
+    "stoppingAt": 1648171300.436,
+    "stoppedReason": "Task stopped by user",
+    "stopCode": "UserInitiated",
+    "startedAt": 1648006358.238,
+    "pullStoppedAt": 1648006354.667,
+    "pullStartedAt": 1648006342.562,
+    "platformVersion": "1.4.0",
+    "platformFamily": "Linux",
+    "overrides": {
+      "inferenceAcceleratorOverrides": [],
+      "containerOverrides": [
+        {
+          "name": "SyndicateBridgeTask"
+        }
+      ]
+    },
+    "memory": "1024",
+    "containers": [
+      {
+        "taskArn": "arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d1e",
+        "runtimeId": "250d85bc107e4dcbb39666340c2a3d1e-1942472365",
+        "networkInterfaces": [
+          {
+            "privateIpv4Address": "10.1.15.193",
+            "attachmentId": "5fbc3ab4-2a38-4ece-936b-1628deb7e853"
+          }
+        ],
+        "containerArn": "arn:aws:ecs:us-east-2:595508394202:container/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d1e/4cd5ef94-4d1b-4608-8570-1df2d310817b",
+        "cpu": "0",
+        "image": "595508394202.dkr.ecr.us-west-2.amazonaws.com/syn-bridge-servers:latest",
+        "imageDigest": "sha256:40a17781c6efe883d633db4b9134a5ac613998d8856e9b7b19805641e0c6d009",
+        "lastStatus": "RUNNING",
+        "managedAgents": [
+          {
+            "name": "ExecuteCommandAgent",
+            "lastStatus": "RUNNING",
+            "lastStartedAt": 1648006362.96
+          }
+        ],
+        "name": "SyndicateBridgeTask",
+        "networkBindings": []
+      }
+    ],
+    "connectivityAt": 1648006326.578,
+    "connectivity": "CONNECTED",
+    "clusterArn": "arn:aws:ecs:us-east-2:595508394202:cluster/SyndicateECSCluster",
+    "capacityProviderName": "FARGATE",
+    "availabilityZone": "us-east-2a",
+    "attributes": [
+      {
+        "value": "x86_64",
+        "name": "ecs.cpu-architecture"
+      }
+    ],
+    "attachments": [
+      {
+        "type": "ElasticNetworkInterface",
+        "status": "ATTACHED",
+        "id": "5fbc3ab4-2a38-4ece-936b-1628deb7e853",
+        "details": [
+          {
+            "value": "subnet-02fb1f76eb1218cdf",
+            "name": "subnetId"
+          },
+          {
+            "value": "eni-0fcf6baa8592fe25e",
+            "name": "networkInterfaceId"
+          },
+          {
+            "value": "02:ba:db:de:5f:34",
+            "name": "macAddress"
+          },
+          {
+            "value": "ip-10-1-15-193.us-east-2.compute.internal",
+            "name": "privateDnsName"
+          },
+          {
+            "value": "10.1.15.193",
+            "name": "privateIPv4Address"
+          }
+        ]
+      }
+    ],
+    "cpu": "512",
+    "createdAt": 1648006323.213,
+    "desiredStatus": "STOPPED",
+    "enableExecuteCommand": true,
+    "ephemeralStorage": {
+      "sizeInGiB": 20
+    },
+    "group": "family:SyndicateBridgeTaskDefinition",
+    "lastStatus": "RUNNING",
+    "launchType": "FARGATE"
+  }
+}
