@@ -285,6 +285,8 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+      Layers:
+        - !Ref LayerPGLib
       Policies:
         - CloudWatchPutMetricPolicy: {}
         - Statement:
@@ -337,6 +339,8 @@ Resources:
       Handler: lambda/auth/scale_in/post.auth_scale_in_post_handler
       Runtime: ruby2.7
       CodeUri: ./
+      Layers:
+        - !Ref LayerPGLib
       Events:
         SyndicateAPI:
           Type: Api
