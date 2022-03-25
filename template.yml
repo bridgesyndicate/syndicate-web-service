@@ -287,6 +287,15 @@ Resources:
           SYNDICATE_ENV: production
           POSTGRES_HOST: !ImportValue
             'SyndicateVPCAndBroker-RDSEndpoint'
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-PostgresIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
+        SubnetIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-SubnetLambdaId'
       Layers:
         - !Ref LayerPGLib
       Policies:
@@ -343,6 +352,15 @@ Resources:
       Handler: lambda/auth/scale_in/post.auth_scale_in_post_handler
       Runtime: ruby2.7
       CodeUri: ./
+      VpcConfig:
+        SecurityGroupIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-PostgresIngressSecurityGroupId'
+          - !ImportValue
+            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
+        SubnetIds:
+          - !ImportValue
+            'SyndicateVPCAndBroker-SubnetLambdaId'
       Layers:
         - !Ref LayerPGLib
       Events:
