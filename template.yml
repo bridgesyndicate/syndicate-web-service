@@ -313,6 +313,12 @@ Resources:
                 - ecs:RunTask
               Resource: '*'
         - Statement:
+            - Sid: inlinePolicyGameContainerScaleOutEcsStopTask
+              Effect: Allow
+              Action:
+                - ecs:StopTask
+              Resource: '*'
+        - Statement:
             - Sid: inlinePolicyGameContainerScaleOutEcsPassRole
               Effect: Allow
               Action:
