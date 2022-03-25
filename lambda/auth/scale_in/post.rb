@@ -33,6 +33,9 @@ def auth_scale_in_post_handler(event:, context:)
 
   delay = CloudwatchClient.get_container_metadata_delay
   config = AppconfigClient.get_configuration
+
+  syn_logger "delay: #{delay}, config: #{config}"
+
   auto_scaler = AutoScaler.new(tasks, delay, config)
   auto_scaler.set_sql_client(PostgresClient.instance)
 
@@ -40,8 +43,12 @@ def auth_scale_in_post_handler(event:, context:)
            headers: headers_list,
            body: {}.to_json } unless auto_scaler.accept_candidate?
 
+  syn_logger 'accepting candidate'
+
   auto_scaler.insert_candidate(task_arn)
   status = auto_scaler.first_candidate?(task_arn) ? OK : NOT_FOUND
+
+  syn_logger "returning #{status}"
 
   return { statusCode: status,
            headers: headers_list,
