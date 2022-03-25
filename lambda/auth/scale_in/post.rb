@@ -3,6 +3,11 @@ require 'json'
 require 'json-schema'
 require 'lib/helpers'
 require 'lib/schema/scale_in'
+require 'lib/appconfig_client'
+require 'lib/ecs_client'
+require 'lib/cloudwatch_client'
+require 'lib/postgres_client'
+require 'lib/auto_scaler'
 
 def auth_scale_in_post_handler(event:, context:)
 
@@ -22,11 +27,23 @@ def auth_scale_in_post_handler(event:, context:)
 
   task_arn = JSON.parse(payload, object_class: OpenStruct)['task_arn']
 
-  status = task_arn[task_arn.size-1].to_i % 2 == 0 ? OK : NOT_FOUND
+  tasks = ECSClient
+    .list_tasks
+    .task_arns
 
-  ret = {}
+  delay = CloudwatchClient.get_container_metadata_delay
+  config = AppconfigClient.get_configuration
+  auto_scaler = AutoScaler.new(tasks, delay, config)
+  auto_scaler.set_sql_client(PostgresClient.instance)
+
+  return { statusCode: NOT_FOUND,
+           headers: headers_list,
+           body: {}.to_json } unless auto_scaler.accept_candidate?
+
+  auto_scaler.insert_candidate(task_arn)
+  status = auto_scaler.first_candidate?(task_arn) ? OK : NOT_FOUND
 
   return { statusCode: status,
            headers: headers_list,
-           body: ret.to_json }
+           body: {}.to_json }
 end

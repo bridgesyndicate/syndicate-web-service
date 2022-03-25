@@ -7,7 +7,7 @@ class AutoScaler
     def initialize(res)
       @rows = res.ntuples.times
         .map {|n| res[n] }
-        .sort{ |a, b| a["id"] <=> b["id"] }
+        .sort{ |a, b| a["id"].to_i <=> b["id"].to_i }
     end
 
     def has_task?
@@ -67,8 +67,22 @@ class AutoScaler
     sql_client.update_terminated_row(pk)
   end
 
-  def scale
+  def accept_candidate?
+    delay < max_task_start_delay_seconds and
+    tasks.size > min_tasks
+  end
+
+  def insert_candidate(task_arn)
+    sql_client.insert_candidate(task_arn)
+  end
+
+  def first_candidate?(task_arn)
     candidates = ScaleInCandidates.new(sql_client.get_scale_in_candidates)
+    candidates.has_task? and task_arn == candidates.task_arn
+  end
+
+  def scale
+    candidates = ScaleInCandidates.new(sql_client.lock_scale_in_candidates)
     if candidates.has_task?
       stop_task(candidates.task_arn)
       set_as_terminated(candidates.task_pk)

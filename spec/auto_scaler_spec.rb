@@ -27,7 +27,7 @@ RSpec.describe '#auto_scaler' do
                    body: File.read('spec/mocks/web-mock-ecs-run-task/success.json'),
                    headers: {})
       sql = double('sql')
-      allow(sql).to receive(:get_scale_in_candidates)
+      allow(sql).to receive(:lock_scale_in_candidates)
         .and_return(PGResultsMock.new([]))
       @auto_scaler = AutoScaler.new(current_tasks, delay, config)
       @auto_scaler.set_sql_client(sql)
@@ -77,7 +77,67 @@ RSpec.describe '#auto_scaler' do
     end
   end
 
-  describe 'scaling in' do
+  describe 'scale in candidates' do
+    let(:config) { {} }
+    let(:delay) { 0 }
+    before(:each) do
+      sql = double('sql')
+      allow(sql).to receive(:insert_candidate)
+      allow(sql).to receive(:get_scale_in_candidates)
+          .and_return(
+                      PGResultsMock.new(
+                                        current_tasks.each_with_index.map { |t, i| {
+                                            id: (i + 1).to_s,
+                                            created_at: Time.now,
+                                            task_arn: t,
+                                            processed: 'f',
+                                            terminated: 'f'
+                                          }
+                                            .transform_keys(&:to_s)
+                                        })
+                      )
+      @auto_scaler = AutoScaler.new(current_tasks, delay, config)
+      @auto_scaler.set_sql_client(sql)
+    end
+
+    describe 'when there are MIN tasks' do
+      let(:current_tasks) { AutoScaler::MIN_TASKS.times.map { SecureRandom.uuid } }
+
+      it 'rejects the candidate (404) when there are MIN tasks' do
+        expect(@auto_scaler.accept_candidate?).to be false
+      end
+    end
+
+    describe 'when tasks are MIN < tasks MAX and delay is high' do
+      let(:current_tasks) { 5.times.map { SecureRandom.uuid } }
+      let(:delay) { 100 }
+
+      it 'rejects the candidate' do
+        expect(@auto_scaler.accept_candidate?).to be false
+      end
+
+      describe 'delay is low' do
+        let(:delay) { 1 }
+
+        it 'accepts the candidate' do
+          expect(@auto_scaler.accept_candidate?).to be true
+        end
+
+        it 'is the first candidate' do
+          @auto_scaler.insert_candidate(current_tasks.first)
+          expect(@auto_scaler.first_candidate?(current_tasks.first)).to be true
+        end
+
+        it 'is not the first candidate' do
+          @auto_scaler.insert_candidate(current_tasks[0])
+          @auto_scaler.insert_candidate(current_tasks[1])
+          expect(@auto_scaler.first_candidate?(current_tasks[1])).to be false
+        end
+      end
+    end
+  end
+
+  describe 'scheduled scaling in' do
     let(:delay) { AutoScaler::MAX_TASK_START_DELAY_SECONDS - 1 }
     let(:config) { {} }
     before(:each) do
@@ -93,7 +153,7 @@ RSpec.describe '#auto_scaler' do
       before(:each) do
         sql = double('sql')
         allow(sql).to receive(:update_terminated_row)
-        allow(sql).to receive(:get_scale_in_candidates)
+        allow(sql).to receive(:lock_scale_in_candidates)
           .and_return(
                       PGResultsMock.new(
                                         current_tasks.each_with_index.map { |t, i| {

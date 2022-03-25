@@ -56,7 +56,7 @@ HERE
     conn.exec(sql_cmd, [pk])
   end
 
-  def get_scale_in_candidates
+  def lock_scale_in_candidates
     sql_cmd = <<HERE
 UPDATE syndicate_scale_in_candidates
   SET processed = true
@@ -65,6 +65,28 @@ UPDATE syndicate_scale_in_candidates
   RETURNING *;
 HERE
     conn.exec(sql_cmd)
+  end
+
+  def get_scale_in_candidates
+    sql_cmd = <<HERE
+SELECT *
+  FROM syndicate_scale_in_candidates
+  WHERE processed = false
+  AND created_at > now() - interval '1 hour';
+HERE
+    conn.exec(sql_cmd)
+  end
+
+  def insert_candidate(task_arn)
+    sql_cmd = <<HERE
+INSERT into syndicate_scale_in_candidates
+  VALUES (
+    nextval('syndicate_scale_in_candidates_id_seq'),
+    now(),
+    $1
+  );
+HERE
+    conn.exec(sql_cmd, [task_arn])
   end
 
   class Double

@@ -14,30 +14,21 @@ RSpec.describe '#scale_in' do
     let(:event) { { 'body' =>  JSON.generate(post_body) } }
     let(:lambda_result) { auth_scale_in_post_handler(event: event, context: '') }
 
+    before(:each) do
+      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+        .to_return(status: 200,
+                   body: File.read('spec/mocks/web-mock-ecs-list-tasks/one-task.json')
+                   )
+      stub_request(:post, "https://monitoring.us-east-1.amazonaws.com/")
+        .to_return(status: 200,
+                   body: File.read('spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-average.xml')
+                   )
+      stub_request(:get, 'https://appconfig.us-east-2.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
+        .to_return(status: 200, body: File.read('spec/mocks/web-mock-appconfig-get-configuration/success.json'))
+    end
+
     describe 'for the post response' do
       it_behaves_like 'lambda function'
-    end
-
-    describe 'for even arn' do
-      let(:post_body) {
-        {
-          task_arn: 'arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d12'
-        }
-      }
-      it 'returns 200' do
-        expect(lambda_result[:statusCode]).to eq 200
-      end
-    end
-
-    describe 'for odd arn' do
-      let(:post_body) {
-        {
-          task_arn: 'arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d11'
-        }
-      }
-      it 'returns 404' do
-        expect(lambda_result[:statusCode]).to eq 404
-      end
     end
 
     describe 'for invalid posts' do
