@@ -320,7 +320,7 @@ Resources:
               Action:
                 - appconfig:GetConfiguration
               Resource: "*"
-      Handler: lambda/scheduled/scale_out.handler
+      Handler: lambda/scheduled/scale.handler
       Runtime: ruby2.7
       CodeUri: ./
       Events:

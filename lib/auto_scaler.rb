@@ -67,10 +67,6 @@ class AutoScaler
     sql_client.update_terminated_row(pk)
   end
 
-  def get_scale_in_task
-    ScaleInCandidates.new(sql_client.get_scale_in_candidates)
-  end
-
   def scale
     candidates = ScaleInCandidates.new(sql_client.get_scale_in_candidates)
     if candidates.has_task?

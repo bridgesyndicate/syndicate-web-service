@@ -3,7 +3,7 @@ require 'lib/helpers'
 require 'lib/appconfig_client'
 require 'lib/ecs_client'
 require 'lib/cloudwatch_client'
-require 'lib.postgres_client'
+require 'lib/postgres_client'
 require 'lib/auto_scaler'
 
 def handler(event:, context:)
