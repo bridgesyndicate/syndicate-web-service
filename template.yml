@@ -370,6 +370,12 @@ Resources:
               Action:
                 - ecs:ListTasks
               Resource: '*'
+        - Statement:
+            - Sid: inlinePolicyGameContainerAuthScaleInPostAppConfig
+              Effect: Allow
+              Action:
+                - appconfig:GetConfiguration
+              Resource: "*"
       Events:
         SyndicateAPI:
           Type: Api
