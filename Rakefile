@@ -34,6 +34,20 @@ HERE
   puts $pg_conn.exec(CMD)
 end
 
+task :create_scale_in_candidates_table do
+  CMD = <<HERE
+create table syndicate_scale_in_candidates (
+    id serial primary key,
+    created_at timestamp,
+    task_arn varchar(255),
+    processed boolean default false,
+    terminated boolean default false);
+create index created_at_idx on syndicate_scale_in_candidates(created_at);
+HERE
+  puts $pg_conn.exec(CMD)
+
+end
+
 task :create_game_table do
   manager = DynamodbGameManager.new()
   manager.create_table

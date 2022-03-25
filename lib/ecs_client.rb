@@ -41,4 +41,7 @@ class ECSClient
       .first
       .task_arn
   end
+
+  def self.stop_task(task_arn)
+  end
 end

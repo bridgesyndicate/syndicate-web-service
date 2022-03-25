@@ -47,6 +47,26 @@ class PostgresClient
     end
   end
 
+  def update_terminated_row(pk)
+    sql_cmd = <<HERE
+UPDATE syndicate_scale_in_candidates
+  SET terminated = true
+  WHERE id = $1
+HERE
+    conn.exec(sql_cmd, [pk])
+  end
+
+  def get_scale_in_candidates
+    sql_cmd = <<HERE
+UPDATE syndicate_scale_in_candidates
+  SET processed = true
+  WHERE processed = false
+  AND created_at > now() - interval '1 hour'
+  RETURNING *;
+HERE
+    conn.exec(sql_cmd)
+  end
+
   class Double
     def exec_prepared(*args)
       Tuples.new(1)

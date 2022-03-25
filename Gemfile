@@ -17,7 +17,6 @@ gem 'pry-byebug'
 gem 'ruby-uuid'
 
 group :test do
-  # gem 'pg_tester', wants ancient pg 0.18
   gem 'simplecov', require: false, group: :test
   gem 'rspec'
   gem 'rspec_junit_formatter'

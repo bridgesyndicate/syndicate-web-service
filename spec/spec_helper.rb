@@ -101,5 +101,5 @@ end
 
 def random_number_of_tasks
   delta = AutoScaler::MAX_TASKS - AutoScaler::MIN_TASKS
-  rand(delta) + AutoScaler::MIN_TASKS
+  rand(delta) + AutoScaler::MIN_TASKS + 1
 end

@@ -33,4 +33,17 @@ RSpec.describe '#cloudwatch_client' do
       expect(ECSClient.run_task).to match %r!arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/[a-z0-9]{32}!
     end
   end
+
+  describe 'stop task' do
+    before(:each) do
+      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+        .to_return(status: 200,
+                   body: File.read('spec/mocks/web-mock-ecs-stop-task/success.json'),
+                   headers: {})
+    end
+
+    it 'stops a task' do
+      expect(ECSClient.stop_task(foo)).to match %r!arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/[a-z0-9]{32}!
+    end
+  end
 end
