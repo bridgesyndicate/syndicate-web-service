@@ -363,6 +363,13 @@ Resources:
             'SyndicateVPCAndBroker-SubnetLambdaId'
       Layers:
         - !Ref LayerPGLib
+      Policies:
+        - Statement:
+            - Sid: inlinePolicyGameContainerAuthScaleInPostListTasks
+              Effect: Allow
+              Action:
+                - ecs:ListTasks
+              Resource: '*'
       Events:
         SyndicateAPI:
           Type: Api
