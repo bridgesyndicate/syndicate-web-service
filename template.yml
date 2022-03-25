@@ -285,6 +285,8 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          POSTGRES_HOST: !ImportValue
+            'SyndicateVPCAndBroker-RDSEndpoint'
       Layers:
         - !Ref LayerPGLib
       Policies:
@@ -336,6 +338,8 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          POSTGRES_HOST: !ImportValue
+            'SyndicateVPCAndBroker-RDSEndpoint'
       Handler: lambda/auth/scale_in/post.auth_scale_in_post_handler
       Runtime: ruby2.7
       CodeUri: ./
