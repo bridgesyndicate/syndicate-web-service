@@ -1,0 +1,9 @@
+<GetMetricStatisticsResponse xmlns="http://monitoring.amazonaws.com/doc/2010-08-01/">
+  <GetMetricStatisticsResult>
+    <Datapoints/>
+    <Label>ContainerMetadataDelay</Label>
+  </GetMetricStatisticsResult>
+  <ResponseMetadata>
+    <RequestId>03c9482f-99c2-4109-9ffb-6ac072574280</RequestId>
+  </ResponseMetadata>
+</GetMetricStatisticsResponse>

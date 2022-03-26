@@ -301,6 +301,12 @@ Resources:
       Policies:
         - CloudWatchPutMetricPolicy: {}
         - Statement:
+            - Sid: inlinePolicyGameContainerScaleOutCloudwatchGetMetricStatistics
+              Effect: Allow
+              Action:
+                - cloudwatch:GetMetricStatistics
+              Resource: '*'
+        - Statement:
             - Sid: inlinePolicyGameContainerScaleOutEcsListTasks
               Effect: Allow
               Action:
@@ -382,6 +388,12 @@ Resources:
               Action:
                 - appconfig:GetConfiguration
               Resource: "*"
+        - Statement:
+            - Sid: inlinePolicyGameContainerAuthScaleInCloudwatchGetMetricStatistics
+              Effect: Allow
+              Action:
+                - cloudwatch:GetMetricStatistics
+              Resource: '*'
       Events:
         SyndicateAPI:
           Type: Api

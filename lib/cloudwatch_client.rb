@@ -12,6 +12,11 @@ class CloudwatchClient
   end
 
   def self.get_container_metadata_delay
+    res = container_metadata_delay
+    res.datapoints.first ? res.datapoints.first.average : 0
+  end
+
+  def self.container_metadata_delay
     right_now = Time.now
     five_minutes_ago = right_now - 300
     client.get_metric_statistics({
@@ -21,7 +26,7 @@ class CloudwatchClient
                                    end_time: right_now.utc.iso8601,
                                    period: 300,
                                    statistics: %w/Average/
-                                 }).datapoints.first.average
+                                 })
   end
 
   def self.put_queue_delay_data(seconds)
