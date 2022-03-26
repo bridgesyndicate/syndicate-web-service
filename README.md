@@ -106,3 +106,6 @@ SYNDICATE_ENV=development AWS_DEFAULT_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS
 ```
 
 cats
+
+aws cloudwatch put-metric-data --namespace syndicate_production --metric-data "MetricName=ContainerMetadataDelay,Timestamp=$(date -Iseconds),Value=20,Unit=Count"
+
