@@ -21,7 +21,7 @@ class CloudwatchClient
                                    end_time: right_now.utc.iso8601,
                                    period: 300,
                                    statistics: %w/Average/
-                                 }).datapoints.first.average rescue 0
+                                 }).datapoints.first.average
   end
 
   def self.put_queue_delay_data(seconds)
