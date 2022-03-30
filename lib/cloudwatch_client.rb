@@ -26,7 +26,7 @@ class CloudwatchClient
                                    start_time: fifteen_minutes_ago.utc.iso8601,
                                    end_time: right_now.utc.iso8601,
                                    period: fifteen_minutes_in_seconds,
-                                   statistics: %w/Max/
+                                   statistics: %w/Maximum/
                                  })
   end
 
