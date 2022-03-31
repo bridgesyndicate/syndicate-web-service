@@ -1,0 +1,15 @@
+<GetMetricStatisticsResponse xmlns="http://monitoring.amazonaws.com/doc/2010-08-01/">
+  <GetMetricStatisticsResult>
+    <Datapoints>
+      <member>
+        <Unit>Seconds</Unit>
+        <Maximum>599.140511345</Maximum>
+        <Timestamp>2022-03-30T01:15:00Z</Timestamp>
+      </member>
+    </Datapoints>
+    <Label>ContainerMetadataDelay</Label>
+  </GetMetricStatisticsResult>
+  <ResponseMetadata>
+    <RequestId>3a408cc8-8b5e-4bda-b736-a0373c497349</RequestId>
+  </ResponseMetadata>
+</GetMetricStatisticsResponse>

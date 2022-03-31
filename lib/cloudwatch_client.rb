@@ -13,11 +13,12 @@ class CloudwatchClient
 
   def self.get_container_metadata_delay
     res = container_metadata_delay
-    res.datapoints.first ? res.datapoints.first.average : 0
+    res.datapoints.first ? res.datapoints.first.maximum : 0
   end
 
   def self.container_metadata_delay
     right_now = Time.now
+    # right_now = Time.new(2022, 03, 30, 01, 30, 00, "Z")
     fifteen_minutes_in_seconds = 60 * 15
     fifteen_minutes_ago = right_now - fifteen_minutes_in_seconds
     client.get_metric_statistics({

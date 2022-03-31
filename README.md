@@ -109,3 +109,6 @@ cats
 
 aws cloudwatch put-metric-data --namespace syndicate_production --metric-data "MetricName=ContainerMetadataDelay,Timestamp=$(date -Iseconds),Value=20,Unit=Count"
 
+aws cloudwatch get-metric-statistics --namespace syndicate_production --metric-name ContainerMetadataDelay  --start-time 2022-02-14T03:40:00Z --end-time 2022-02-14T04:40:00Z --period 300 --statistic Maximum
+
+aws cloudwatch get-metric-statistics --namespace syndicate_production --metric-name ContainerMetadataDelay  --start-time 2022-02-14T03:55:00Z --end-time 2022-02-14T04:00:00Z --period 300 --statistic Average

@@ -10,13 +10,13 @@ RSpec.describe '#cloudwatch_client' do
   end
 
   describe 'for getting ContainerMetadataDelay' do
-    let(:response_body_file) { 'spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-average.xml' }
+    let(:response_body_file) { 'spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-maximum.xml' }
     it 'gets a client' do
       expect(CloudwatchClient.client).to be_a Aws::CloudWatch::Client
     end
-    it 'ContainerMetadataDelay average data has one datapoint' do
+    it 'ContainerMetadataDelay maximum has one datapoint' do
       expect(CloudwatchClient.get_container_metadata_delay)
-        .to eq 2.220701642
+        .to eq 599.140511345
     end
   end
 
