@@ -75,44 +75,52 @@ class GameStream
   def update_leaderboard
     PostgresClient.instance.prepare
     batch.each do |m|
-      if m.tie
-        res = $pg_conn.exec_prepared('update_tie', [ m.winner.end_elo,
-                                                      m.winner.discord_id
-        ])
-        if res.cmd_tuples == 0
-          $pg_conn.exec_prepared('new_tie', [m.winner.discord_id,
-                                                       m.winner.minecraft_uuid,
-                                                       m.winner.end_elo,
-                    ])
+      begin
+        if m.tie
+          res = $pg_conn.exec_prepared('update_tie', [ m.winner.end_elo,
+                                                       m.winner.discord_id
+                                                     ])
+          if res.cmd_tuples == 0
+            $pg_conn.exec_prepared('new_tie', [m.winner.discord_id,
+                                               m.winner.minecraft_uuid,
+                                               m.winner.end_elo,
+                                              ])
+          end
+          res = $pg_conn.exec_prepared('update_tie', [ m.loser.end_elo,
+                                                       m.loser.discord_id
+                                                     ])
+          if res.cmd_tuples == 0
+            $pg_conn.exec_prepared('new_tie', [m.loser.discord_id,
+                                               m.loser.minecraft_uuid,
+                                               m.loser.end_elo,
+                                              ])
+          end
+        else
+          res = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
+                                                          m.winner.discord_id
+                                                        ])
+          if res.cmd_tuples == 0
+            $pg_conn.exec_prepared('new_winner', [m.winner.discord_id,
+                                                  m.winner.minecraft_uuid,
+                                                  m.winner.end_elo,
+                                                 ])
+          end
+          resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
+                                                          m.loser.discord_id
+                                                        ])
+          if resl.cmd_tuples == 0
+            $pg_conn.exec_prepared('new_loser', [m.loser.discord_id,
+                                                 m.loser.minecraft_uuid,
+                                                 m.loser.end_elo,
+                                                ])
+          end
         end
-        res = $pg_conn.exec_prepared('update_tie', [ m.loser.end_elo,
-                                                      m.loser.discord_id
-        ])
-        if res.cmd_tuples == 0
-          $pg_conn.exec_prepared('new_tie', [m.loser.discord_id,
-                                                       m.loser.minecraft_uuid,
-                                                       m.loser.end_elo,
-                    ])
-        end
-      else
-        res = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
-                                                         m.winner.discord_id
-        ])
-        if res.cmd_tuples == 0
-          $pg_conn.exec_prepared('new_winner', [m.winner.discord_id,
-                                                          m.winner.minecraft_uuid,
-                                                          m.winner.end_elo,
-                    ])
-        end
-        resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
-                                                        m.loser.discord_id
-        ])
-        if resl.cmd_tuples == 0
-          $pg_conn.exec_prepared('new_loser', [m.loser.discord_id,
-                                                         m.loser.minecraft_uuid,
-                                                         m.loser.end_elo,
-                    ])
-        end
+      rescue Exception => e
+        syn_logger "Error in update_leaderboard"
+        syn_logger [m.winner.end_elo, m.winner.discord_id, m.winner.minecraft_uuid].join(', ')
+        syn_logger [m.loser.end_elo, m.loser.discord_id, m.loser.minecraft_uuid].join(', ')
+        syn_logger e
+        syn_logger e.backtrace
       end
     end
   end
