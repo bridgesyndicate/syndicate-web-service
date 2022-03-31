@@ -21,7 +21,7 @@ RSpec.describe '#scale_in' do
                    )
       stub_request(:post, "https://monitoring.us-east-1.amazonaws.com/")
         .to_return(status: 200,
-                   body: File.read('spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-average.xml')
+                   body: File.read('spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-maximum.xml')
                    )
       stub_request(:get, 'https://appconfig.us-east-2.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
         .to_return(status: 200, body: File.read('spec/mocks/web-mock-appconfig-get-configuration/success.json'))
