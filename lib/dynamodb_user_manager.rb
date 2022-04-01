@@ -154,15 +154,23 @@ class DynamodbUserManager
     end
   end
 
+  def get_first_elo_from_response_items(items)
+    items.each do |item|
+      return item['elo'] if item['elo']
+    end
+    return nil
+  end
+
   # BatchGetItem can only read from the base table, and not from
   # indexes (LSI, GSI). Therefore, you need to perform several query operations
   # in parallel on your GSI to achieve a similar effect.
   def batch_get_by_discord_ids(users)
     users.map do |user|
       response = get_by_discord_id(user)
-      if response.items.size == 1
-        item = response.items.first
-        { "#{item['discord_id']}" => item['elo'] }
+      if response.items.size != 0
+        elo = get_first_elo_from_response_items(response.items)
+        discord_id = response.items.first['discord_id']
+        { "#{discord_id}" => elo }
       end
     end.reduce(Hash.new, :merge)
   end

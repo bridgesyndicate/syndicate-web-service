@@ -1,0 +1,53 @@
+{
+    "Items": [
+        {
+            "minecraft_uuid": {
+                "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+            },
+            "kick_code": {
+                "S": "rjmji9huZXFSIeOZ"
+            },
+            "created_at": {
+                "S": "2022-04-01T15:17:06Z"
+            },
+            "updated_at": {
+                "S": "2022-04-01T15:17:06Z"
+            },
+            "kick_code_created_at": {
+                "S": "2022-04-01T15:15:49Z"
+            },
+            "elo": {
+                "N": "2112"
+            },
+            "discord_id": {
+                "S": "246107858712788993"
+            }
+        },
+        {
+            "minecraft_uuid": {
+                "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+            },
+            "updated_at": {
+                "S": "2022-04-01T15:16:53Z"
+            },
+            "kick_code": {
+                "S": "HkCIRlbabwysR6su"
+            },
+            "created_at": {
+                "S": "2022-04-01T15:03:17Z"
+            },
+            "elo": {
+                "N": "9999"
+            },
+            "kick_code_created_at": {
+                "S": "2022-04-01T15:03:00Z"
+            },
+            "discord_id": {
+                "S": "246107858712788993"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}
