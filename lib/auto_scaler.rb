@@ -27,7 +27,7 @@ class AutoScaler
   MAX_TASKS = 12
   MAX_TASK_START_DELAY_SECONDS = 8
 
-  attr_accessor :tasks, :delay, :config, :sql_client
+  attr_accessor :tasks, :delay, :config, :sql_client, :ecs_client
 
   def min_tasks
     config[:min_tasks] || MIN_TASKS
@@ -45,7 +45,9 @@ class AutoScaler
     @tasks = tasks.clone
     @delay = delay
     @config = config
-
+    @ecs_client = ECSClient.new(
+      tasks_subnet: config[:tasks_subnet],
+      tasks_security_group: config[:tasks_security_group])
   end
 
   def set_sql_client(client)
@@ -54,12 +56,12 @@ class AutoScaler
 
   def run_task
     syn_logger 'running new task'
-    @tasks.push(ECSClient.run_task)
+    @tasks.push(ecs_client.run_task)
   end
 
   def stop_task(task_arn)
     syn_logger "stopping task #{task_arn}"
-    ECSClient.stop_task(task_arn)
+    ecs_client.stop_task(task_arn)
     @tasks = tasks.reject { |e| e == task_arn }
   end
 

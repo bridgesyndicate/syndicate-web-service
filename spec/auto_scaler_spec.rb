@@ -20,9 +20,14 @@ end
 RSpec.describe '#auto_scaler' do
   describe 'for MIN and MAX' do
     let(:delay) { AutoScaler::MAX_TASK_START_DELAY_SECONDS - 1 }
-    let(:config) { {} }
+    let(:config) { {
+                     tasks_subnet: 'subnet-02f0a2e9ba4b5d279',
+                     tasks_security_group: 'sg-0cde2458dac7fcd35'
+                   }
+    }
+
     before(:each) do
-      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+      stub_request(:post, 'https://ecs.us-east-1.amazonaws.com/')
         .to_return(status: 200,
                    body: File.read('spec/mocks/web-mock-ecs-run-task/success.json'),
                    headers: {})
@@ -141,7 +146,7 @@ RSpec.describe '#auto_scaler' do
     let(:delay) { AutoScaler::MAX_TASK_START_DELAY_SECONDS - 1 }
     let(:config) { {} }
     before(:each) do
-      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+      stub_request(:post, 'https://ecs.us-east-1.amazonaws.com/')
         .to_return(status: 200,
                    body: File.read('spec/mocks/web-mock-ecs-run-task/success.json'),
                    headers: {})

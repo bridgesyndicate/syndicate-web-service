@@ -27,12 +27,16 @@ def auth_scale_in_post_handler(event:, context:)
 
   task_arn = JSON.parse(payload, object_class: OpenStruct)['task_arn']
 
-  tasks = ECSClient
-    .list_tasks
-    .task_arns
-
   delay = CloudwatchClient.get_container_metadata_delay
   config = AppconfigClient.get_configuration
+
+  ecs_client = ECSClient.new(
+    tasks_subnet: config[:tasks_subnet],
+    tasks_security_group: config[:tasks_security_group])
+
+  tasks = ecs_client
+            .list_tasks
+            .task_arns
 
   syn_logger "delay: #{delay}, config: #{config}"
 

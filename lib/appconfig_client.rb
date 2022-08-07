@@ -4,12 +4,8 @@ require 'lib/aws_credentials'
 
 class AppconfigClient
 
-  REGION = 'us-east-2'
-
   def self.client
-    @@client ||= Aws::AppConfig::Client.new(region: REGION,
-                                        credentials: AwsCredentials.instance.credentials
-                                        )
+    @@client ||= Aws::AppConfig::Client.new(credentials: AwsCredentials.instance.credentials)
   end
 
   def self.get_configuration

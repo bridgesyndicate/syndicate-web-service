@@ -4,7 +4,7 @@ require 'appconfig_client'
 
 RSpec.describe '#appconfig_client.rb' do
   before(:each) do
-    stub_request(:get, 'https://appconfig.us-east-2.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
+    stub_request(:get, 'https://appconfig.us-east-1.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
       .to_return(status: 200, body: File.read('spec/mocks/web-mock-appconfig-get-configuration/success.json'))
   end
 

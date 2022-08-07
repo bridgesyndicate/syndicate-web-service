@@ -15,7 +15,7 @@ RSpec.describe '#scale_in' do
     let(:lambda_result) { auth_scale_in_post_handler(event: event, context: '') }
 
     before(:each) do
-      stub_request(:post, 'https://ecs.us-east-2.amazonaws.com/')
+      stub_request(:post, 'https://ecs.us-east-1.amazonaws.com/')
         .to_return(status: 200,
                    body: File.read('spec/mocks/web-mock-ecs-list-tasks/one-task.json')
                    )
@@ -23,7 +23,7 @@ RSpec.describe '#scale_in' do
         .to_return(status: 200,
                    body: File.read('spec/mocks/web-mock-cloudwatch-get_metric_statistics/ContainerMetadataDelay-five-minute-maximum.xml')
                    )
-      stub_request(:get, 'https://appconfig.us-east-2.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
+      stub_request(:get, 'https://appconfig.us-east-1.amazonaws.com/applications/SyndicateGameContainerAutoScale/environments/production/configurations/GameContainerAutoScaling?client_id=Lambda')
         .to_return(status: 200, body: File.read('spec/mocks/web-mock-appconfig-get-configuration/success.json'))
     end
 
@@ -48,7 +48,7 @@ RSpec.describe '#scale_in' do
       describe 'with extra properties' do
         let(:post_body) {
           {
-            task_arn: 'arn:aws:ecs:us-east-2:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d1e',
+            task_arn: 'arn:aws:ecs:us-east-1:595508394202:task/SyndicateECSCluster/250d85bc107e4dcbb39666340c2a3d1e',
             foo: 'bar'
           }
         }
