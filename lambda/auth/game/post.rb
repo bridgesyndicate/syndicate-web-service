@@ -17,9 +17,9 @@ def auth_game_post_handler(event:, context:)
   }
 
   payload = event['body']
-  status = JSON::Validator.validate(GamePostSchema.schema, payload,
-                                    :strict => true
-                                   ) ? OK : BAD_REQUEST
+
+  status = JSON::Validator.validate(GamePostSchema.schema, payload
+                                    ) ? OK : BAD_REQUEST
   return { statusCode: status,
            headers: headers_list,
            body: { reason: "Payload json does not validate against schema."}.to_json

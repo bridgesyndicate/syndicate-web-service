@@ -27,6 +27,7 @@
     }
   ],
   "queued_via": "queue match",
+  "season": "season1",
   "elo_before_game": {
     "417766998471213062": 1000,
     "240177490906054658": 1000

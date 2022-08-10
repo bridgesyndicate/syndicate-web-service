@@ -72,6 +72,10 @@ class GamePostSchema
         },
         elo_before_game: {
           type: :object
+        },
+        season: {
+          type: :string,
+          required: false
         }
       }
     }
