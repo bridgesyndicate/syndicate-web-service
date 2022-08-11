@@ -11,6 +11,7 @@ KICK_CODE_REGEX = /[a-zA-z0-9]{16}/
 GAME='game'
 PLAYER_MESSAGES='player_messages'
 MINECRAFT_PORT=2556
+STARTING_ELO=1000
 
 def get_cognito_username ctx
   ctx['requestContext']['authorizer']['claims']["cognito:username"]

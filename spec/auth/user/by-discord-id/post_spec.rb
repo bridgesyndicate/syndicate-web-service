@@ -1,7 +1,8 @@
 load 'spec_helper.rb'
 require 'lambda/auth/user/by-discord-id/post'
 require 'json-schema'
-require 'lib/schema/user/by-discord-id/post'
+#require 'lib/schema/user/by-discord-id/post'
+require 'lib/schema/user/by-discord-id/response'
 require 'lib/helpers'
 
 # webmock_log_request
@@ -39,13 +40,15 @@ RSpec.describe '#auth_user_by_minecraft_uuid_post' do
         it 'succeeds' do
           expect(lambda_result[:statusCode]).to eq 200
         end
-        it 'returns a hash of user records' do
+        it 'returns a hash of user records with elo' do
           body = JSON.parse(lambda_result[:body])
-          expect(body).to be_a Hash
-          expect(body["246107858712788993"]).to eq 1654
-          expect(body["882712836852301886"]).to eq 1698
-          expect(body["417766998471213061"]).to eq 114
-          expect(body["562075850883989514"]).to eq 961
+          expect(JSON::Validator
+                   .fully_validate(UserByDiscordIdResponse.schema, body))
+            .to eq []
+          expect(body["246107858712788993"]['elo']).to eq 1654
+          expect(body["882712836852301886"]['elo']).to eq 1698
+          expect(body["417766998471213061"]['elo']).to eq 114
+          expect(body["562075850883989514"]['elo']).to eq 961
         end
       end
       describe 'for an invalid post' do
@@ -54,7 +57,7 @@ RSpec.describe '#auth_user_by_minecraft_uuid_post' do
           expect(lambda_result[:statusCode]).to eq 400
         end
       end
-      describe 'for a post with usrs who do not yet have elo' do
+      describe 'for a post with users who do not yet have elo' do
         before(:each) do
           stub_request(:post, "http://localhost:8000/")
             .to_return(status: 200,
@@ -74,13 +77,16 @@ RSpec.describe '#auth_user_by_minecraft_uuid_post' do
         it 'succeeds' do
           expect(lambda_result[:statusCode]).to eq 200
         end
-        it 'returns a hash of user records' do
+        it 'returns the elo hash' do
           body = JSON.parse(lambda_result[:body])
-          expect(body).to be_a Hash
-          expect(body["246107858712788993"]).to eq 1654
-          expect(body["882712836852301886"]).to eq nil
-          expect(body["417766998471213061"]).to eq 114
-          expect(body["562075850883989514"]).to eq 961
+          expect(JSON::Validator
+                   .fully_validate(UserByDiscordIdResponse.schema, body))
+            .to eq []
+        end
+        it 'one of the users has a season elo' do
+          body = JSON.parse(lambda_result[:body])
+          expect(body['246107858712788993']['season_elos']).to be_a Hash
+          expect(body['246107858712788993']['season_elos']['season1']).to eq 1100
         end
       end
     end

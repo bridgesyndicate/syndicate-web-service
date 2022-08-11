@@ -154,11 +154,12 @@ class DynamodbUserManager
     end
   end
 
-  def get_first_elo_from_response_items(items)
-    items.each do |item|
-      return item['elo'] if item['elo']
-    end
-    return nil
+  def get_elo_from_response(response)
+    ret = { elo: STARTING_ELO }
+    item = response.items.first
+    ret = { elo: item['elo'] } if item['elo']
+    ret.merge!({ season_elos: item['season_elos'] }) if item['season_elos']
+    return ret
   end
 
   # BatchGetItem can only read from the base table, and not from
@@ -168,9 +169,9 @@ class DynamodbUserManager
     users.map do |user|
       response = get_by_discord_id(user)
       if response.items.size != 0
-        elo = get_first_elo_from_response_items(response.items)
         discord_id = response.items.first['discord_id']
-        { "#{discord_id}" => elo }
+        elo = get_elo_from_response(response)
+        ret = { discord_id => elo }
       end
     end.reduce(Hash.new, :merge)
   end
