@@ -24,10 +24,12 @@ RSpec.describe '#games stream' do
       game_stream.compute_elo_changes
     end
     it 'computes the right winners' do
-      expect(game_stream.batch.map {|p| p.winner.discord_name }).to eq winners
+      expect(game_stream.batch.map {|p| p.winner.discord_name }
+             .sort).to eq winners
     end
     it 'computes the right losers' do
-      expect(game_stream.batch.map {|p| p.loser.discord_name }).to eq losers
+      expect(game_stream.batch.map {|p| p.loser.discord_name }
+             .sort).to eq losers
     end
     it 'increases the winners elo' do
       expect(game_stream.batch.map {|p| p.winner.end_elo - p.winner.start_elo })
@@ -43,7 +45,7 @@ RSpec.describe '#games stream' do
     let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
     let(:num_pairs) {2}
     let(:winners) { %w/bdamja ken/ }
-    let(:losers) { %w/viceversa ellis/ }
+    let(:losers) { %w/ellis viceversa/ }
     it_behaves_like 'end-of-match processing for all'
     it_behaves_like 'end-of-match processing for non-ties'
   end

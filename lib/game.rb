@@ -2,7 +2,7 @@ require 'lib/pair'
 require 'lib/player'
 
 class Game
-  attr_accessor :game, :winner, :uuid, :red, :blue
+  attr_accessor :game, :winner, :uuid, :red, :blue, :season
 
   def initialize game
     @game = JSON.parse(game.to_json) # gets rid of BigDecimals
@@ -10,17 +10,24 @@ class Game
     @uuid = game['uuid']
     @red = make_team('red')
     @blue = make_team('blue')
+    @season = game['season'] ? game['season'] : nil
+  end
+
+  def elo_for_player(player:, season: nil)
+    # {"season_elos"=>{"bar"=>2112, "season0"=>1200}, "elo"=>1618}
+    elo_hash = game["elo_before_game"][player]
+    season.nil? ? elo_hash["elo"] : 'foobarbaz'
   end
 
   def make_team(color)
     game["#{color}_team_minecraft_uuids"].map.with_index do |uuid, i|
       Player.new(
-        uuid,
-        game['player_map'].key(uuid),
-        game["#{color}_team_discord_ids"][i],
-        game["#{color}_team_discord_names"][i],
-        game["elo_before_game"][game["#{color}_team_discord_ids"][i]]
-      )
+                 uuid,
+                 game['player_map'].key(uuid),
+                 game["#{color}_team_discord_ids"][i],
+                 game["#{color}_team_discord_names"][i],
+                 elo_for_player(player: game["#{color}_team_discord_ids"][i])
+                 )
     end
   end
 
