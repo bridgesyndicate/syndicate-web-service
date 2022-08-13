@@ -49,18 +49,19 @@ class GameStream
 
   def generate_elo_batch
     game = Game.new(game_hash[:dynamodb][:new_image]['game'])
-    pairs = game.get_elo_matched_winning_pairs
+    pairs = game.get_elo_matched_winning_pairs(nil) # plain elos
+    pairs = pairs + game.get_elo_matched_winning_pairs(game.season) if game.season # season elos
     pairs.each do |pair|
       if pair.tie
         adjust = EloRating.rating_adjustment(
-          EloRating.expected_score(pair.loser.start_elo,
-                                   pair.winner.start_elo), 0)/2
+                                             EloRating.expected_score(pair.get_start_elo_for_loser,
+                                                                      pair.get_start_elo_for_winner), 0)/2
         adjust = adjust.round
         pair.update_elo(-adjust, adjust)
       else
         match = EloRating::Match.new
-        match.add_player(rating: pair.winner.start_elo, winner: true)
-        match.add_player(rating: pair.loser.start_elo)
+        match.add_player(rating: pair.get_start_elo_for_winner, winner: true)
+        match.add_player(rating: pair.get_start_elo_for_loser)
         pair.update_elo(*match.updated_ratings)
       end
     end
@@ -78,47 +79,55 @@ class GameStream
       begin
         if m.tie
           res = $pg_conn.exec_prepared('update_tie', [ m.winner.end_elo,
-                                                       m.winner.discord_id
+                                                       m.winner.discord_id,
+                                                       m.season
                                                      ])
           if res.cmd_tuples == 0
             $pg_conn.exec_prepared('new_tie', [m.winner.discord_id,
                                                m.winner.minecraft_uuid,
                                                m.winner.end_elo,
+                                               m.season
                                               ])
           end
           res = $pg_conn.exec_prepared('update_tie', [ m.loser.end_elo,
-                                                       m.loser.discord_id
+                                                       m.loser.discord_id,
+                                                       m.season
                                                      ])
           if res.cmd_tuples == 0
             $pg_conn.exec_prepared('new_tie', [m.loser.discord_id,
                                                m.loser.minecraft_uuid,
                                                m.loser.end_elo,
+                                               m.season
                                               ])
           end
         else
           res = $pg_conn.exec_prepared('update_winner', [ m.winner.end_elo,
-                                                          m.winner.discord_id
+                                                          m.winner.discord_id,
+                                                          m.season
                                                         ])
           if res.cmd_tuples == 0
             $pg_conn.exec_prepared('new_winner', [m.winner.discord_id,
                                                   m.winner.minecraft_uuid,
                                                   m.winner.end_elo,
+                                                  m.season
                                                  ])
           end
           resl = $pg_conn.exec_prepared('update_loser', [ m.loser.end_elo,
-                                                          m.loser.discord_id
+                                                          m.loser.discord_id,
+                                                          m.season
                                                         ])
           if resl.cmd_tuples == 0
             $pg_conn.exec_prepared('new_loser', [m.loser.discord_id,
                                                  m.loser.minecraft_uuid,
                                                  m.loser.end_elo,
+                                                 m.season
                                                 ])
           end
         end
       rescue Exception => e
         syn_logger "Error in update_leaderboard"
-        syn_logger [m.winner.end_elo, m.winner.discord_id, m.winner.minecraft_uuid].join(', ')
-        syn_logger [m.loser.end_elo, m.loser.discord_id, m.loser.minecraft_uuid].join(', ')
+        syn_logger [m.winner.end_elo, m.winner.discord_id, m.winner.minecraft_uuid, m.season].join(', ')
+        syn_logger [m.loser.end_elo, m.loser.discord_id, m.loser.minecraft_uuid, m.season].join(', ')
         syn_logger e
         syn_logger e.backtrace
       end

@@ -2,21 +2,33 @@ require 'lib/pair'
 require 'lib/player'
 
 class Game
+  class Elos
+    attr_accessor :get, :season
+    def initialize (elo, season)
+      @get = elo
+      @season = season
+    end
+  end
+
   attr_accessor :game, :winner, :uuid, :red, :blue, :season
 
   def initialize game
     @game = JSON.parse(game.to_json) # gets rid of BigDecimals
+    @season = game['season'] ? game['season'] : nil
     @winner = winner
     @uuid = game['uuid']
     @red = make_team('red')
     @blue = make_team('blue')
-    @season = game['season'] ? game['season'] : nil
   end
 
-  def elo_for_player(player:, season: nil)
-    # {"season_elos"=>{"bar"=>2112, "season0"=>1200}, "elo"=>1618}
+  def elo_for_player(player)
     elo_hash = game["elo_before_game"][player]
-    season.nil? ? elo_hash["elo"] : 'foobarbaz'
+    if elo_hash["season_elos"].nil? || elo_hash["season_elos"][season].nil?
+      season_elo = STARTING_ELO
+    else
+      season_elo = elo_hash["season_elos"][season]
+    end
+    Elos.new(elo_hash["elo"], season.nil? ? nil : season_elo)
   end
 
   def make_team(color)
@@ -26,23 +38,37 @@ class Game
                  game['player_map'].key(uuid),
                  game["#{color}_team_discord_ids"][i],
                  game["#{color}_team_discord_names"][i],
-                 elo_for_player(player: game["#{color}_team_discord_ids"][i])
+                 elo_for_player(game["#{color}_team_discord_ids"][i])
                  )
     end
   end
 
-  def red_by_elo
-    red.sort {|a,b| a.start_elo <=> b.start_elo }
+  def red_by_elo(by_season)
+    if by_season
+      red.sort {|a,b| a.start_elo.season <=> b.start_elo.season }
+    else
+      red.sort {|a,b| a.start_elo.get <=> b.start_elo.get }
+    end
   end
 
-  def blue_by_elo
-    blue.sort {|a,b| a.start_elo <=> b.start_elo }
+  def blue_by_elo(by_season)
+    if by_season
+      blue.sort {|a,b| a.start_elo.season <=> b.start_elo.season }
+    else
+      blue.sort {|a,b| a.start_elo.get <=> b.start_elo.get }
+    end
   end
 
-  def get_elo_matched_winning_pairs
-    red_by_elo.map.with_index do |r, i|
-      args = (winner==1) ? [r, blue_by_elo[i]] : [blue_by_elo[i], r]
-      pair = Pair.new(*args)
+  def get_elo_matched_winning_pairs(season)
+    red_by_elo(season).map.with_index do |r, i|
+      if winner == 1
+        playerA = r
+        playerB = blue_by_elo(season)[i]
+      else
+        playerA = blue_by_elo(season)[i]
+        playerB = r
+      end
+      pair = Pair.new(playerA.clone, playerB.clone, season)
       pair.set_tie if winner == 0
       pair
     end

@@ -29,20 +29,20 @@ class PostgresClient
   def prepare
     unless prepared
       conn.prepare('update_winner', 'UPDATE syndicate_leader_board ' +
-                                    'set elo=$1, wins=wins+1 where discord_id=$2')
+                                    'set elo=$1, wins=wins+1 where discord_id=$2 AND season=$3')
       conn.prepare('update_loser', 'UPDATE syndicate_leader_board ' +
-                                   'set elo=$1, losses=losses+1 where discord_id=$2')
+                                   'set elo=$1, losses=losses+1 where discord_id=$2 AND season=$3')
       conn.prepare('update_tie', 'UPDATE syndicate_leader_board ' +
-                                   'set elo=$1, ties=ties+1 where discord_id=$2')
+                                   'set elo=$1, ties=ties+1 where discord_id=$2 AND season=$3')
       conn.prepare('new_winner', 'INSERT INTO syndicate_leader_board ' +
-                                 '(discord_id, minecraft_uuid, elo, wins) '+
-                                 'values ($1, $2, $3, 1)')
+                                 '(discord_id, minecraft_uuid, elo, wins, season) '+
+                                 'values ($1, $2, $3, 1, $4)')
       conn.prepare('new_loser', 'INSERT INTO syndicate_leader_board ' +
-                                '(discord_id, minecraft_uuid, elo, losses) '+
-                                'values ($1, $2, $3, 1)')
+                                '(discord_id, minecraft_uuid, elo, losses, season) '+
+                                'values ($1, $2, $3, 1, $4)')
       conn.prepare('new_tie', 'INSERT INTO syndicate_leader_board ' +
-                                '(discord_id, minecraft_uuid, elo, ties) '+
-                                'values ($1, $2, $3, 1)')
+                                '(discord_id, minecraft_uuid, elo, ties, season) '+
+                                'values ($1, $2, $3, 1, $4)')
       @prepared = true
     end
   end

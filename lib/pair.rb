@@ -1,14 +1,31 @@
 class Pair
-  attr_accessor :winner, :loser, :tie
+  attr_accessor :winner, :loser, :tie, :season
 
-  def initialize(winner, loser)
+  def initialize(winner, loser, season)
     @winner = winner
     @loser = loser
+    @season = season
+  end
+
+  def get_start_elo_for_player(player)
+    if season
+      player.start_elo.season
+    else
+      player.start_elo.get
+    end
+  end
+
+  def get_start_elo_for_winner
+    get_start_elo_for_player(winner)
+  end
+
+  def get_start_elo_for_loser
+    get_start_elo_for_player(loser)
   end
 
   def set_tie
     # make the loser the one with the most start elo
-    if winner.start_elo > loser.start_elo
+    if get_start_elo_for_player(winner) > get_start_elo_for_player(loser)
       temp = winner # swap winner and loser
       @winner = loser
       @loser = temp
@@ -21,8 +38,8 @@ class Pair
       winner.end_elo = winner_end_elo
       loser.end_elo = loser_end_elo
     else # for tie, the elo is overloaded with the delta elo
-      winner.end_elo = winner.start_elo + winner_end_elo
-      loser.end_elo = loser.start_elo + loser_end_elo
+      winner.end_elo = get_start_elo_for_player(winner) + winner_end_elo
+      loser.end_elo = get_start_elo_for_player(loser) + loser_end_elo
     end
   end
 

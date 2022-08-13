@@ -4,8 +4,8 @@ require 'timecop'
 require 'lambda/via-stream/games'
 require 'lib/game_stream'
 
-RSpec.describe '#games stream' do
-  let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
+RSpec.describe '#games stream for season games' do
+  let(:event) { JSON.parse(File.read'spec/mocks/stream/game/season/players-with-season/game-season1-red-wins-2x2.json') }
   let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
                                        .from_event(event).first)
   }
@@ -25,11 +25,11 @@ RSpec.describe '#games stream' do
     end
     it 'computes the right winners' do
       expect(game_stream.batch.map {|p| p.winner.discord_name }
-             .sort).to eq winners
+             .sort.uniq).to eq winners
     end
     it 'computes the right losers' do
       expect(game_stream.batch.map {|p| p.loser.discord_name }
-             .sort).to eq losers
+             .sort.uniq).to eq losers
     end
     it 'increases the winners elo' do
       expect(game_stream.batch.map {|p| p.winner.end_elo - p.get_start_elo_for_winner })
@@ -42,8 +42,29 @@ RSpec.describe '#games stream' do
   end
 
   describe 'red-wins-2x2' do
-    let(:event) { JSON.parse(File.read'spec/mocks/stream/game-red-wins-2x2.json') }
-    let(:num_pairs) {2}
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game/season/players-with-season/game-season1-red-wins-2x2.json')) }
+    let(:num_pairs) {4}
+    let(:winners) { %w/bdamja ken/ }
+    let(:losers) { %w/ellis viceversa/ }
+    it_behaves_like 'end-of-match processing for all'
+    it_behaves_like 'end-of-match processing for non-ties'
+  end
+
+  describe 'all players new to season, red-wins-2x2' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game/season/new-to-season/game-season4-red-wins-2x2.json')) }
+    before() do
+      game_stream.compute_elo_changes
+    end
+    it 'players have starting elo' do
+      expect(game_stream.batch
+               .map{ |m| [m.loser.start_elo.season, m.winner.start_elo.season] }
+               .flatten.uniq.first).to eq STARTING_ELO
+    end
+  end
+
+  describe 'all players new to season, red-wins-2x2' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game/season/new-to-season/game-season4-red-wins-2x2.json')) }
+    let(:num_pairs) {4}
     let(:winners) { %w/bdamja ken/ }
     let(:losers) { %w/ellis viceversa/ }
     it_behaves_like 'end-of-match processing for all'
@@ -120,11 +141,11 @@ RSpec.describe '#games stream' do
         expect($pg_conn).to receive(:exec_prepared)
                               .with('update_winner', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(1)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(1)).exactly(4)
         expect($pg_conn).to receive(:exec_prepared)
                               .with('update_loser', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(1)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(1)).exactly(4)
         handler(event: event, context: {})
       end
       it 'creates users' do
@@ -133,19 +154,19 @@ RSpec.describe '#games stream' do
         expect($pg_conn).to receive(:exec_prepared)
                               .with('update_winner', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(4)
         expect($pg_conn).to receive(:exec_prepared)
                               .with('new_winner', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(4)
         expect($pg_conn).to receive(:exec_prepared)
                               .with('update_loser', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(4)
         expect($pg_conn).to receive(:exec_prepared)
                               .with('new_loser', any_args)
                               .ordered
-                              .and_return(PostgresClient::Tuples.new(0)).exactly(2)
+                              .and_return(PostgresClient::Tuples.new(0)).exactly(4)
         handler(event: event, context: {})
       end
     end

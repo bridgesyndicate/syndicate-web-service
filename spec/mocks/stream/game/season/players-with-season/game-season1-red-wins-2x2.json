@@ -1,0 +1,892 @@
+{
+  "Records": [
+    {
+      "eventSourceARN": "arn:aws:dynamodb:us-west-2:595508394202:table/syndicate_production_games/stream/2021-10-06T23:13:58.394",
+      "dynamodb": {
+        "StreamViewType": "NEW_IMAGE",
+        "SizeBytes": 5397,
+        "SequenceNumber": "9689000000000016739044563",
+        "NewImage": {
+          "created_at": {
+            "S": "2019-10-08T19:55:19Z"
+          },
+          "game_uuid": {
+            "S": "47d23b54-1d16-4c91-ba24-67fb56bc3e61"
+          },
+          "updated_at": {
+            "S": "2019-10-08T19:55:19Z"
+          },
+          "game": {
+            "M": {
+              "season" : {
+                "S": "season1"
+              },
+              "elo_before_game": {
+                "M": {
+                  "246107858712788993": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "bar": {
+                            "N": "2112"
+                          },
+                          "season1": {
+                            "N": "1112"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "1618"
+                      }
+                    }
+                  },
+                  "346107858712788994": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "foo": {
+                            "N": "800"
+                          },
+                          "season1": {
+                            "N": "1200"
+                          },
+                          "season0": {
+                            "N": "1200"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "1093"
+                      }
+                    }
+                  },
+                  "417766998471213061": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "bar": {
+                            "N": "2112"
+                          },
+                          "season1": {
+                            "N": "1200"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "1618"
+                      }
+                    }
+                  },
+                  "517766998471213062": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "foo": {
+                            "N": "800"
+                          },
+                          "season1": {
+                            "N": "1112"
+                          },
+                          "season0": {
+                            "N": "1200"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "1093"
+                      }
+                    }
+                  }
+                }
+              },
+              "task_ip": {
+                "S": "10.0.15.99"
+              },
+              "game_length_in_seconds": {
+                "N": "600"
+              },
+              "red_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "246107858712788993"
+                  },
+                  {
+                    "S": "346107858712788994"
+                  }
+                ]
+              },
+              "remaining_time_formatted": {
+                "S": "00:-1"
+              },
+              "dequeued_at": {
+                "S": "2021-10-03T17:41:33.090Z"
+              },
+              "accepted_by_discord_ids": {
+                "L": [
+                  {
+                    "M": {
+                      "discord_id": {
+                        "S": "246107858712788993"
+                      },
+                      "accepted_at": {
+                        "S": "2021-10-03T17:41:32Z"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "discord_id": {
+                        "S": "417766998471213061"
+                      },
+                      "accepted_at": {
+                        "S": "2021-10-03T17:41:20Z"
+                      }
+                    }
+                  }
+                ]
+              },
+              "blue_team_discord_names": {
+                "L": [
+                  {
+                    "S": "viceversa"
+                  },
+                  {
+                    "S": "ellis"
+                  }
+                ]
+              },
+              "remaining_time_in_seconds": {
+                "N": "-1"
+              },
+              "number_of_joined_players": {
+                "N": "2"
+              },
+              "kills_registered": {
+                "L": [
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282913876"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282930074"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282933489"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282941724"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282954973"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282964674"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633282992077"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283002224"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283017280"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283034982"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283042179"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283048794"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283058685"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283070728"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283072224"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283080173"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283089880"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283091573"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283110123"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283118574"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283147676"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283177972"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283182323"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283190385"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283194672"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283195172"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283204677"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283209272"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283213672"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283215328"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283223772"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283229376"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283265623"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283271377"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283272172"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283279872"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283289223"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283299873"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283308872"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283317672"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283325222"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283333322"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283359074"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283360872"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283384673"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283402522"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283409880"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283421573"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283429922"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283439276"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283452074"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283460223"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283469622"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283469822"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283477375"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "kill_time": {
+                        "N": "1633283483522"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  }
+                ]
+              },
+              "game_ended_at": {
+                "N": "1633283497022"
+              },
+              "final_game_length_formatted": {
+                "S": "10:02"
+              },
+              "player_map": {
+                "M": {
+                  "ellis": {
+                    "S": "e1185cea-8291-4734-be1b-bf37f6bcab7c"
+                  },
+                  "ken": {
+                    "S": "eb7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  },
+                  "bdamja": {
+                    "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  },
+                  "vice9": {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                }
+              },
+              "blue_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "417766998471213061"
+                  },
+                  {
+                    "S": "517766998471213062"
+                  }
+                ]
+              },
+              "uuid": {
+                "S": "26ccc40d-710d-4b78-9840-ee25b30e9831"
+              },
+              "queued_via": {
+                "S": "discord duel slash command"
+              },
+              "game_score": {
+                "M": {
+                  "blue": {
+                    "N": "4"
+                  },
+                  "red": {
+                    "N": "10"
+                  }
+                }
+              },
+              "required_players": {
+                "N": "4"
+              },
+              "game_started_at": {
+                "N": "1633282895475"
+              },
+              "state": {
+                "S": "AFTER_GAME"
+              },
+              "joined_players": {
+                "L": [
+                  {
+                    "S": "vice9"
+                  },
+                  {
+                    "S": "bdamja"
+                  }
+                ]
+              },
+              "goals_to_win": {
+                "N": "3"
+              },
+              "red_team_discord_names": {
+                "L": [
+                  {
+                    "S": "bdamja"
+                  },
+                  {
+                    "S": "ken"
+                  }
+                ]
+              },
+              "goals_scored": {
+                "L": [
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1633283128673"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1633283160322"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1633283250722"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1633283488074"
+                      },
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      }
+                    }
+                  }
+                ]
+              },
+              "blue_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  },
+                  {
+                    "S": "e1185cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                ]
+              },
+              "queued_at": {
+                "S": "2021-10-03T17:41:20Z"
+              },
+              "red_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  },
+                  {
+                    "S": "eb7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Keys": {
+          "game_uuid": {
+            "S": "47d23b54-1d16-4c91-ba24-67fb56bc3e61"
+          }
+        },
+        "ApproximateCreationDateTime": 1633743479
+      },
+      "awsRegion": "us-west-2",
+      "eventSource": "aws:dynamodb",
+      "eventVersion": "1.1",
+      "eventName": "MODIFY",
+      "eventID": "7b348c27f877a5cb2feca840422d5295"
+    }
+  ]
+}

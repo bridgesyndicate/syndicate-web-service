@@ -67,10 +67,10 @@ describe 'GameStream' do
     }
     it 'has integers not BigDecimals' do
       game_stream.compute_elo_changes
-      expect(game_stream.batch.map {|p| p.winner.start_elo.class}
+      expect(game_stream.batch.map {|p| p.get_start_elo_for_winner}
                .uniq
                .first)
-        .to eq Integer
+        .to be_a Integer
     end
   end
 end
