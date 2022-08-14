@@ -89,9 +89,9 @@ RSpec.describe '#games stream for season games' do
     it_behaves_like 'end-of-match processing for non-ties'
   end
 
-  describe 'tie-2x2' do
-    let(:event) { JSON.parse(File.read'spec/mocks/stream/game-tie-2x2.json') }
-    let(:num_pairs) {2}
+  describe 'some players new to season, tie-2x2' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game/season/new-to-season/game-tie-2x2.json')) }
+    let(:num_pairs) { 4 }
     let(:winners) { %w/bdamja ken/ }
     let(:losers) { %w/viceversa ellis/ }
     it_behaves_like 'end-of-match processing for all'
@@ -100,7 +100,7 @@ RSpec.describe '#games stream for season games' do
     end
     it 'changes elos by half' do
       expect(game_stream.batch.map {|p| p.winner.end_elo - p.get_start_elo_for_winner })
-        .to eq [9,8] # see note in games.rb about who is the winner, sorry.
+        .to eq [9,8,6,6] # see note in games.rb about who is the winner, sorry.
     end
   end
 

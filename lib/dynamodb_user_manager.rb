@@ -1,3 +1,4 @@
+require 'util/make_ddb_elo_update_hash'
 require 'time'
 require 'aws-sdk-dynamodb'
 
@@ -149,8 +150,10 @@ class DynamodbUserManager
   end
 
   def batch_update(batch)
-    batch.map {|p| [p.winner, p.loser]}.flatten.each do |player|
-      update_elo(player.minecraft_uuid, player.end_elo)
+    map = MakeDdbEloUpdateHash.new(batch).hash
+    map.each do |k, v|
+      binding.pry;1
+      update_elo(k, v)
     end
   end
 
