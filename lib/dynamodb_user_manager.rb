@@ -1,4 +1,4 @@
-require 'util/make_ddb_elo_update_hash'
+require 'lib/util/make_ddb_elo_update_hash'
 require 'time'
 require 'aws-sdk-dynamodb'
 
