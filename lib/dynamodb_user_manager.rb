@@ -18,6 +18,41 @@ class DynamodbUserManager
     @client = Aws::DynamoDB::Client.new(options)
   end
 
+  def add_blank_season_elo_for_user(minecraft_uuid)
+    client.update_item(
+      {
+        table_name: table_name,
+        key: {
+          minecraft_uuid: minecraft_uuid
+        },
+        update_expression: 'SET #season_elos = :empty',
+        expression_attribute_names: {
+          '#season_elos': 'season_elos'
+        },
+        expression_attribute_values: {
+          ':empty': {}
+        },
+        return_values: 'ALL_NEW'
+      }
+    )
+  end
+
+  def add_season_elo
+    begin
+      ret = client.scan(
+        {
+          table_name: table_name
+        }
+      )
+      puts ret.count
+      ret.items.each do |item|
+        print '.'
+        add_blank_season_elo_for_user(item['minecraft_uuid'])
+        sleep 1
+      end
+    end while !ret.last_evaluated_key.nil?
+  end
+
   def create_table
     create_table_impl unless @client.list_tables.table_names.include?(table_name)
   end
@@ -78,7 +113,8 @@ class DynamodbUserManager
       'minecraft_uuid' => minecraft_uuid,
       'discord_id' => discord_id,
       'kick_code' => kick_code,
-      'kick_code_created_at' => kick_code_created_at
+      'kick_code_created_at' => kick_code_created_at,
+      'season_elos' => {}
     }
     @client.put_item(
       {
@@ -128,31 +164,42 @@ class DynamodbUserManager
       })
   end
 
-  def update_elo(minecraft_uuid, elo)
-    client.update_item(
-      {
-        table_name: table_name,
-        key: {
-          minecraft_uuid: minecraft_uuid
-        },
-        update_expression: 'SET #updated_at = :now, #elo = :elo',
-        expression_attribute_names: {
-          '#updated_at': 'updated_at',
-          '#elo': 'elo',
-        },
-        expression_attribute_values: {
-          ':now': Time.now.utc.iso8601,
-          ':elo': elo
-        },
-        return_values: 'ALL_NEW'
-      }
-    )
+  def update_elo(minecraft_uuid, elo_hash)
+    update_hash = {
+      table_name: table_name,
+      key: {
+        minecraft_uuid: minecraft_uuid
+      },
+      update_expression: 'SET #updated_at = :now, #elo = :new_elo',
+      expression_attribute_names: {
+        '#updated_at': 'updated_at',
+                                   '#elo': 'elo'
+      },
+      expression_attribute_values: {
+        ':now': Time.now.utc.iso8601,
+                                    ':new_elo': elo_hash[:end_elo],
+                                    ':old_elo': elo_hash[:start_elo],
+      },
+      return_values: 'ALL_NEW',
+      condition_expression: 'elo = :old_elo'
+    }
+
+    if elo_hash.has_key?(:season)
+      update_hash[:update_expression] += ', #season_elos.#season = :new_season_elo'
+      update_hash[:expression_attribute_names].merge!(
+        '#season_elos': 'season_elos',
+        '#season': elo_hash[:season],
+      )
+      update_hash[:expression_attribute_values].merge!(
+        ':new_season_elo': elo_hash[:end_season_elo]
+      )
+    end
+    client.update_item(update_hash)
   end
 
   def batch_update(batch)
     map = MakeDdbEloUpdateHash.new(batch).hash
     map.each do |k, v|
-      binding.pry;1
       update_elo(k, v)
     end
   end

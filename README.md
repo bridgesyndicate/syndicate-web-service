@@ -6,7 +6,7 @@ You need a local DDB server in docker:
 
 ```
 docker run -d -p 8000:8000 amazon/dynamodb-local
-SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
+POSTGRES_HOST=localhost SYNDICATE_ENV=development AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=foo AWS_SECRET_ACCESS_KEY=bar rake
 ```
 
 You need a local rabbit mq in docker:
