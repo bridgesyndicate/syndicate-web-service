@@ -1,14 +1,8 @@
 require 'lib/pair'
 require 'lib/player'
+require 'lib/elos'
 
 class Game
-  class Elos
-    attr_accessor :get, :season
-    def initialize (elo, season)
-      @get = elo
-      @season = season
-    end
-  end
 
   attr_accessor :game, :winner, :uuid, :red, :blue, :season
 

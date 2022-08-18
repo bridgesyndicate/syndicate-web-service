@@ -19,26 +19,30 @@ class PairPlayerArraySchema
                  },
                  player: {
                    type: :object,
-                   required: %w/class minecraft_uuid minecraft_name discord_name discord_id start_elo/,
+                   required: %w/class minecraft_uuid minecraft_name/ +
+                   %w/discord_name discord_id start_elo/,
                    properties: {
-                     "class": {
-                             type: :string
-                           },
-                                discord_id: {
-                                  type: :number
-                                },
-                                discord_name: {
-                                  type: :string
-                                },
-                                minecraft_uuid: {
-                                  type: :uuid
-                                },
-                                minecraft_name: {
-                                  type: :string
-                                },
-                                start_elo: {
-                                  type: :number
-                                }
+                     class: {
+                       type: :string
+                     },
+                     discord_id: {
+                       type: :number
+                     },
+                     discord_name: {
+                       type: :string
+                     },
+                     minecraft_uuid: {
+                       type: :uuid
+                     },
+                     minecraft_name: {
+                       type: :string
+                     },
+                     start_elo: {
+                       type: :number
+                     },
+                     end_elo: {
+                       type: :number
+                     }
                    }
                  }
                }

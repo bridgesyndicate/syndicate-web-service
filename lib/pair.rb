@@ -46,10 +46,8 @@ class Pair
   def to_json(*args)
     {
       class: self.class.to_s,
-      winner: winner.instance_variables.
-        to_h { |k| [k.to_s.gsub('@',''), winner.instance_variable_get(k)] },
-      loser: loser.instance_variables.
-        to_h { |k| [k.to_s.gsub('@',''), loser.instance_variable_get(k)] },
+      winner: winner.as_json,
+      loser: loser.as_json
     }.to_json
   end
 end

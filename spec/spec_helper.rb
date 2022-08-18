@@ -103,3 +103,7 @@ def random_number_of_tasks
   delta = AutoScaler::MAX_TASKS - AutoScaler::MIN_TASKS
   rand(delta) + AutoScaler::MIN_TASKS + 1
 end
+
+def random_string
+  (rand(8)+2).times.map{|i| (97 + rand(26)).chr}.join
+end
