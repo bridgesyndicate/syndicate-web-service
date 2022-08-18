@@ -20,3 +20,9 @@ end
 def syn_logger(msg)
   puts msg if SYNDICATE_ENV != 'test'
 end
+
+class String
+  def blank?
+    self.size == 0 || self.nil?
+  end
+end

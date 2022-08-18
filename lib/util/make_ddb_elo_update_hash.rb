@@ -9,7 +9,7 @@ class MakeDdbEloUpdateHash
 
   def make_hash
     batch.each do |pair|
-      if pair.season
+      unless pair.season.blank?
         k, v = make_hash_from(player: pair.winner, season: pair.season)
         hash.has_key?(k) ? hash[k].merge!(v) : hash[k] = v
         k, v = make_hash_from(player: pair.loser, season: pair.season)
@@ -23,8 +23,8 @@ class MakeDdbEloUpdateHash
     end
   end
 
-  def make_hash_from(player:, season: nil)
-    if season
+  def make_hash_from(player:, season: '')
+    unless season.blank?
       v = { start_season_elo: player.start_elo.season,
         end_season_elo: player.end_elo,
         season: season }

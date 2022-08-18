@@ -1,9 +1,3 @@
-class String
-  def blank?
-    self.size == 0 || self.nil?
-  end
-end
-
 class Pair
   attr_accessor :winner, :loser, :tie, :season
 

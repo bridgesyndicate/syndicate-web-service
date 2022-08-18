@@ -1,0 +1,275 @@
+{
+  "Records": [
+    {
+      "eventSourceARN": "arn:aws:dynamodb:us-west-2:595508394202:table/syndicate_production_games/stream/2021-10-06T23:13:58.394",
+      "dynamodb": {
+        "StreamViewType": "NEW_IMAGE",
+        "SizeBytes": 1729,
+        "SequenceNumber": "1504656800000000008731425188",
+        "NewImage": {
+          "created_at": {
+            "S": "2022-08-18T03:39:14Z"
+          },
+          "game_uuid": {
+            "S": "f9967744-f811-4da7-957c-609505b99287"
+          },
+          "updated_at": {
+            "S": "2022-08-18T14:40:14Z"
+          },
+          "game": {
+            "M": {
+              "task_ip": {
+                "S": "10.0.0.126"
+              },
+              "red_team_discord_names": {
+                "L": [
+                  {
+                    "S": "ken"
+                  }
+                ]
+              },
+              "goals_to_win": {
+                "N": "5"
+              },
+              "joined_players": {
+                "L": [
+                  {
+                    "S": "viceww"
+                  },
+                  {
+                    "S": "ep1cpr0gamer"
+                  }
+                ]
+              },
+              "state": {
+                "S": "AFTER_GAME"
+              },
+              "last_scorer_name": {
+                "S": "§9viceww"
+              },
+              "season": {
+                "S": "season1"
+              },
+              "final_game_length_formatted": {
+                "S": "01:38"
+              },
+              "player_map": {
+                "M": {
+                  "ep1cpr0gamer": {
+                    "S": "9bf95247-d0ed-4c22-877e-0ac31532ade7"
+                  },
+                  "viceww": {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                }
+              },
+              "before_game": {
+                "BOOL": false
+              },
+              "game_started_at": {
+                "N": "1660793962364"
+              },
+              "required_players": {
+                "N": "2"
+              },
+              "game_score": {
+                "M": {
+                  "blue": {
+                    "N": "5"
+                  },
+                  "red": {
+                    "N": "0"
+                  }
+                }
+              },
+              "queued_via": {
+                "S": "queue match"
+              },
+              "blue_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "417766998471213061"
+                  }
+                ]
+              },
+              "uuid": {
+                "S": "f9967744-f811-4da7-957c-609505b99287"
+              },
+              "elo_before_game": {
+                "M": {
+                  "240177490906054658": {
+                    "M": {
+                      "season_elos": {
+                        "M": {}
+                      },
+                      "elo": {
+                        "N": "1001"
+                      }
+                    }
+                  },
+                  "417766998471213061": {
+                    "M": {
+                      "season_elos": {
+                        "M": {}
+                      },
+                      "elo": {
+                        "N": "915"
+                      }
+                    }
+                  }
+                }
+              },
+              "goals_scored": {
+                "L": [
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1660793982612"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1660794002416"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1660794026113"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1660794042912"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "goal_time": {
+                        "N": "1660794059814"
+                      },
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      }
+                    }
+                  }
+                ]
+              },
+              "blue_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  }
+                ]
+              },
+              "during_game": {
+                "BOOL": false
+              },
+              "queued_at": {
+                "S": "2022-08-18T03:39:12Z"
+              },
+              "map_name": {
+                "S": "condo"
+              },
+              "red_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "9bf95247-d0ed-4c22-877e-0ac31532ade7"
+                  }
+                ]
+              },
+              "game_ended_at": {
+                "N": "1660794059822"
+              },
+              "kills_registered": {
+                "L": []
+              },
+              "number_of_joined_players": {
+                "N": "2"
+              },
+              "remaining_time_in_seconds": {
+                "N": "802"
+              },
+              "blue_team_discord_names": {
+                "L": [
+                  {
+                    "S": "viceversa"
+                  }
+                ]
+              },
+              "accepted_by_discord_ids": {
+                "L": [
+                  {
+                    "M": {
+                      "discord_id": {
+                        "S": "417766998471213061"
+                      },
+                      "accepted_at": {
+                        "S": "2022-08-18T03:39:12Z"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "discord_id": {
+                        "S": "240177490906054658"
+                      },
+                      "accepted_at": {
+                        "S": "2022-08-18T03:39:12Z"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dequeued_at": {
+                "S": "2022-08-18T03:39:14.341Z"
+              },
+              "remaining_time_formatted": {
+                "S": "13:23"
+              },
+              "red_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "240177490906054658"
+                  }
+                ]
+              },
+              "game_length_in_seconds": {
+                "N": "900"
+              }
+            }
+          }
+        },
+        "Keys": {
+          "game_uuid": {
+            "S": "f9967744-f811-4da7-957c-609505b99287"
+          }
+        },
+        "ApproximateCreationDateTime": 1660854517
+      },
+      "awsRegion": "us-west-2",
+      "eventSource": "aws:dynamodb",
+      "eventVersion": "1.1",
+      "eventName": "MODIFY",
+      "eventID": "89e89bda4e84869a65b9360c0d90a0fc"
+    }
+  ]
+}
