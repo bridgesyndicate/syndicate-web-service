@@ -1,14 +1,20 @@
+class String
+  def blank?
+    self.size == 0 || self.nil?
+  end
+end
+
 class Pair
   attr_accessor :winner, :loser, :tie, :season
 
   def initialize(winner, loser, season)
     @winner = winner
     @loser = loser
-    @season = season
+    @season = season.nil? ? '' : season
   end
 
   def get_start_elo_for_player(player)
-    if season
+    unless season.blank?
       player.start_elo.season
     else
       player.start_elo.get
