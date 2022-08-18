@@ -194,7 +194,6 @@ class DynamodbUserManager
         ':new_season_elo': elo_hash[:end_season_elo]
       )
     end
-    syn_logger "update_hash: #{update_hash.inspect}"
     client.update_item(update_hash)
   end
 
