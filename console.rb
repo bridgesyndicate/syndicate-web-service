@@ -19,6 +19,5 @@ require 'lib/helpers'
 require 'securerandom'
 require 'lib/cloudwatch_client'
 
-binding.pry;1
-puts 'foo'
+$ddb_user_manager.add_elo
 exit

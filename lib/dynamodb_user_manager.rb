@@ -39,6 +39,46 @@ class DynamodbUserManager
     )
   end
 
+  def add_starting_elo_for_user(minecraft_uuid)
+    begin
+      client.update_item(
+        {
+          table_name: table_name,
+          key: {
+            minecraft_uuid: minecraft_uuid
+          },
+          update_expression: 'SET #elo = :starting_elo',
+          expression_attribute_names: {
+            '#elo': 'elo'
+          },
+          expression_attribute_values: {
+            ':starting_elo': STARTING_ELO
+          },
+          condition_expression: 'attribute_not_exists(elo)',
+          return_values: 'ALL_NEW'
+        }
+      )
+    rescue Aws::DynamoDB::Errors::ConditionalCheckFailedException
+      puts "#{minecraft_uuid} already has elo"
+    end
+  end
+
+  def add_elo
+    begin
+      ret = client.scan(
+        {
+          table_name: table_name
+        }
+      )
+      puts ret.count
+      ret.items.each do |item|
+        puts "doing: #{item['minecraft_uuid']}"
+        add_starting_elo_for_user(item['minecraft_uuid'])
+        sleep 1
+      end
+    end while !ret.last_evaluated_key.nil?
+  end
+
   def add_season_elo
     begin
       ret = client.scan(
