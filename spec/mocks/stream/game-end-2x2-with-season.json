@@ -1,0 +1,748 @@
+{
+  "Records": [
+    {
+      "eventID": "915c0a2196292a5271a80bebb8a537db",
+      "eventName": "MODIFY",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-west-2",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1660890691,
+        "Keys": {
+          "game_uuid": {
+            "S": "eb600fdf-6ee4-4797-a625-139752b903c2"
+          }
+        },
+        "NewImage": {
+          "game": {
+            "M": {
+              "before_game": {
+                "BOOL": false
+              },
+              "game_started_at": {
+                "N": "1660890253415"
+              },
+              "required_players": {
+                "N": "4"
+              },
+              "game_score": {
+                "M": {
+                  "red": {
+                    "N": "5"
+                  },
+                  "blue": {
+                    "N": "3"
+                  }
+                }
+              },
+              "queued_via": {
+                "S": "queue match"
+              },
+              "uuid": {
+                "S": "eb600fdf-6ee4-4797-a625-139752b903c2"
+              },
+              "blue_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "417766998471213061"
+                  },
+                  {
+                    "S": "240177490906054658"
+                  }
+                ]
+              },
+              "elo_before_game": {
+                "M": {
+                  "417766998471213061": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "season1": {
+                            "N": "1012"
+                          },
+                          "seasontest": {
+                            "N": "1012"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "930"
+                      }
+                    }
+                  },
+                  "246107858712788993": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "season1": {
+                            "N": "1035"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "1032"
+                      }
+                    }
+                  },
+                  "882712836852301886": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "season1": {
+                            "N": "977"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "967"
+                      }
+                    }
+                  },
+                  "240177490906054658": {
+                    "M": {
+                      "season_elos": {
+                        "M": {
+                          "season1": {
+                            "N": "988"
+                          },
+                          "seasonfoo": {
+                            "N": "988"
+                          }
+                        }
+                      },
+                      "elo": {
+                        "N": "986"
+                      }
+                    }
+                  }
+                }
+              },
+              "player_map": {
+                "M": {
+                  "ottoclicker": {
+                    "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                  },
+                  "viceww": {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  },
+                  "ep1cpr0gamer": {
+                    "S": "9bf95247-d0ed-4c22-877e-0ac31532ade7"
+                  },
+                  "bdamja": {
+                    "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  }
+                }
+              },
+              "final_game_length_formatted": {
+                "S": "07:17"
+              },
+              "season": {
+                "S": "season1"
+              },
+              "state": {
+                "S": "AFTER_GAME"
+              },
+              "last_scorer_name": {
+                "S": "§cbdamja"
+              },
+              "joined_players": {
+                "L": [
+                  {
+                    "S": "ottoclicker"
+                  },
+                  {
+                    "S": "viceww"
+                  },
+                  {
+                    "S": "ep1cpr0gamer"
+                  },
+                  {
+                    "S": "bdamja"
+                  }
+                ]
+              },
+              "goals_to_win": {
+                "N": "5"
+              },
+              "red_team_discord_names": {
+                "L": [
+                  {
+                    "S": "ign ottoclicker"
+                  },
+                  {
+                    "S": "bdamja"
+                  }
+                ]
+              },
+              "goals_scored": {
+                "L": [
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "goal_time": {
+                        "N": "1660890280212"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                      },
+                      "goal_time": {
+                        "N": "1660890340413"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "goal_time": {
+                        "N": "1660890363662"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "goal_time": {
+                        "N": "1660890434469"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "goal_time": {
+                        "N": "1660890533517"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "goal_time": {
+                        "N": "1660890605563"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "goal_time": {
+                        "N": "1660890664763"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "goal_time": {
+                        "N": "1660890689817"
+                      }
+                    }
+                  }
+                ]
+              },
+              "blue_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                  },
+                  {
+                    "S": "9bf95247-d0ed-4c22-877e-0ac31532ade7"
+                  }
+                ]
+              },
+              "queued_at": {
+                "S": "2022-08-19T06:22:27Z"
+              },
+              "during_game": {
+                "BOOL": false
+              },
+              "red_team_minecraft_uuids": {
+                "L": [
+                  {
+                    "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                  },
+                  {
+                    "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                  }
+                ]
+              },
+              "map_name": {
+                "S": "hyperfrost"
+              },
+              "game_ended_at": {
+                "N": "1660890689820"
+              },
+              "kills_registered": {
+                "L": [
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890265964"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890271670"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890278016"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890297267"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890313113"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890320365"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                      },
+                      "kill_time": {
+                        "N": "1660890333517"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890355466"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890386763"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890399565"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890403514"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890405163"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890416017"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890450916"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890456617"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890473365"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890481467"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890490315"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890499618"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890508264"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890510165"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890510615"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890511865"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890519464"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890521864"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                      },
+                      "kill_time": {
+                        "N": "1660890549517"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890558073"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890565913"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890599021"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890616965"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "c21842bf-f4b3-4e28-ad5d-72cf0679fa64"
+                      },
+                      "kill_time": {
+                        "N": "1660890621867"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "f0885cea-8291-4734-be1b-bf37f6bcab7c"
+                      },
+                      "kill_time": {
+                        "N": "1660890627069"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890644417"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890656621"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "player_uuid": {
+                        "S": "2b7fa93b-f690-46b8-bfe6-a07b2ec42563"
+                      },
+                      "kill_time": {
+                        "N": "1660890687467"
+                      }
+                    }
+                  }
+                ]
+              },
+              "number_of_joined_players": {
+                "N": "4"
+              },
+              "remaining_time_in_seconds": {
+                "N": "463"
+              },
+              "blue_team_discord_names": {
+                "L": [
+                  {
+                    "S": "viceversa"
+                  },
+                  {
+                    "S": "ken"
+                  }
+                ]
+              },
+              "accepted_by_discord_ids": {
+                "L": [
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2022-08-19T06:22:27Z"
+                      },
+                      "discord_id": {
+                        "S": "882712836852301886"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2022-08-19T06:22:27Z"
+                      },
+                      "discord_id": {
+                        "S": "246107858712788993"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2022-08-19T06:22:27Z"
+                      },
+                      "discord_id": {
+                        "S": "417766998471213061"
+                      }
+                    }
+                  },
+                  {
+                    "M": {
+                      "accepted_at": {
+                        "S": "2022-08-19T06:22:27Z"
+                      },
+                      "discord_id": {
+                        "S": "240177490906054658"
+                      }
+                    }
+                  }
+                ]
+              },
+              "dequeued_at": {
+                "S": "2022-08-19T06:22:29.419Z"
+              },
+              "remaining_time_formatted": {
+                "S": "07:44"
+              },
+              "red_team_discord_ids": {
+                "L": [
+                  {
+                    "S": "882712836852301886"
+                  },
+                  {
+                    "S": "246107858712788993"
+                  }
+                ]
+              },
+              "game_length_in_seconds": {
+                "N": "900"
+              },
+              "task_ip": {
+                "S": "10.0.0.126"
+              }
+            }
+          },
+          "updated_at": {
+            "S": "2022-08-19T06:22:29Z"
+          },
+          "game_uuid": {
+            "S": "eb600fdf-6ee4-4797-a625-139752b903c2"
+          },
+          "created_at": {
+            "S": "2022-08-19T06:22:29Z"
+          }
+        },
+        "SequenceNumber": "1506149100000000065884947910",
+        "SizeBytes": 4929,
+        "StreamViewType": "NEW_IMAGE"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:us-west-2:595508394202:table/syndicate_production_games/stream/2021-10-06T23:13:58.394"
+    }
+  ]
+}

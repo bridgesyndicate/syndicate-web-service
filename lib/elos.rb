@@ -7,6 +7,9 @@ class Elos
   end
 
   def as_json(**args)
-    self.get # not sure what we should return
+    {
+      elo: get,
+      season: season
+    }
   end
 end

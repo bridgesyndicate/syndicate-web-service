@@ -17,6 +17,18 @@ class PairPlayerArraySchema
                      loser: { "$ref": "#/$defs/player" }
                    }
                  },
+                 elos: {
+                   type: :object,
+                   required: %w/elo season/,
+                   properties: {
+                     elo: {
+                       type: :number
+                     },
+                     season: {
+                       type: :number
+                     }
+                   }
+                 },
                  player: {
                    type: :object,
                    required: %w/class minecraft_uuid minecraft_name/ +
@@ -38,7 +50,7 @@ class PairPlayerArraySchema
                        type: :string
                      },
                      start_elo: {
-                       type: :number
+                       type: :elos
                      },
                      end_elo: {
                        type: :number

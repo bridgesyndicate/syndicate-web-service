@@ -44,10 +44,12 @@ class Pair
   end
 
   def to_json(*args)
-    {
+    ret = {
       class: self.class.to_s,
       winner: winner.as_json,
       loser: loser.as_json
-    }.to_json
+    }
+    ret.merge!(season: season) unless season.blank?
+    ret.to_json
   end
 end

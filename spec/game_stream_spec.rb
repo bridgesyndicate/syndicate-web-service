@@ -3,6 +3,46 @@ require 'lib/helpers'
 require 'lib/game_stream'
 
 describe 'GameStream' do
+  context 'the player message' do
+    let(:event) { JSON.parse(File.read('spec/mocks/stream/game-end-2x2-with-season.json')) }
+    let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
+                                         .from_event(event).first)
+    }
+    let(:json) { game_stream.batch.to_json }
+    let(:parsed_json) { JSON.parse(json) }
+
+    before(:each) { game_stream.compute_elo_changes }
+
+    it 'is a list' do
+      expect(game_stream.batch).to be_a Array
+      expect(game_stream.batch.size).to eq 4
+    end
+
+    it 'converts to json ' do
+      expect(json).to be_a String
+    end
+
+    it 'the json has two season pairs and two non-season pairs' do
+      expect(parsed_json.map{ |p| p['season'] })
+        .to eq [nil, nil, "season1", "season1"]
+    end
+
+    it 'has the expected elo' do
+      parsed_json.each do |p|
+        season = !!p['season']
+        winner_start = season ? p['winner']['start_elo']['season'] :
+                         p['winner']['start_elo']['elo']
+        loser_start = season ? p['loser']['start_elo']['season'] :
+                        p['loser']['start_elo']['elo']
+        winner_end = p['winner']['end_elo']
+        loser_end = p['loser']['end_elo']
+        expect(winner_end).to be > winner_start
+        expect(loser_end).to be < loser_start
+      end
+    end
+
+  end
+
   context 'new (inserted) record' do
     let(:event) { JSON.parse(File.read('./spec/mocks/stream/game-insert.json')) }
     let(:game_stream) { GameStream.new(Aws::DynamoDBStreams::AttributeTranslator
