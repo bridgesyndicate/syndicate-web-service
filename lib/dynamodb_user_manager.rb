@@ -3,6 +3,8 @@ require 'time'
 require 'aws-sdk-dynamodb'
 
 class DynamodbUserManager
+  class NoEloError < StandardError
+  end
   attr_accessor :client, :table_name, :secondary_index_name
 
   def initialize()
@@ -114,6 +116,7 @@ class DynamodbUserManager
       'discord_id' => discord_id,
       'kick_code' => kick_code,
       'kick_code_created_at' => kick_code_created_at,
+      'elo' => STARTING_ELO,
       'season_elos' => {}
     }
     @client.put_item(
@@ -205,10 +208,12 @@ class DynamodbUserManager
   end
 
   def get_elo_from_response(response)
-    ret = { elo: STARTING_ELO }
     item = response.items.first
-    ret = { elo: item['elo'] } if item['elo']
-    ret.merge!({ season_elos: item['season_elos'] }) if item['season_elos']
+    raise NoEloError.new unless ( item.keys.include?('elo') and
+      item.keys.include?('season_elos'))
+    ret = { elo: item['elo'],
+            season_elos: item['season_elos']
+          }
     return ret
   end
 

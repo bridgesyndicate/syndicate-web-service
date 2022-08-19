@@ -74,19 +74,11 @@ RSpec.describe '#auth_user_by_minecraft_uuid_post' do
                        headers: {})
         end
         let(:post_file) {'spec/mocks/user/by-discord-id/valid-post-with-new-user.json'}
-        it 'succeeds' do
-          expect(lambda_result[:statusCode]).to eq 200
-        end
-        it 'returns the elo hash' do
-          body = JSON.parse(lambda_result[:body])
-          expect(JSON::Validator
-                   .fully_validate(UserByDiscordIdResponse.schema, body))
-            .to eq []
-        end
-        it 'one of the users has a season elo' do
-          body = JSON.parse(lambda_result[:body])
-          expect(body['246107858712788993']['season_elos']).to be_a Hash
-          expect(body['246107858712788993']['season_elos']['season1']).to eq 1100
+
+        it 'fails' do
+          expect{
+            lambda_result[:statusCode]
+          }.to raise_error DynamodbUserManager::NoEloError
         end
       end
     end

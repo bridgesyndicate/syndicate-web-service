@@ -1,1 +1,36 @@
-{"Items":[{"minecraft_uuid":{"S":"0d56f190-5d6f-4fe6-9061-8e7797d64337"},"updated_at":{"S":"2021-10-28T03:52:23Z"},"kick_code":{"S":"fvMGqKTro8BJcSKb"},"created_at":{"S":"2021-10-28T03:11:47Z"},"elo":{"N":"961"},"kick_code_created_at":{"S":"2021-10-28T03:11:24Z"},"discord_id":{"S":"562075850883989514"}}],"Count":1,"ScannedCount":1}
+{
+  "Items": [
+    {
+      "minecraft_uuid": {
+        "S": "0d56f190-5d6f-4fe6-9061-8e7797d64337"
+      },
+      "updated_at": {
+        "S": "2021-10-28T03:52:23Z"
+      },
+      "kick_code": {
+        "S": "fvMGqKTro8BJcSKb"
+      },
+      "created_at": {
+        "S": "2021-10-28T03:11:47Z"
+      },
+      "elo": {
+        "N": "961"
+      },
+      "kick_code_created_at": {
+        "S": "2021-10-28T03:11:24Z"
+      },
+      "discord_id": {
+        "S": "562075850883989514"
+      },
+      "season_elos": {
+	"M": {
+	  "foobar" : {
+	    "N": 1001
+	  }
+	}
+      }
+    }
+  ],
+  "Count": 1,
+  "ScannedCount": 1
+}

@@ -25,16 +25,14 @@ RSpec.describe '#dynamodb_user_manager_spec' do
     end
   end
 
-  describe 'for a batch that has one record without elo, expect STARTING_ELO' do
+  describe 'for a batch that has a record without elo' do
     let(:response_body_file_1) { 'spec/mocks/user/by-discord-id/ddb-882712836852301886-no-elo.json' }
     let(:response_body_file_2) { '/dev/null' }
-    it 'has valid results' do
-      res = $ddb_user_manager.batch_get_by_discord_ids(users)
-      expect(res.to_json).to be_a String
-      obj = JSON.parse(res.to_json)
-      key = obj.keys.first
-      expect(obj[key]).to be_a Hash
-      expect(obj[key]['elo']).to eq STARTING_ELO
+
+    it 'raises an exception' do
+      expect {
+        res = $ddb_user_manager.batch_get_by_discord_ids(users)
+      }.to raise_error DynamodbUserManager::NoEloError
     end
   end
 
@@ -43,14 +41,10 @@ RSpec.describe '#dynamodb_user_manager_spec' do
     let(:response_body_file_1) { 'spec/mocks/user/by-discord-id/returns-two-records.json' }
     let(:response_body_file_2) { 'spec/mocks/user/by-discord-id/ddb-882712836852301886.json'}
 
-    it 'has valid results' do
-      res = $ddb_user_manager.batch_get_by_discord_ids(users)
-      expect(res.to_json).to be_a String
-      obj = JSON.parse(res.to_json)
-      key = obj.keys.first
-      expect(obj[key]['elo']).to equal STARTING_ELO
-      key = obj.keys[1]
-      expect(obj[key]['elo']).to equal 1698
+    it 'raises an exception' do
+      expect {
+        res = $ddb_user_manager.batch_get_by_discord_ids(users)
+      }.to raise_error DynamodbUserManager::NoEloError
     end
   end
 
