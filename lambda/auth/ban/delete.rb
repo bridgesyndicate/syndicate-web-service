@@ -20,6 +20,8 @@ def auth_ban_delete_handler(event:, context:)
     }
   end
 
+  syn_logger "attempting to unban: #{minecraft_uuid}"
+
   ret = $ddb_user_manager.unban(minecraft_uuid)
 
   return { statusCode: OK,
