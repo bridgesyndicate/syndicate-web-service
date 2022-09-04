@@ -409,7 +409,7 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
-        - DynamoDBReadPolicy:
+        - DynamoDBWritePolicy:
             TableName: syndicate_production_users
       Handler: lambda/auth/ban/post.auth_ban_post_handler
       Runtime: ruby2.7
@@ -429,7 +429,7 @@ Resources:
         Variables:
           SYNDICATE_ENV: production
       Policies:
-        - DynamoDBReadPolicy:
+        - DynamoDBWritePolicy:
             TableName: syndicate_production_users
       Handler: lambda/auth/ban/delete.auth_ban_delete_handler
       Runtime: ruby2.7
