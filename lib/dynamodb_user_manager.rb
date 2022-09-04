@@ -197,7 +197,7 @@ class DynamodbUserManager
       'kick_code' => kick_code,
       'kick_code_created_at' => kick_code_created_at,
       'elo' => STARTING_ELO,
-      'season_elos' => {}
+      'season_elos' => {},
       'banned_at' => [],
       'unbanned_at' => []
     }
