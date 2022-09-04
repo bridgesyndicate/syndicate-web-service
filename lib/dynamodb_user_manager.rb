@@ -20,6 +20,25 @@ class DynamodbUserManager
     @client = Aws::DynamoDB::Client.new(options)
   end
 
+  def add_empty_ban_arrays_for_user(minecraft_uuid)
+    client.update_item({
+                         table_name: table_name,
+                         key: {
+                           minecraft_uuid: minecraft_uuid
+                         },
+                         update_expression: 'SET #banned_at = :empty_array, #unbanned_at = :empty_array',
+                         expression_attribute_names: {
+                           '#banned_at': 'banned_at',
+                           '#unbanned_at': 'banned_at',
+                         },
+                         expression_attribute_values: {
+                           ':empty_array': []
+                         },
+                         condition_expression: 'attribute_not_exists(banned_at) AND attribute_not_exists(unbanned_at)',
+                         return_values: 'ALL_NEW'
+                       })
+  end
+
   def add_blank_season_elo_for_user(minecraft_uuid)
     client.update_item(
       {
@@ -95,6 +114,23 @@ class DynamodbUserManager
     end while !ret.last_evaluated_key.nil?
   end
 
+  def add_ban_and_unban_arrays
+    binding.pry;1
+    begin
+      ret = client.scan(
+        {
+          table_name: table_name
+        }
+      )
+      puts ret.count
+      ret.items.each do |item|
+        print '.'
+        add_empty_ban_arrays_for_user(item['minecraft_uuid'])
+        sleep 1
+      end
+    end while !ret.last_evaluated_key.nil?
+  end
+
   def create_table
     create_table_impl unless @client.list_tables.table_names.include?(table_name)
   end
@@ -158,6 +194,8 @@ class DynamodbUserManager
       'kick_code_created_at' => kick_code_created_at,
       'elo' => STARTING_ELO,
       'season_elos' => {}
+      'banned_at' => [],
+      'unbanned_at' => []
     }
     @client.put_item(
       {
@@ -238,6 +276,30 @@ class DynamodbUserManager
       )
     end
     client.update_item(update_hash)
+  end
+
+  def ban(minecraft_uuid)
+    now = Time.now.utc.iso8601
+    client.update_item({
+                         table_name: table_name,
+                         key: {
+                           minecraft_uuid: minecraft_uuid
+                         },
+                         update_expression: 'SET #banned = :true, #updated_at = :now, #banned_at = list_append(#banned_at, :now_li)',
+                         expression_attribute_names: {
+                           '#updated_at': 'updated_at',
+                           '#banned': 'banned',
+                           '#banned_at': 'banned_at'
+                         },
+                         expression_attribute_values: {
+                           ':now': now,
+                           ':now_li': Array.new.push(now),
+                           ':true': true,
+                           ':minecraft_uuid': minecraft_uuid
+                         },
+                         condition_expression: 'minecraft_uuid=:minecraft_uuid AND attribute_not_exists(#banned)',
+                         return_values: 'ALL_NEW'
+                       })
   end
 
   def batch_update(batch)
