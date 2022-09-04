@@ -1,5 +1,4 @@
 load 'git_commit_sha.rb'
-require 'json'
 require 'json-schema'
 require 'lib/helpers'
 require 'lib/schema/ban_schema'

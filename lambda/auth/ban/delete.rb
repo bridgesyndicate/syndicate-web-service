@@ -1,5 +1,5 @@
 load 'git_commit_sha.rb'
-require 'json'
+require 'json-schema' # this avoids a "superclass mismatch for class BigDecimal"
 require 'lib/helpers'
 require 'lib/dynamo_client.rb'
 

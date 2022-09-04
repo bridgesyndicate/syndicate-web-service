@@ -25,6 +25,7 @@ class DynamodbUserManager
   end
 
   def add_empty_ban_arrays_for_user(minecraft_uuid)
+    begin
     client.update_item({
                          table_name: table_name,
                          key: {
@@ -33,7 +34,7 @@ class DynamodbUserManager
                          update_expression: 'SET #banned_at = :empty_array, #unbanned_at = :empty_array',
                          expression_attribute_names: {
                            '#banned_at': 'banned_at',
-                           '#unbanned_at': 'banned_at',
+                           '#unbanned_at': 'unbanned_at',
                          },
                          expression_attribute_values: {
                            ':empty_array': []
@@ -41,6 +42,10 @@ class DynamodbUserManager
                          condition_expression: 'attribute_not_exists(banned_at) AND attribute_not_exists(unbanned_at)',
                          return_values: 'ALL_NEW'
                        })
+      print '.'
+      rescue => e
+      print "X"
+    end
   end
 
   def add_blank_season_elo_for_user(minecraft_uuid)
@@ -119,7 +124,6 @@ class DynamodbUserManager
   end
 
   def add_ban_and_unban_arrays
-    binding.pry;1
     begin
       ret = client.scan(
         {
@@ -128,7 +132,6 @@ class DynamodbUserManager
       )
       puts ret.count
       ret.items.each do |item|
-        print '.'
         add_empty_ban_arrays_for_user(item['minecraft_uuid'])
         sleep 1
       end
