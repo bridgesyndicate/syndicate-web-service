@@ -1,6 +1,5 @@
 load 'git_commit_sha.rb'
 require 'json'
-require 'lib/aws_credentials'
 require 'lib/dynamo_client.rb'
 require 'lib/helpers'
 require 'securerandom'

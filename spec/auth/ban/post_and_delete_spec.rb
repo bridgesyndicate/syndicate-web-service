@@ -1,11 +1,55 @@
 load 'spec_helper.rb'
+require 'lambda/auth/ban/delete'
 require 'lambda/auth/ban/post'
-require 'json-schema'
-require 'lib/schema/ban_schema'
 require 'lib/helpers'
 
 RSpec.describe '#ban' do
-  context 'lambda_result' do
+  context 'delete' do
+
+    let(:minecraft_uuid) { '9b6efcde-8870-4c3e-9b5b-1ea9c336e2b2' }
+    let(:event) {
+      {
+        'pathParameters' => {
+          'proxy' => minecraft_uuid
+        }
+      }
+    }
+    let(:lambda_result) { auth_ban_delete_handler(event: event, context: '') }
+    let(:status) { 200 }
+    let(:body) { File.read('spec/mocks/ddb/web-mock-ddb-unban-success.json') }
+
+    before(:each) do
+      stub_request(:post, "http://localhost:8000/")
+        .to_return(status: status,
+                   body: body)
+    end
+
+
+    describe 'for the get response body' do
+      it_behaves_like 'lambda function'
+    end
+
+    describe 'for the get response' do
+      describe 'for a valid user' do
+        it 'it succeeds' do
+          expect(lambda_result[:statusCode]).to eq 200
+        end
+      end
+
+      describe 'for an error' do
+        let(:uuid) { 'abcd' }
+        let(:status) { 400 }
+        let(:body) { File.read('spec/mocks/ddb/web-mock-ddb-unban-failure.json') }
+        it 'returns 400' do
+          expect {
+            lambda_result
+          }.to raise_error Aws::DynamoDB::Errors::ConditionalCheckFailedException
+        end
+      end
+    end
+  end
+
+  context 'post' do
     let(:post_body) {
       {
         task_arn: 'foo'

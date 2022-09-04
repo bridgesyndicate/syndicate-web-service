@@ -20,6 +20,10 @@ class DynamodbUserManager
     @client = Aws::DynamoDB::Client.new(options)
   end
 
+  def now
+    Time.now.utc.iso8601
+  end
+
   def add_empty_ban_arrays_for_user(minecraft_uuid)
     client.update_item({
                          table_name: table_name,
@@ -186,8 +190,8 @@ class DynamodbUserManager
 
   def put(minecraft_uuid, discord_id, kick_code, kick_code_created_at)
     item = {
-      'updated_at' => Time.now.utc.iso8601,
-      'created_at' => Time.now.utc.iso8601,
+      'updated_at' => now,
+      'created_at' => now,
       'minecraft_uuid' => minecraft_uuid,
       'discord_id' => discord_id,
       'kick_code' => kick_code,
@@ -257,9 +261,9 @@ class DynamodbUserManager
                                    '#elo': 'elo'
       },
       expression_attribute_values: {
-        ':now': Time.now.utc.iso8601,
-                                    ':new_elo': elo_hash[:end_elo],
-                                    ':old_elo': elo_hash[:start_elo],
+        ':now': now,
+        ':new_elo': elo_hash[:end_elo],
+        ':old_elo': elo_hash[:start_elo],
       },
       return_values: 'ALL_NEW',
       condition_expression: 'elo = :old_elo'
@@ -279,7 +283,6 @@ class DynamodbUserManager
   end
 
   def ban(minecraft_uuid)
-    now = Time.now.utc.iso8601
     client.update_item({
                          table_name: table_name,
                          key: {
@@ -298,6 +301,28 @@ class DynamodbUserManager
                            ':minecraft_uuid': minecraft_uuid
                          },
                          condition_expression: 'minecraft_uuid=:minecraft_uuid AND attribute_not_exists(#banned)',
+                         return_values: 'ALL_NEW'
+                       })
+  end
+
+  def unban(minecraft_uuid)
+    client.update_item({
+                         table_name: table_name,
+                         key: {
+                           minecraft_uuid: minecraft_uuid
+                         },
+                         update_expression: 'REMOVE #banned SET #updated_at = :now, #unbanned_at = list_append(#unbanned_at, :now_li)',
+                         expression_attribute_names: {
+                           '#updated_at': 'updated_at',
+                           '#banned':'banned',
+                           '#unbanned_at': 'unbanned_at'
+                         },
+                         expression_attribute_values: {
+                           ':now': now,
+                           ':now_li': Array.new.push(now),
+                           ':minecraft_uuid': minecraft_uuid
+                         },
+                         condition_expression: 'minecraft_uuid=:minecraft_uuid AND attribute_exists(#banned)',
                          return_values: 'ALL_NEW'
                        })
   end

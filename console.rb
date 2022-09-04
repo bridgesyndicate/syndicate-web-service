@@ -19,5 +19,7 @@ require 'lib/helpers'
 require 'securerandom'
 require 'lib/cloudwatch_client'
 
-$ddb_user_manager.add_elo
+# $ddb_user_manager.add_elo
+binding.pry;1
+$ddb_user_manager.add_ban_and_unban_arrays
 exit

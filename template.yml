@@ -402,3 +402,43 @@ Resources:
             Method: POST
             RestApiId:
               Ref: ApiGatewayApi
+  AuthBanPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/ban/post.auth_ban_post_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/ban
+            Method: POST
+            RestApiId:
+              Ref: ApiGatewayApi
+  AuthBanDelete:
+    Type: AWS::Serverless::Function
+    Properties:
+      Environment:
+        Variables:
+          SYNDICATE_ENV: production
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
+      Handler: lambda/auth/ban/delete.auth_ban_delete_handler
+      Runtime: ruby2.7
+      CodeUri: ./
+      Events:
+        SyndicateAPI:
+          Type: Api
+          Properties:
+            Path: /auth/ban/{proxy+}
+            Method: DELETE
+            RestApiId:
+              Ref: ApiGatewayApi

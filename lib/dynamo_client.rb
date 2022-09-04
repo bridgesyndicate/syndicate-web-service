@@ -1,3 +1,4 @@
+require 'lib/aws_credentials'
 require 'lib/dynamodb_game_manager'
 require 'lib/dynamodb_kick_code_manager'
 require 'lib/dynamodb_user_manager'
