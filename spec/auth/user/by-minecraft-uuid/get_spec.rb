@@ -58,6 +58,15 @@ RSpec.describe '#auth_user_by_minecraft_uuid_get' do
           expect(JSON.parse(lambda_result[:body])['kick_code']).to match KICK_CODE_REGEX
         end
       end
+      describe 'for a banned user' do
+        let(:response) { File.read('./spec/mocks/user/by-minecraft-uuid/dynamo-get-banned.json') }
+        it 'returns 403' do
+          stub_request(:post, "http://localhost:8000/")
+            .to_return(status: 200,
+                       body: response)
+          expect(lambda_result[:statusCode]).to eq 403
+        end
+      end
     end
   end
 end

@@ -29,7 +29,7 @@ def auth_user_by_minecraft_uuid_get_handler(event:, context:)
       kick_code: kick_code
     }
   else
-    status = OK
+    status = user.items.first['banned'] ? FORBIDDEN : OK
     user = user.items.first # TODO: make a User model
     ret = {
       user: user
