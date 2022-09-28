@@ -1,5 +1,6 @@
 require 'bunny'
 require 'lib/warp'
+require 'lib/aws_credentials'
 
 class RabbitClient
   attr_accessor :connection, :channel
