@@ -408,6 +408,8 @@ Resources:
       Environment:
         Variables:
           SYNDICATE_ENV: production
+          RABBIT_URI: !ImportValue
+            'SyndicateVPCAndBroker-AmqpEndpoint'
       Policies:
         - DynamoDBWritePolicy:
             TableName: syndicate_production_users
