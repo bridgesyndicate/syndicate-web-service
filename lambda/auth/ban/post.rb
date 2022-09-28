@@ -29,6 +29,7 @@ def auth_ban_post_handler(event:, context:)
 
   rabbit_client = RabbitClientFactory.produce
   task_ip = "0.0.0.0" # warp the player to hell to disconnect them
+  syn_logger "test"
   rabbit_client.send_players_to_host_no_cache(Array(minecraft_uuid), task_ip)
   rabbit_client.shutdown
 
