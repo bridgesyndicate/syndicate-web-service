@@ -3,6 +3,7 @@ require 'json-schema'
 require 'lib/helpers'
 require 'lib/schema/ban_schema'
 require 'lib/dynamo_client'
+require 'lib/aws_credentials'
 
 def auth_ban_post_handler(event:, context:)
 
@@ -25,6 +26,11 @@ def auth_ban_post_handler(event:, context:)
   syn_logger "attempting to ban: #{minecraft_uuid}"
 
   ret = $ddb_user_manager.ban(minecraft_uuid)
+
+  rabbit_client = RabbitClientFactory.produce
+  task_ip = "0.0.0.0" # warp the player to hell to disconnect them
+  rabbit_client.send_players_to_host_no_cache(Array(minecraft_uuid), task_ip)
+  rabbit_client.shutdown
 
   return { 
     statusCode: status,
