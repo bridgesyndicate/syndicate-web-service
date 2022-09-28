@@ -3,6 +3,7 @@ require 'json-schema'
 require 'lib/helpers'
 require 'lib/schema/ban_schema'
 require 'lib/dynamo_client'
+require 'lib/rabbit_client_factory'
 
 def auth_ban_post_handler(event:, context:)
 
