@@ -4,6 +4,7 @@ require 'lib/helpers'
 require 'lib/schema/ban_schema'
 require 'lib/dynamo_client'
 require 'lib/aws_credentials'
+require 'lib/rabbit_client_factory'
 
 def auth_ban_post_handler(event:, context:)
 
