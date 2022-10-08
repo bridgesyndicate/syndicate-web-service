@@ -177,6 +177,8 @@ Resources:
             TableName: syndicate_production_kick_codes
         - DynamoDBWritePolicy:
             TableName: syndicate_production_users
+        - DynamoDBReadPolicy:
+            TableName: syndicate_production_users
       Handler: lambda/auth/register/by-kick-code/post.auth_register_by_kick_code_post_handler
       Runtime: ruby2.7
       CodeUri: ./
