@@ -16,7 +16,8 @@ RSpec.describe '#kick_code_post' do
     let(:lambda_result) { auth_register_by_kick_code_post_handler(event: event, context: '') }
     before(:each) {
       stub_request(:post, "http://localhost:8000/")
-        .to_return(status: 200, body: File.read('spec/mocks/register/by-kick-code/success.json'), headers: {})
+        .to_return(status: 200, body: File.read('spec/mocks/register/by-kick-code/success.json'))
+        .to_return(status: 200, body: File.read('./spec/mocks/user/by-minecraft-uuid/dynamo-get-not-found.json'))
     }
 
     describe 'for the post response' do
@@ -46,10 +47,21 @@ RSpec.describe '#kick_code_post' do
       end
     end
     describe 'for a kick code not in the database' do
-      it 'returns not found' do
+      it 'returns not found with kickcode message' do
         stub_request(:post, "http://localhost:8000/")
-          .to_return(status: 400, body: File.read('spec/mocks/register/by-kick-code/failure.json'), headers: {})
+          .to_return(status: 400, body: File.read('spec/mocks/register/by-kick-code/failure.json'))
         expect(lambda_result[:statusCode]).to eq 404
+        expect(JSON.parse(lambda_result[:body])['reason']).to eq "Kickcode not found."
+      end
+    end
+
+    describe 'for a user who already has a record' do
+      it 'returns not found with duplicate message' do
+        stub_request(:post, "http://localhost:8000/")
+          .to_return(status: 200, body: File.read('spec/mocks/register/by-kick-code/success.json'))
+          .to_return(status: 200, body: File.read('spec/mocks/user/by-minecraft-name/dynamo-get-found.json'))
+        expect(lambda_result[:statusCode]).to eq 404
+        expect(JSON.parse(lambda_result[:body])['reason']).to eq 'Duplicate user record.'
       end
     end
   end

@@ -28,13 +28,20 @@ def auth_register_by_kick_code_post_handler(event:, context:)
 
   return { statusCode: NOT_FOUND,
            headers: headers_list,
-           body: {}.to_json
+           body: { reason: 'Kickcode not found.' }.to_json
   } if kick == ObjectNotFound
 
   kick_record = kick.attributes
 
   minecraft_uuid = kick_record['minecraft_uuid']
   kick_code_created_at = kick_record['created_at']
+
+  existing_user = $ddb_user_manager.get(minecraft_uuid)
+
+  return { statusCode: NOT_FOUND,
+           headers: headers_list,
+           body: { reason: 'Duplicate user record.' }.to_json
+  } unless existing_user.items.empty?
 
   ret = $ddb_user_manager.put(minecraft_uuid,
                         discord_id,
