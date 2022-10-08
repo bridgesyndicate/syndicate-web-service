@@ -405,15 +405,6 @@ Resources:
   AuthBanPost:
     Type: AWS::Serverless::Function
     Properties:
-      VpcConfig:
-        SecurityGroupIds:
-          - !ImportValue
-            'SyndicateVPCAndBroker-RabbitIngressSecurityGroupId'
-          - !ImportValue
-            'SyndicateVPCAndBroker-HTTPIngressSecurityGroupId'
-        SubnetIds:
-          - !ImportValue
-            'SyndicateVPCAndBroker-SubnetLambdaId'
       Environment:
         Variables:
           SYNDICATE_ENV: production
