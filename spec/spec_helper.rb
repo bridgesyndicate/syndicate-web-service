@@ -1,6 +1,8 @@
 require 'simplecov'
 require 'webmock/rspec'
-
+require 'simplecov-json'
+require 'simplecov_json_formatter'
+SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
 SimpleCov.start do
   add_group 'Controllers', 'lambda/'
   add_filter 'lib/sinatra_shim/'

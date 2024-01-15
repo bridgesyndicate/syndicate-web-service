@@ -18,6 +18,8 @@ gem 'ruby-uuid'
 
 group :test do
   gem 'simplecov', require: false, group: :test
+  gem 'simplecov-cobertura'
+  gem 'simplecov-json'
   gem 'rspec'
   gem 'rspec_junit_formatter'
   gem 'timecop'
